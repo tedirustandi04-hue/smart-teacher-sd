@@ -1,0 +1,45 @@
+// js/app.js
+
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Initialize Lucide Icons
+    lucide.createIcons();
+
+    // 2. Mobile Sidebar Toggle Logic
+    const sidebar = document.getElementById('sidebar');
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const appContent = document.getElementById('app-content');
+
+    if(mobileBtn) {
+        mobileBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+    }
+
+    // Close sidebar when clicking outside on mobile
+    appContent.addEventListener('click', () => {
+        if (window.innerWidth <= 1024 && sidebar.classList.contains('open')) {
+            sidebar.classList.remove('open');
+        }
+    });
+
+    // 3. Highlight Active Nav Link
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            navLinks.forEach(l => {
+                l.classList.remove('active');
+                // reset icon color
+                const icon = l.querySelector('i');
+                if(icon && !icon.classList.contains('text-blue-400') && !l.classList.contains('active')) {
+                    // reset default styling logic handled by CSS classes mostly
+                }
+            });
+            this.classList.add('active');
+            
+            // Auto-close sidebar on mobile after clicking a link
+            if (window.innerWidth <= 1024) {
+                sidebar.classList.remove('open');
+            }
+        });
+    });
+});

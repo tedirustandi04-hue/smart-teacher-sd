@@ -1,0 +1,21 @@
+/* css/variables.css */
+:root {
+    /* Primary Colors */
+    --color-navy: #0f172a;       /* Slate 900 */
+    --color-navy-dark: #020617;  /* Slate 950 */
+    --color-blue: #0ea5e9;       /* Sky 500 */
+    --color-blue-light: #e0f2fe; /* Sky 100 */
+    
+    /* Backgrounds */
+    --bg-main: #f8fafc;          /* Slate 50 */
+    --bg-card: #ffffff;
+    
+    /* Text Colors */
+    --text-primary: #1e293b;     /* Slate 800 */
+    --text-secondary: #64748b;   /* Slate 500 */
+    --text-light: #f8fafc;
+    
+    /* Document/Print */
+    --doc-width: 210mm;          /* A4 Width */
+    --doc-padding: 20mm;
+}

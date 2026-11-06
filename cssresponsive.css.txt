@@ -1,0 +1,29 @@
+/* css/responsive.css */
+@media (max-width: 1024px) {
+    #sidebar {
+        position: absolute;
+        transform: translateX(-100%);
+    }
+    
+    #sidebar.open {
+        transform: translateX(0);
+        box-shadow: 4px 0 15px rgba(0,0,0,0.2);
+    }
+}
+
+@media print {
+    #sidebar, header {
+        display: none !important;
+    }
+    #app-content {
+        padding: 0 !important;
+        background: white !important;
+        overflow: visible !important;
+    }
+    .a4-preview {
+        box-shadow: none !important;
+        padding: 0 !important;
+        max-width: none !important;
+        width: 100% !important;
+    }
+}

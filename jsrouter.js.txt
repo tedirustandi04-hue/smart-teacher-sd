@@ -1,0 +1,186 @@
+// js/router.js
+
+class Router {
+    constructor() {
+        this.appContent = document.getElementById('app-content');
+        this.init();
+    }
+
+    init() {
+        window.addEventListener('hashchange', () => this.handleRoute());
+        this.handleRoute(); // Call on first load
+    }
+
+    handleRoute() {
+        let hash = window.location.hash || '#dashboard';
+        this.renderView(hash);
+    }
+
+    renderView(hash) {
+        // Hapus class active dari semua nav, pasang pada yang cocok
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        const activeLink = document.querySelector(`.nav-link[href="${hash}"]`);
+        if(activeLink) activeLink.classList.add('active');
+
+        // Logic pergantian view
+        switch(hash) {
+            case '#dashboard':
+                this.appContent.innerHTML = this.getDashboardHTML();
+                this.initDashboardCharts(); // Panggil init chart setelah DOM ter-render
+                break;
+            default:
+                // Fallback untuk tool yang belum diimplementasikan di TAHAP 1
+                const toolName = hash.replace('#', '').replace(/-/g, ' ').toUpperCase();
+                this.appContent.innerHTML = `
+                    <div class="flex flex-col items-center justify-center h-full text-slate-500">
+                        <i data-lucide="wrench" class="w-16 h-16 mb-4 text-slate-300"></i>
+                        <h2 class="text-2xl font-bold text-slate-700">${toolName}</h2>
+                        <p class="mt-2">Modul ini sedang dalam tahap pengembangan (Tahap 5).</p>
+                    </div>
+                `;
+                lucide.createIcons(); // Render ikon baru
+                break;
+        }
+    }
+
+    getDashboardHTML() {
+        return `
+            <div class="mb-6 flex justify-between items-end">
+                <div>
+                    <h1 class="text-2xl font-bold text-slate-800">Dashboard</h1>
+                    <p class="text-sm text-slate-500 mt-1">Selamat datang kembali! Berikut ringkasan aktivitas perangkat ajar Anda.</p>
+                </div>
+                <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition flex items-center shadow-sm">
+                    <i data-lucide="plus" class="w-4 h-4 mr-2"></i> Buat Modul Baru
+                </button>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex items-center">
+                    <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-4">
+                        <i data-lucide="folders" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-slate-500 font-medium">Total Perangkat</p>
+                        <h3 class="text-2xl font-bold text-slate-800">142</h3>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex items-center">
+                    <div class="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 mr-4">
+                        <i data-lucide="book-open" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-slate-500 font-medium">Modul Ajar</p>
+                        <h3 class="text-2xl font-bold text-slate-800">36</h3>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex items-center">
+                    <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 mr-4">
+                        <i data-lucide="pie-chart" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-slate-500 font-medium">Asesmen & Bank Soal</p>
+                        <h3 class="text-2xl font-bold text-slate-800">58</h3>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex items-center">
+                    <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-4">
+                        <i data-lucide="clipboard-list" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-slate-500 font-medium">LKPD & Media</p>
+                        <h3 class="text-2xl font-bold text-slate-800">48</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts & Activity -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm lg:col-span-2">
+                    <h3 class="text-lg font-bold text-slate-800 mb-4">Statistik Pembuatan Perangkat (Semester Ganjil)</h3>
+                    <div class="relative h-64 w-full">
+                        <canvas id="activityChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-slate-800 mb-4">Aktivitas Terbaru</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3 shrink-0">
+                                <i data-lucide="book-open" class="w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-slate-800">Modul Ajar IPAS Bab 2</p>
+                                <p class="text-xs text-slate-500">Diedit 2 jam yang lalu</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 mr-3 shrink-0">
+                                <i data-lucide="bar-chart-2" class="w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-slate-800">Analisis Sumatif Matematika</p>
+                                <p class="text-xs text-slate-500">Dibuat kemarin</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 mr-3 shrink-0">
+                                <i data-lucide="file-text" class="w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-slate-800">LKPD Pancasila Kelas 4</p>
+                                <p class="text-xs text-slate-500">Disimpan 2 hari yang lalu</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="w-full mt-6 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50 transition">Lihat Semua Riwayat</button>
+                </div>
+            </div>
+        `;
+    }
+
+    initDashboardCharts() {
+        lucide.createIcons(); // Render icon yang ada di dashboard
+        const ctx = document.getElementById('activityChart');
+        if(ctx) {
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+                    datasets: [{
+                        label: 'Modul Ajar',
+                        data: [5, 12, 8, 15, 6, 0],
+                        backgroundColor: '#0ea5e9',
+                        borderRadius: 4
+                    }, {
+                        label: 'Asesmen',
+                        data: [2, 10, 15, 8, 12, 0],
+                        backgroundColor: '#f59e0b',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, grid: { borderDash: [2, 4] } },
+                        x: { grid: { display: false } }
+                    },
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+        }
+    }
+}
+
+// Inisialisasi router saat file dimuat
+document.addEventListener('DOMContentLoaded', () => {
+    window.appRouter = new Router();
+});
