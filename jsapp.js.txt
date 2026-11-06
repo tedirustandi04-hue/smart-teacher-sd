@@ -1,10 +1,15 @@
 // js/app.js
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Initialize Lucide Icons
+    // 1. Inisialisasi Lucide Icons
     lucide.createIcons();
 
-    // 2. Mobile Sidebar Toggle Logic
+    // 2. Inisialisasi Sesi Profil Pengguna ke Header
+    if (window.authService) {
+        window.authService.updateUIProfile();
+    }
+
+    // 3. Mobile Sidebar Toggle Logic
     const sidebar = document.getElementById('sidebar');
     const mobileBtn = document.getElementById('mobile-menu-btn');
     const appContent = document.getElementById('app-content');
@@ -15,31 +20,58 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Close sidebar when clicking outside on mobile
-    appContent.addEventListener('click', () => {
-        if (window.innerWidth <= 1024 && sidebar.classList.contains('open')) {
-            sidebar.classList.remove('open');
-        }
-    });
-
-    // 3. Highlight Active Nav Link
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            navLinks.forEach(l => {
-                l.classList.remove('active');
-                // reset icon color
-                const icon = l.querySelector('i');
-                if(icon && !icon.classList.contains('text-blue-400') && !l.classList.contains('active')) {
-                    // reset default styling logic handled by CSS classes mostly
-                }
-            });
-            this.classList.add('active');
-            
-            // Auto-close sidebar on mobile after clicking a link
-            if (window.innerWidth <= 1024) {
+    if(appContent) {
+        appContent.addEventListener('click', () => {
+            if (window.innerWidth <= 1024 && sidebar.classList.contains('open')) {
                 sidebar.classList.remove('open');
             }
         });
-    });
+    }
+
+    // 4. Modal Authentication Events
+    const authModal = document.getElementById('auth-modal');
+    const btnShowLogin = document.getElementById('btn-show-login');
+    const btnCloseAuthModal = document.getElementById('close-auth-modal');
+    const loginForm = document.getElementById('login-form');
+    const btnLogout = document.getElementById('btn-logout');
+    const authAlert = document.getElementById('auth-error-alert');
+
+    if (btnShowLogin) {
+        btnShowLogin.addEventListener('click', () => {
+            authModal.classList.remove('hidden');
+        });
+    }
+
+    if (btnCloseAuthModal) {
+        btnCloseAuthModal.addEventListener('click', () => {
+            authModal.classList.add('hidden');
+        });
+    }
+
+    if (btnLogout) {
+        btnLogout.addEventListener('click', () => {
+            window.authService.logout();
+            alert("Anda telah keluar dari akun.");
+        });
+    }
+
+    if (loginForm) {
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                await window.authService.login(email, password);
+                authModal.classList.add('hidden');
+                loginForm.reset();
+                if(authAlert) authAlert.classList.add('hidden');
+            } catch (error) {
+                if(authAlert) {
+                    authAlert.textContent = error.message;
+                    authAlert.classList.remove('hidden');
+                }
+            }
+        });
+    }
 });
