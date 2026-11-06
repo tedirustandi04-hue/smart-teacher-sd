@@ -1,0 +1,62 @@
+// js/export-excel.js
+
+class ExcelExportEngine {
+    /**
+     * Mengonversi tabel HTML menjadi Spreadsheet Microsoft Excel (.xlsx)
+     * @param {string} tableIdOrContainerId - ID tabel HTML atau kontainer yang memuat tabel
+     * @param {string} fileName - Nama file output Excel
+     */
+    static exportTableToExcel(tableIdOrContainerId, fileName = 'Data_Tabel_Smart_Teacher') {
+        const container = document.getElementById(tableIdOrContainerId);
+        if (!container) {
+            alert('Tabel tidak ditemukan untuk diekspor!');
+            return;
+        }
+
+        const table = container.tagName === 'TABLE' ? container : container.querySelector('table');
+        if (!table) {
+            alert('Tidak ada data tabel di dalam elemen ini!');
+            return;
+        }
+
+        try {
+            // Menggunakan library SheetJS (XLSX)
+            const wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+            XLSX.writeFile(wb, `${fileName}_${Date.now()}.xlsx`);
+        } catch (err) {
+            console.error('Gagal mengekspor Excel via SheetJS:', err);
+            // Fallback ekspor CSV jika SheetJS mengalami kendala
+            this.fallbackCSVExport(table, fileName);
+        }
+    }
+
+    /**
+     * Fallback ekspor berformat CSV
+     */
+    static fallbackCSVExport(table, fileName) {
+        let csv = [];
+        const rows = table.querySelectorAll("tr");
+
+        rows.forEach(row => {
+            let cols = row.querySelectorAll("td, th");
+            let rowData = [];
+            cols.forEach(col => {
+                let text = col.innerText.replace(/"/g, '""').replace(/\n/g, ' ');
+                rowData.push(`"${text}"`);
+            });
+            csv.push(rowData.join(","));
+        });
+
+        const csvString = csv.join("\n");
+        const blob = new Blob(["\ufeff" + csvString], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${fileName}_${Date.now()}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+}
+
+window.ExcelExportEngine = ExcelExportEngine;

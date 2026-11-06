@@ -1,0 +1,63 @@
+// js/export-pdf.js
+
+class PDFExportEngine {
+    /**
+     * Mengunduh kontainer HTML menjadi file PDF standar A4
+     * @param {string} elementId - ID kontainer HTML A4 Preview
+     * @param {string} fileName - Nama file output PDF
+     */
+    static exportToPDF(elementId, fileName = 'Perangkat_Ajar_Smart_Teacher') {
+        const element = document.getElementById(elementId);
+        if (!element) {
+            alert('Elemen dokumen tidak ditemukan untuk diekspor ke PDF!');
+            return;
+        }
+
+        const opt = {
+            margin: [10, 15, 15, 15], // Top, Left, Bottom, Right dalam mm
+            filename: `${fileName}_${Date.now()}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { 
+                scale: 2, 
+                useCORS: true, 
+                logging: false 
+            },
+            jsPDF: { 
+                unit: 'mm', 
+                format: 'a4', 
+                orientation: 'portrait' 
+            },
+            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+        };
+
+        // Tampilkan indikator loading sederhana
+        const originalText = event?.target?.innerHTML || '';
+        if (event?.target) {
+            event.target.innerText = 'Memproses PDF...';
+            event.target.disabled = true;
+        }
+
+        html2pdf().set(opt).from(element).save().then(() => {
+            if (event?.target) {
+                event.target.innerHTML = originalText;
+                event.target.disabled = false;
+            }
+        }).catch(err => {
+            console.error('Gagal mengekspor PDF:', err);
+            alert('Terjadi kesalahan saat membuat file PDF.');
+            if (event?.target) {
+                event.target.innerHTML = originalText;
+                event.target.disabled = false;
+            }
+        });
+    }
+
+    /**
+     * Membuka dialog cetak langsung browser (Print A4)
+     */
+    static printDocument() {
+        window.print();
+    }
+}
+
+window.PDFExportEngine = PDFExportEngine;
