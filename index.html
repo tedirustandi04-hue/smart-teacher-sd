@@ -15,102 +15,162 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
-    <!-- Custom CSS -->
+    <!-- Custom Tailwind Configuration & Styling -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            DEFAULT: '#0f172a',
+                            dark: '#020617',
+                            light: '#1e293b'
+                        },
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
+    
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #0f172a; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        .form-input-focus { transition: all 0.2s ease-in-out; }
+        .form-input-focus:focus {
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            border-color: #3b82f6;
+        }
+    </style>
 </head>
-<body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800 font-sans">
+<body class="bg-slate-100 flex h-screen overflow-hidden text-slate-800 font-sans">
 
-    <!-- Sidebar Navigation -->
-    <aside id="sidebar" class="bg-navy w-72 flex-shrink-0 h-full flex flex-col transition-all duration-300 z-20">
-        <div class="h-16 flex items-center px-6 border-b border-slate-700 bg-navy-dark">
-            <i data-lucide="graduation-cap" class="text-blue-400 w-8 h-8 mr-3"></i>
-            <span class="text-white font-bold text-xl tracking-wide">SMART TEACHER</span>
+    <!-- Sidebar Navigation Modern Dark Navy -->
+    <aside id="sidebar" class="bg-slate-900 w-72 flex-shrink-0 h-full flex flex-col transition-all duration-300 z-20 shadow-2xl border-r border-slate-800">
+        <div class="h-20 flex items-center px-6 border-b border-slate-800/80 bg-slate-950/50 backdrop-blur-md">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-blue-500/30 mr-3">
+                <i data-lucide="graduation-cap" class="text-white w-6 h-6"></i>
+            </div>
+            <div>
+                <span class="text-white font-extrabold text-lg tracking-wider block leading-none">SMART TEACHER</span>
+                <span class="text-[10px] text-blue-400 font-medium tracking-widest uppercase">Digital Toolkit SD</span>
+            </div>
         </div>
 
-        <div class="overflow-y-auto flex-1 custom-scrollbar pb-6">
-            <ul class="py-4">
-                <li>
-                    <a href="#dashboard" class="nav-link active flex items-center px-6 py-2.5 text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">
-                        <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3"></i> Dashboard
-                    </a>
-                </li>
-                <li>
-                    <a href="#profile-school" class="nav-link flex items-center px-6 py-2.5 text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">
-                        <i data-lucide="school" class="w-5 h-5 mr-3 text-amber-400"></i> Profil Sekolah & Guru
-                    </a>
-                </li>
-            </ul>
+        <div class="overflow-y-auto flex-1 custom-scrollbar py-4 px-3 space-y-6">
+            <div>
+                <ul class="space-y-1">
+                    <li>
+                        <a href="#dashboard" class="nav-link active flex items-center px-4 py-3 text-sm font-medium text-slate-300 rounded-xl hover:text-white hover:bg-slate-800/60 transition-all group">
+                            <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3 text-blue-400 group-hover:scale-110 transition-transform"></i> Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#profile-school" class="nav-link flex items-center px-4 py-3 text-sm font-medium text-slate-300 rounded-xl hover:text-white hover:bg-slate-800/60 transition-all group">
+                            <i data-lucide="school" class="w-5 h-5 mr-3 text-amber-400 group-hover:scale-110 transition-transform"></i> Profil Sekolah & Guru
+                        </a>
+                    </li>
+                </ul>
+            </div>
 
-            <div class="px-6 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">A. Perencanaan</div>
-            <ul>
-                <li><a href="#tool-cp" class="nav-link flex items-center px-6 py-2 text-sm text-slate-400 hover:text-white hover:bg-slate-800"><i data-lucide="target" class="w-4 h-4 mr-3"></i> CP Generator</a></li>
-                <li><a href="#tool-tp" class="nav-link flex items-center px-6 py-2 text-sm text-slate-400 hover:text-white hover:bg-slate-800"><i data-lucide="crosshair" class="w-4 h-4 mr-3"></i> TP Generator</a></li>
-                <li><a href="#tool-atp" class="nav-link flex items-center px-6 py-2 text-sm text-slate-400 hover:text-white hover:bg-slate-800"><i data-lucide="git-merge" class="w-4 h-4 mr-3"></i> ATP Generator</a></li>
-                <li><a href="#tool-prota" class="nav-link flex items-center px-6 py-2 text-sm text-slate-400 hover:text-white hover:bg-slate-800"><i data-lucide="calendar" class="w-4 h-4 mr-3"></i> PROTA</a></li>
-                <li><a href="#tool-promes" class="nav-link flex items-center px-6 py-2 text-sm text-slate-400 hover:text-white hover:bg-slate-800"><i data-lucide="calendar-days" class="w-4 h-4 mr-3"></i> PROMES</a></li>
-                <li><a href="#tool-kalender" class="nav-link flex items-center px-6 py-2 text-sm text-slate-400 hover:text-white hover:bg-slate-800"><i data-lucide="calendar-clock" class="w-4 h-4 mr-3"></i> Kalender Akademik</a></li>
-            </ul>
+            <div>
+                <div class="px-4 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">A. Perencanaan Pembelajaran</div>
+                <ul class="space-y-1">
+                    <li><a href="#tool-cp" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="target" class="w-4 h-4 mr-3 text-indigo-400"></i> CP Generator</a></li>
+                    <li><a href="#tool-tp" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="crosshair" class="w-4 h-4 mr-3 text-emerald-400"></i> TP Generator</a></li>
+                    <li><a href="#tool-atp" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="git-merge" class="w-4 h-4 mr-3 text-cyan-400"></i> ATP Generator</a></li>
+                    <li><a href="#tool-prota" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="calendar" class="w-4 h-4 mr-3 text-amber-400"></i> PROTA</a></li>
+                    <li><a href="#tool-promes" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="calendar-days" class="w-4 h-4 mr-3 text-purple-400"></i> PROMES</a></li>
+                    <li><a href="#tool-kalender" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="calendar-clock" class="w-4 h-4 mr-3 text-rose-400"></i> Kalender Akademik</a></li>
+                </ul>
+            </div>
 
-            <div class="px-6 py-2 mt-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">B. Pelaksanaan</div>
-            <ul>
-                <li><a href="#tool-modul-ajar" class="nav-link flex items-center px-6 py-2 text-sm text-slate-400 hover:text-white hover:bg-slate-800"><i data-lucide="book-open" class="w-4 h-4 mr-3"></i> Modul Ajar</a></li>
-                <li><a href="#tool-bahan-ajar" class="nav-link flex items-center px-6 py-2 text-sm text-slate-400 hover:text-white hover:bg-slate-800"><i data-lucide="file-text" class="w-4 h-4 mr-3"></i> Bahan Ajar</a></li>
-                <li><a href="#tool-lkpd" class="nav-link flex items-center px-6 py-2 text-sm text-slate-400 hover:text-white hover:bg-slate-800"><i data-lucide="clipboard-list" class="w-4 h-4 mr-3"></i> LKPD</a></li>
-                <li><a href="#tool-media" class="nav-link flex items-center px-6 py-2 text-sm text-slate-400 hover:text-white hover:bg-slate-800"><i data-lucide="monitor-play" class="w-4 h-4 mr-3"></i> Media Pembelajaran</a></li>
-            </ul>
+            <div>
+                <div class="px-4 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">B. Pelaksanaan Pembelajaran</div>
+                <ul class="space-y-1">
+                    <li><a href="#tool-modul-ajar" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="book-open" class="w-4 h-4 mr-3 text-blue-400"></i> Modul Ajar</a></li>
+                    <li><a href="#tool-bahan-ajar" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="file-text" class="w-4 h-4 mr-3 text-teal-400"></i> Bahan Ajar</a></li>
+                    <li><a href="#tool-lkpd" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="clipboard-list" class="w-4 h-4 mr-3 text-orange-400"></i> LKPD</a></li>
+                    <li><a href="#tool-media" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="monitor-play" class="w-4 h-4 mr-3 text-pink-400"></i> Media Pembelajaran</a></li>
+                </ul>
+            </div>
 
-            <div class="px-6 py-2 mt-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">C. Asesmen & Evaluasi</div>
-            <ul>
-                <li><a href="#tool-diagnostik" class="nav-link flex items-center px-6 py-2 text-sm text-slate-400 hover:text-white hover:bg-slate-800"><i data-lucide="stethoscope" class="w-4 h-4 mr-3"></i> Asesmen Diagnostik</a></li>
-                <li><a href="#tool-formatif" class="nav-link flex items-center px-6 py-2 text-sm text-slate-400 hover:text-white hover:bg-slate-800"><i data-lucide="bar-chart-2" class="w-4 h-4 mr-3"></i> Asesmen Formatif</a></li>
-                <li><a href="#tool-sumatif" class="nav-link flex items-center px-6 py-2 text-sm text-slate-400 hover:text-white hover:bg-slate-800"><i data-lucide="pie-chart" class="w-4 h-4 mr-3"></i> Asesmen Sumatif</a></li>
-                <li><a href="#tool-kisi-kisi" class="nav-link flex items-center px-6 py-2 text-sm text-slate-400 hover:text-white hover:bg-slate-800"><i data-lucide="table" class="w-4 h-4 mr-3"></i> Kisi-kisi & Bank Soal</a></li>
-                <li><a href="#tool-kartu-soal" class="nav-link flex items-center px-6 py-2 text-sm text-slate-400 hover:text-white hover:bg-slate-800"><i data-lucide="layers" class="w-4 h-4 mr-3"></i> Kartu Soal</a></li>
-                <li><a href="#tool-rubrik" class="nav-link flex items-center px-6 py-2 text-sm text-slate-400 hover:text-white hover:bg-slate-800"><i data-lucide="list-checks" class="w-4 h-4 mr-3"></i> Rubrik Penilaian</a></li>
-                <li><a href="#tool-analisis-soal" class="nav-link flex items-center px-6 py-2 text-sm text-slate-400 hover:text-white hover:bg-slate-800"><i data-lucide="microscope" class="w-4 h-4 mr-3"></i> Analisis Soal (KR-20)</a></li>
-            </ul>
+            <div>
+                <div class="px-4 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">C. Asesmen & Evaluasi</div>
+                <ul class="space-y-1">
+                    <li><a href="#tool-diagnostik" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="stethoscope" class="w-4 h-4 mr-3 text-emerald-400"></i> Asesmen Diagnostik</a></li>
+                    <li><a href="#tool-formatif" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="bar-chart-2" class="w-4 h-4 mr-3 text-amber-400"></i> Asesmen Formatif</a></li>
+                    <li><a href="#tool-sumatif" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="pie-chart" class="w-4 h-4 mr-3 text-indigo-400"></i> Asesmen Sumatif</a></li>
+                    <li><a href="#tool-kisi-kisi" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="table" class="w-4 h-4 mr-3 text-cyan-400"></i> Kisi-kisi & Bank Soal</a></li>
+                    <li><a href="#tool-kartu-soal" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="layers" class="w-4 h-4 mr-3 text-violet-400"></i> Kartu Soal</a></li>
+                    <li><a href="#tool-rubrik" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="list-checks" class="w-4 h-4 mr-3 text-lime-400"></i> Rubrik Penilaian</a></li>
+                    <li><a href="#tool-analisis-soal" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="microscope" class="w-4 h-4 mr-3 text-fuchsia-400"></i> Analisis Soal (KR-20)</a></li>
+                </ul>
+            </div>
 
-            <div class="px-6 py-2 mt-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">D. Cetak & Dokumen</div>
-            <ul>
-                <li><a href="#tool-remedial" class="nav-link flex items-center px-6 py-2 text-sm text-slate-400 hover:text-white hover:bg-slate-800"><i data-lucide="arrow-up-circle" class="w-4 h-4 mr-3"></i> Remedial & Refleksi</a></li>
-                <li><a href="#tool-print" class="nav-link flex items-center px-6 py-2 text-sm text-amber-400 hover:text-white hover:bg-slate-800 font-semibold"><i data-lucide="printer" class="w-4 h-4 mr-3"></i> Menu Cetak Perangkat (A4)</a></li>
-            </ul>
+            <div class="pt-2">
+                <div class="px-4 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">D. Cetak Dokumen</div>
+                <ul class="space-y-1">
+                    <li><a href="#tool-remedial" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="arrow-up-circle" class="w-4 h-4 mr-3 text-teal-400"></i> Remedial & Refleksi</a></li>
+                    <li>
+                        <a href="#tool-print" class="nav-link flex items-center px-4 py-3 text-xs font-semibold text-amber-300 bg-amber-500/10 border border-amber-500/20 rounded-xl hover:bg-amber-500 hover:text-slate-950 transition-all group shadow-sm">
+                            <i data-lucide="printer" class="w-4 h-4 mr-3 group-hover:scale-110 transition-transform"></i> Menu Cetak Perangkat (A4)
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </aside>
 
-    <!-- Main Container -->
-    <div class="flex flex-col flex-1 w-full h-full">
-        <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 z-10 shadow-sm">
+    <!-- Main Container Layout -->
+    <div class="flex flex-col flex-1 w-full h-full min-w-0">
+        <!-- Top App Bar Modern Header -->
+        <header class="h-20 bg-white/80 backdrop-blur-md border-b border-slate-200/80 flex items-center justify-between px-8 z-10 shadow-sm sticky top-0">
             <div class="flex items-center">
-                <button id="mobile-menu-btn" class="lg:hidden mr-4 text-slate-500 hover:text-slate-800"><i data-lucide="menu"></i></button>
+                <button id="mobile-menu-btn" class="lg:hidden mr-4 p-2 text-slate-600 hover:text-slate-900 rounded-lg bg-slate-100"><i data-lucide="menu"></i></button>
                 <div class="relative hidden md:block">
-                    <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4"></i>
-                    <input type="text" placeholder="Cari perangkat ajar..." class="pl-10 pr-4 py-2 border border-slate-300 rounded-full text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 w-64 bg-slate-50">
+                    <i data-lucide="search" class="absolute left-3.5 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4"></i>
+                    <input type="text" placeholder="Cari modul atau dokumen..." class="pl-10 pr-4 py-2 border border-slate-200 rounded-full text-xs focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 w-72 bg-slate-50/70 transition-all">
                 </div>
             </div>
             
-            <div class="flex items-center space-x-4">
-                <div class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700 flex items-center border border-emerald-300">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-1.5"></span> 23 Sheets RDBMS Connected
+            <div class="flex items-center space-x-5">
+                <div class="px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/80 flex items-center shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping mr-2"></span>
+                    <span class="w-2 h-2 rounded-full bg-emerald-600 mr-2 -ml-4"></span>
+                    23 Sheets RDBMS Connected
                 </div>
-                <button class="text-slate-400 hover:text-blue-500 relative">
-                    <i data-lucide="bell"></i><span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                <button class="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-colors relative">
+                    <i data-lucide="bell" class="w-5 h-5"></i>
+                    <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full"></span>
                 </button>
                 <div class="h-8 w-px bg-slate-200"></div>
-                <div class="flex items-center cursor-pointer">
-                    <img id="user-avatar" src="https://ui-avatars.com/api/?name=Guru+SD&background=0ea5e9&color=fff" class="w-8 h-8 rounded-full">
+                <div class="flex items-center cursor-pointer group">
+                    <div class="relative">
+                        <img id="user-avatar" src="https://ui-avatars.com/api/?name=Tedi+Rustandi&background=2563eb&color=fff&bold=true" class="w-10 h-10 rounded-full ring-2 ring-blue-500/30 group-hover:ring-blue-500 transition-all shadow-sm">
+                    </div>
                     <div class="ml-3 hidden md:block">
-                        <p id="user-name" class="text-sm font-semibold text-slate-700">Tedi Rustandi, S.Pd</p>
-                        <p id="user-role" class="text-xs text-slate-500">Guru SD Daya Susila</p>
+                        <p id="user-name" class="text-xs font-bold text-slate-800 group-hover:text-blue-600 transition-colors">Tedi Rustandi, S.Pd</p>
+                        <p id="user-role" class="text-[11px] text-slate-500">Guru SD Daya Susila</p>
                     </div>
                 </div>
             </div>
         </header>
 
-        <main id="app-content" class="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 p-6">
-            <!-- Form Input & Menu Cetak Loaded Here -->
+        <!-- Main Content Area -->
+        <main id="app-content" class="flex-1 overflow-x-hidden overflow-y-auto bg-slate-100 p-8">
+            <!-- Dynamic Views loaded here -->
         </main>
     </div>
 
@@ -123,13 +183,13 @@
     <script src="js/export-docx.js"></script>
     <script src="js/export-excel.js"></script>
 
-    <!-- Google Sheets Integration Driver & Router -->
+    <!-- Google Sheets Integration & Routing -->
     <script>
         class GoogleSheetsService {
             static async sendToSheet(action, payload) {
                 const apiUrl = window.CONFIG?.GAS_API_URL;
                 if (!apiUrl || apiUrl === "") {
-                    console.log("GAS_API_URL belum diatur. Menyimpan secara lokal...");
+                    console.log("GAS_API_URL belum diatur. Menyimpan lokal...");
                     return { success: true, mode: 'local' };
                 }
 
@@ -176,31 +236,31 @@
 
         function renderHeaderKop(school, title) {
             return `
-                <div class="text-center border-b-2 border-slate-800 pb-3 mb-6">
-                    <h2 class="text-base font-bold uppercase">${school.schoolName}</h2>
-                    <p class="text-xs">${school.address || ''}, ${school.city || ''}, ${school.province || ''}</p>
-                    <p class="text-xs italic">NPSN: ${school.npsn || '-'} | Tahun Ajaran: ${school.academicYear} | Semester: ${school.semester}</p>
+                <div class="text-center border-b-2 border-slate-900 pb-4 mb-6">
+                    <h2 class="text-lg font-black uppercase text-slate-900 tracking-wide">${school.schoolName}</h2>
+                    <p class="text-xs text-slate-700 font-medium">${school.address || ''}, ${school.city || ''}, ${school.province || ''}</p>
+                    <p class="text-xs italic text-slate-600 mt-1">NPSN: ${school.npsn || '-'} | Tahun Ajaran: ${school.academicYear} | Semester: ${school.semester}</p>
                 </div>
-                <h3 class="text-center font-bold text-sm uppercase underline mb-4">${title}</h3>
+                <h3 class="text-center font-bold text-base uppercase underline text-slate-900 mb-6 tracking-wide">${title}</h3>
             `;
         }
 
         function renderFooterSignatures(school) {
             return `
-                <div class="mt-12 text-xs flex justify-between">
+                <div class="mt-16 text-xs flex justify-between px-4">
                     <div>
-                        <p>Mengetahui,</p>
-                        <p class="font-semibold">Kepala ${school.schoolName}</p>
-                        <br><br><br>
-                        <p class="font-bold underline">${school.headmasterName}</p>
-                        <p>NIP. ${school.headmasterNip}</p>
+                        <p class="text-slate-600">Mengetahui,</p>
+                        <p class="font-bold text-slate-800">Kepala ${school.schoolName}</p>
+                        <br><br><br><br>
+                        <p class="font-bold underline text-slate-900">${school.headmasterName}</p>
+                        <p class="text-slate-600">NIP. ${school.headmasterNip}</p>
                     </div>
                     <div>
-                        <p>${school.city || 'Garut'}, 2026</p>
-                        <p class="font-semibold">Guru Kelas / Pengampu</p>
-                        <br><br><br>
-                        <p class="font-bold underline">${school.teacherName}</p>
-                        <p>NIP. ${school.teacherNip}</p>
+                        <p class="text-slate-600">${school.city || 'Garut'}, 2026</p>
+                        <p class="font-bold text-slate-800">Guru Kelas / Pengampu</p>
+                        <br><br><br><br>
+                        <p class="font-bold underline text-slate-900">${school.teacherName}</p>
+                        <p class="text-slate-600">NIP. ${school.teacherNip}</p>
                     </div>
                 </div>
             `;
@@ -218,32 +278,133 @@
             switch(hash) {
                 case '#dashboard':
                     content.innerHTML = `
-                        <div class="mb-6"><h1 class="text-2xl font-bold text-slate-800">Dashboard Utama</h1><p class="text-sm text-slate-500">Selamat Datang di <strong>${school.schoolName}</strong> (TA ${school.academicYear} Semester ${school.semester}).</p></div>
+                        <div class="mb-8">
+                            <h1 class="text-2xl font-black text-slate-900 tracking-tight">Dashboard Utama</h1>
+                            <p class="text-xs text-slate-500 mt-1">Selamat Datang kembali di <strong>${school.schoolName}</strong> (TA ${school.academicYear} Semester ${school.semester}).</p>
+                        </div>
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                            <div class="bg-white p-6 rounded-xl border shadow-sm flex items-center"><div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-4"><i data-lucide="folders"></i></div><div><p class="text-sm text-slate-500 font-medium">Total Perangkat</p><h3 class="text-2xl font-bold">142</h3></div></div>
-                            <div class="bg-white p-6 rounded-xl border shadow-sm flex items-center"><div class="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 mr-4"><i data-lucide="book-open"></i></div><div><p class="text-sm text-slate-500 font-medium">Modul Ajar</p><h3 class="text-2xl font-bold">36</h3></div></div>
-                            <div class="bg-white p-6 rounded-xl border shadow-sm flex items-center"><div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 mr-4"><i data-lucide="pie-chart"></i></div><div><p class="text-sm text-slate-500 font-medium">Asesmen & Bank Soal</p><h3 class="text-2xl font-bold">58</h3></div></div>
-                            <div class="bg-white p-6 rounded-xl border shadow-sm flex items-center"><div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-4"><i data-lucide="clipboard-list"></i></div><div><p class="text-sm text-slate-500 font-medium">LKPD & Media</p><h3 class="text-2xl font-bold">48</h3></div></div>
+                            <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all flex items-center">
+                                <div class="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600 mr-4 border border-blue-100">
+                                    <i data-lucide="folders" class="w-7 h-7"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Total Perangkat</p>
+                                    <h3 class="text-3xl font-black text-slate-900 mt-0.5">142</h3>
+                                </div>
+                            </div>
+                            <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all flex items-center">
+                                <div class="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 mr-4 border border-emerald-100">
+                                    <i data-lucide="book-open" class="w-7 h-7"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Modul Ajar</p>
+                                    <h3 class="text-3xl font-black text-slate-900 mt-0.5">36</h3>
+                                </div>
+                            </div>
+                            <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all flex items-center">
+                                <div class="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center text-amber-600 mr-4 border border-amber-100">
+                                    <i data-lucide="pie-chart" class="w-7 h-7"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Asesmen & Bank Soal</p>
+                                    <h3 class="text-3xl font-black text-slate-900 mt-0.5">58</h3>
+                                </div>
+                            </div>
+                            <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all flex items-center">
+                                <div class="w-14 h-14 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-600 mr-4 border border-purple-100">
+                                    <i data-lucide="clipboard-list" class="w-7 h-7"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">LKPD & Media</p>
+                                    <h3 class="text-3xl font-black text-slate-900 mt-0.5">48</h3>
+                                </div>
+                            </div>
                         </div>
                     `;
                     break;
 
-                // SHEET 6: CP_DATA (TAMPILAN DIATUR LUAS KHUSUS INPUT FORMULIR)
+                // TAB 2: SCHOOL_PROFILE
+                case '#profile-school':
+                    content.innerHTML = `
+                        <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl border border-slate-200/80 shadow-sm space-y-6">
+                            <div class="flex items-center justify-between border-b border-slate-100 pb-5">
+                                <div>
+                                    <h1 class="text-xl font-black text-slate-900">Profil Sekolah & Identitas Guru</h1>
+                                    <p class="text-xs text-blue-600 font-semibold mt-0.5 flex items-center"><i data-lucide="database" class="w-3.5 h-3.5 mr-1"></i> Tersinkron dengan Sheet: <strong>SCHOOL_PROFILE</strong></p>
+                                </div>
+                                <a href="#tool-print" class="bg-amber-500 hover:bg-amber-600 text-slate-950 px-4 py-2 rounded-xl text-xs font-bold flex items-center shadow-sm shadow-amber-500/20 transition-all"><i data-lucide="printer" class="w-4 h-4 mr-1.5"></i> Ke Menu Cetak</a>
+                            </div>
+
+                            <form id="form-profile" class="space-y-5 text-xs">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div><label class="block font-bold mb-1.5 text-slate-700">school_name *</label><input type="text" id="p-school" value="${school.schoolName}" required class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                                    <div><label class="block font-bold mb-1.5 text-slate-700">npsn *</label><input type="text" id="p-npsn" value="${school.npsn}" required class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                                    <div><label class="block font-bold mb-1.5 text-slate-700">address</label><input type="text" id="p-address" value="${school.address}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                                    <div><label class="block font-bold mb-1.5 text-slate-700">city</label><input type="text" id="p-city" value="${school.city}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                                    <div><label class="block font-bold mb-1.5 text-slate-700">province</label><input type="text" id="p-province" value="${school.province}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                                    <div><label class="block font-bold mb-1.5 text-slate-700">headmaster_name</label><input type="text" id="p-headmaster" value="${school.headmasterName}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                                    <div><label class="block font-bold mb-1.5 text-slate-700">headmaster_nip</label><input type="text" id="p-headmaster-nip" value="${school.headmasterNip}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                                    <div><label class="block font-bold mb-1.5 text-slate-700">teacher_name</label><input type="text" id="p-teacher" value="${school.teacherName}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                                    <div><label class="block font-bold mb-1.5 text-slate-700">teacher_nip</label><input type="text" id="p-teacher-nip" value="${school.teacherNip}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                                    <div><label class="block font-bold mb-1.5 text-slate-700">academic_year</label><input type="text" id="p-year" value="${school.academicYear}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                                    <div><label class="block font-bold mb-1.5 text-slate-700">semester</label><input type="text" id="p-sem" value="${school.semester}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                                </div>
+                                <button type="submit" id="btn-save-profile" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3.5 rounded-xl text-sm font-bold flex items-center justify-center shadow-lg shadow-blue-500/25 transition-all">
+                                    <i data-lucide="save" class="w-4 h-4 mr-2"></i> Simpan ke Sheet: SCHOOL_PROFILE
+                                </button>
+                            </form>
+                        </div>
+                    `;
+                    document.getElementById('form-profile').addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        const btn = document.getElementById('btn-save-profile');
+                        btn.innerText = "Mengirim ke Google Sheets...";
+                        btn.disabled = true;
+
+                        const updated = {
+                            user_id: "USR-001",
+                            school_name: document.getElementById('p-school').value,
+                            npsn: document.getElementById('p-npsn').value,
+                            address: document.getElementById('p-address').value,
+                            city: document.getElementById('p-city').value,
+                            province: document.getElementById('p-province').value,
+                            headmaster_name: document.getElementById('p-headmaster').value,
+                            headmaster_nip: document.getElementById('p-headmaster-nip').value,
+                            teacher_name: document.getElementById('p-teacher').value,
+                            teacher_nip: document.getElementById('p-teacher-nip').value,
+                            academic_year: document.getElementById('p-year').value,
+                            semester: document.getElementById('p-sem').value,
+                            updated_at: new Date().toISOString()
+                        };
+
+                        localStorage.setItem('smart_teacher_school_profile', JSON.stringify({
+                            schoolName: updated.school_name, npsn: updated.npsn, address: updated.address, city: updated.city, province: updated.province,
+                            headmasterName: updated.headmaster_name, headmasterNip: updated.headmaster_nip, teacherName: updated.teacher_name, teacherNip: updated.teacher_nip,
+                            academicYear: updated.academic_year, semester: updated.semester
+                        }));
+
+                        await GoogleSheetsService.sendToSheet('SAVE_SCHOOL_PROFILE', updated);
+                        alert("Profil Sekolah berhasil disimpan ke Sheet 'SCHOOL_PROFILE'!");
+                        renderRoute();
+                    });
+                    break;
+
+                // TAB 6: CP_DATA
                 case '#tool-cp':
                     content.innerHTML = `
-                        <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl border shadow-sm">
-                            <div class="flex items-center justify-between border-b pb-4 mb-6">
+                        <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl border border-slate-200/80 shadow-sm space-y-6">
+                            <div class="flex items-center justify-between border-b border-slate-100 pb-5">
                                 <div>
-                                    <h1 class="text-xl font-bold text-slate-800">Input Form (Sheet: CP_DATA)</h1>
-                                    <p class="text-xs text-slate-500">Masukkan parameter Capaian Pembelajaran untuk disimpan ke database Google Sheets.</p>
+                                    <h1 class="text-xl font-black text-slate-900">Capaian Pembelajaran (CP) Generator</h1>
+                                    <p class="text-xs text-blue-600 font-semibold mt-0.5 flex items-center"><i data-lucide="database" class="w-3.5 h-3.5 mr-1"></i> Tersinkron dengan Sheet: <strong>CP_DATA</strong></p>
                                 </div>
-                                <a href="#tool-print" class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1.5 rounded text-xs font-semibold flex items-center"><i data-lucide="printer" class="w-3.5 h-3.5 mr-1.5"></i> Ke Menu Cetak Dokumen</a>
+                                <a href="#tool-print" class="bg-amber-500 hover:bg-amber-600 text-slate-950 px-4 py-2 rounded-xl text-xs font-bold flex items-center shadow-sm shadow-amber-500/20 transition-all"><i data-lucide="printer" class="w-4 h-4 mr-1.5"></i> Ke Menu Cetak</a>
                             </div>
 
                             <form id="form-cp" class="space-y-5 text-sm">
                                 <div>
-                                    <label class="block text-xs font-semibold text-slate-700 mb-1">subject (Mata Pelajaran) *</label>
-                                    <select id="subject" class="w-full px-3 py-2 border rounded-lg text-sm bg-slate-50 focus:bg-white focus:border-blue-500">
+                                    <label class="block text-xs font-bold text-slate-700 mb-1.5">subject (Mata Pelajaran) *</label>
+                                    <select id="cp-subject" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus">
                                         <option value="IPAS">IPAS (Sains & Sosial)</option>
                                         <option value="Matematika">Matematika</option>
                                         <option value="Bahasa Indonesia">Bahasa Indonesia</option>
@@ -251,25 +412,23 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-semibold text-slate-700 mb-1">phase (Fase / Kelas) *</label>
-                                    <select id="phase" class="w-full px-3 py-2 border rounded-lg text-sm bg-slate-50 focus:bg-white focus:border-blue-500">
+                                    <label class="block text-xs font-bold text-slate-700 mb-1.5">phase (Fase / Kelas) *</label>
+                                    <select id="cp-phase" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus">
                                         <option value="Fase A">Fase A (Kelas 1-2)</option>
                                         <option value="Fase B" selected>Fase B (Kelas 3-4)</option>
                                         <option value="Fase C">Fase C (Kelas 5-6)</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-semibold text-slate-700 mb-1">element (Elemen CP Spesifik) *</label>
-                                    <input type="text" id="element" value="Pemahaman IPAS (Sains & Sosial)" class="w-full px-3 py-2 border rounded-lg text-sm bg-slate-50 focus:bg-white focus:border-blue-500">
+                                    <label class="block text-xs font-bold text-slate-700 mb-1.5">element (Elemen CP) *</label>
+                                    <input type="text" id="cp-element" value="Pemahaman IPAS (Sains & Sosial)" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus">
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-semibold text-slate-700 mb-1">cp_content (Naskah Resmi Capaian Pembelajaran) *</label>
-                                    <textarea id="cp_content" rows="6" class="w-full p-3 border rounded-lg text-xs leading-relaxed bg-slate-50 focus:bg-white focus:border-blue-500">Di akhir Fase B, peserta didik menganalisis hubungan antara bentuk serta fungsi bagian tubuh pada manusia dan tumbuhan; mendeskripsikan siklus air dan wujud zat dalam kehidupan sehari-hari.</textarea>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1.5">cp_content (Naskah Deskripsi CP) *</label>
+                                    <textarea id="cp-content" rows="6" class="w-full p-4 border border-slate-200 rounded-xl text-xs leading-relaxed bg-slate-50/50 form-input-focus">Di akhir Fase B, peserta didik menganalisis hubungan antara bentuk serta fungsi bagian tubuh pada manusia dan tumbuhan; mendeskripsikan siklus air dan wujud zat dalam kehidupan sehari-hari.</textarea>
                                 </div>
 
-                                <div id="cp-status" class="hidden p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-800 text-xs font-semibold"></div>
-
-                                <button type="submit" id="btn-send-cp" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg text-sm font-semibold flex items-center justify-center shadow-md transition-all">
+                                <button type="submit" id="btn-save-cp" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3.5 rounded-xl text-sm font-bold flex items-center justify-center shadow-lg shadow-blue-500/25 transition-all">
                                     <i data-lucide="save" class="w-4 h-4 mr-2"></i> Simpan ke Sheet: CP_DATA
                                 </button>
                             </form>
@@ -277,34 +436,189 @@
                     `;
                     document.getElementById('form-cp').addEventListener('submit', async (e) => {
                         e.preventDefault();
-                        const btn = document.getElementById('btn-send-cp');
-                        const statusBox = document.getElementById('cp-status');
-                        btn.innerText = "Mengirim ke Google Sheets...";
+                        const btn = document.getElementById('btn-save-cp');
+                        btn.innerText = "Mengirim...";
                         btn.disabled = true;
 
                         const payload = {
                             cp_id: "CP-" + Date.now(),
-                            subject: document.getElementById('subject').value,
-                            phase: document.getElementById('phase').value,
-                            element: document.getElementById('element').value,
-                            cp_content: document.getElementById('cp_content').value
+                            subject: document.getElementById('cp-subject').value,
+                            phase: document.getElementById('cp-phase').value,
+                            element: document.getElementById('cp-element').value,
+                            cp_content: document.getElementById('cp-content').value
                         };
-                        
-                        // Simpan draf ke LocalStorage untuk pratinjau cetak
+
                         localStorage.setItem('smart_teacher_last_cp', JSON.stringify(payload));
-                        
-                        // Kirim ke Google Sheets
                         await GoogleSheetsService.sendToSheet('SAVE_CP_DATA', payload);
-                        
-                        btn.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 mr-2"></i> Tersimpan di Google Sheets!`;
-                        btn.className = "w-full bg-emerald-600 text-white py-3 rounded-lg text-sm font-semibold flex items-center justify-center shadow-md";
-                        statusBox.classList.remove('hidden');
-                        statusBox.innerHTML = `✓ Berhasil! Data CP telah dimasukkan ke sheet 'CP_DATA'. Anda bisa langsung melihat cetakannya pada <strong>Menu Cetak Perangkat</strong>.`;
-                        lucide.createIcons();
+                        alert("Data CP berhasil disimpan ke Sheet 'CP_DATA'!");
+                        renderRoute();
                     });
                     break;
 
-                // MENU KHUSUS PRATINJAU & CETAK DOKUMEN (A4 FORMAT)
+                // TAB 7: TP_DATA
+                case '#tool-tp':
+                    content.innerHTML = `
+                        <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl border border-slate-200/80 shadow-sm space-y-6">
+                            <div class="flex items-center justify-between border-b border-slate-100 pb-5">
+                                <div>
+                                    <h1 class="text-xl font-black text-slate-900">Tujuan Pembelajaran (TP) Generator</h1>
+                                    <p class="text-xs text-blue-600 font-semibold mt-0.5 flex items-center"><i data-lucide="database" class="w-3.5 h-3.5 mr-1"></i> Tersinkron dengan Sheet: <strong>TP_DATA</strong></p>
+                                </div>
+                                <a href="#tool-print" class="bg-amber-500 hover:bg-amber-600 text-slate-950 px-4 py-2 rounded-xl text-xs font-bold flex items-center shadow-sm shadow-amber-500/20 transition-all"><i data-lucide="printer" class="w-4 h-4 mr-1.5"></i> Ke Menu Cetak</a>
+                            </div>
+
+                            <form id="form-tp" class="space-y-5 text-sm">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">cp_id</label><input type="text" id="tp-cpid" value="CP-DEFAULT" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-100/70" readonly></div>
+                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">subject</label><input type="text" id="tp-subject" value="IPAS" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">phase</label><input type="text" id="tp-phase" value="Fase B" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">bloom_level</label>
+                                        <select id="tp-bloom" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus">
+                                            <option value="C2 - Memahami">C2 - Memahami</option>
+                                            <option value="C4 - Menganalisis" selected>C4 - Menganalisis</option>
+                                            <option value="C5 - Evaluasi">C5 - Evaluasi</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1.5">tp_content (Rumusan Tujuan Pembelajaran)</label>
+                                    <textarea id="tp-content" rows="4" class="w-full p-4 border border-slate-200 rounded-xl text-xs bg-slate-50/50 form-input-focus">Peserta didik mampu menganalisis sistem pencernaan pada manusia beserta fungsi dari tiap organ secara kontekstual.</textarea>
+                                </div>
+
+                                <button type="submit" id="btn-save-tp" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 rounded-xl text-sm font-bold flex items-center justify-center shadow-lg shadow-emerald-500/25 transition-all">
+                                    <i data-lucide="save" class="w-4 h-4 mr-2"></i> Simpan ke Sheet: TP_DATA
+                                </button>
+                            </form>
+                        </div>
+                    `;
+                    document.getElementById('form-tp').addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        const btn = document.getElementById('btn-save-tp');
+                        btn.innerText = "Mengirim...";
+                        btn.disabled = true;
+
+                        const payload = {
+                            tp_id: "TP-" + Date.now(),
+                            cp_id: document.getElementById('tp-cpid').value,
+                            subject: document.getElementById('tp-subject').value,
+                            phase: document.getElementById('tp-phase').value,
+                            bloom_level: document.getElementById('tp-bloom').value,
+                            tp_content: document.getElementById('tp-content').value
+                        };
+                        await GoogleSheetsService.sendToSheet('SAVE_TP_DATA', payload);
+                        alert("Data TP berhasil disimpan ke Sheet 'TP_DATA'!");
+                        renderRoute();
+                    });
+                    break;
+
+                // TAB 8: ATP_DATA
+                case '#tool-atp':
+                    content.innerHTML = `
+                        <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl border border-slate-200/80 shadow-sm space-y-6">
+                            <div class="flex items-center justify-between border-b border-slate-100 pb-5">
+                                <div>
+                                    <h1 class="text-xl font-black text-slate-900">Alur Tujuan Pembelajaran (ATP) Generator</h1>
+                                    <p class="text-xs text-blue-600 font-semibold mt-0.5 flex items-center"><i data-lucide="database" class="w-3.5 h-3.5 mr-1"></i> Tersinkron dengan Sheet: <strong>ATP_DATA</strong></p>
+                                </div>
+                                <a href="#tool-print" class="bg-amber-500 hover:bg-amber-600 text-slate-950 px-4 py-2 rounded-xl text-xs font-bold flex items-center shadow-sm shadow-amber-500/20 transition-all"><i data-lucide="printer" class="w-4 h-4 mr-1.5"></i> Ke Menu Cetak</a>
+                            </div>
+
+                            <form id="form-atp" class="space-y-5 text-sm">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">sequence_order</label><input type="number" id="atp-seq" value="1" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">material_topic</label><input type="text" id="atp-topic" value="Organ Pencernaan Manusia" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">jp_allocation</label><input type="text" id="atp-jp" value="6 JP" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">p3_dimension</label><input type="text" id="atp-p3" value="Bernalar Kritis, Gotong Royong" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">assessment_type</label><input type="text" id="atp-assess" value="Formatif Unjuk Kerja" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                                </div>
+
+                                <button type="submit" id="btn-save-atp" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3.5 rounded-xl text-sm font-bold flex items-center justify-center shadow-lg shadow-blue-500/25 transition-all">
+                                    <i data-lucide="save" class="w-4 h-4 mr-2"></i> Simpan ke Sheet: ATP_DATA
+                                </button>
+                            </form>
+                        </div>
+                    `;
+                    document.getElementById('form-atp').addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        const btn = document.getElementById('btn-save-atp');
+                        btn.innerText = "Mengirim...";
+                        btn.disabled = true;
+
+                        const payload = {
+                            atp_id: "ATP-" + Date.now(),
+                            tp_id: "TP-DEFAULT",
+                            sequence_order: document.getElementById('atp-seq').value,
+                            material_topic: document.getElementById('atp-topic').value,
+                            jp_allocation: document.getElementById('atp-jp').value,
+                            p3_dimension: document.getElementById('atp-p3').value,
+                            assessment_type: document.getElementById('atp-assess').value
+                        };
+                        await GoogleSheetsService.sendToSheet('SAVE_ATP_DATA', payload);
+                        alert("Data ATP berhasil disimpan ke Sheet 'ATP_DATA'!");
+                        renderRoute();
+                    });
+                    break;
+
+                // TAB 12: MODULE_DATA
+                case '#tool-modul-ajar':
+                    content.innerHTML = `
+                        <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl border border-slate-200/80 shadow-sm space-y-6">
+                            <div class="flex items-center justify-between border-b border-slate-100 pb-5">
+                                <div>
+                                    <h1 class="text-xl font-black text-slate-900">Modul Ajar Generator</h1>
+                                    <p class="text-xs text-blue-600 font-semibold mt-0.5 flex items-center"><i data-lucide="database" class="w-3.5 h-3.5 mr-1"></i> Tersinkron dengan Sheet: <strong>MODULE_DATA</strong></p>
+                                </div>
+                                <a href="#tool-print" class="bg-amber-500 hover:bg-amber-600 text-slate-950 px-4 py-2 rounded-xl text-xs font-bold flex items-center shadow-sm shadow-amber-500/20 transition-all"><i data-lucide="printer" class="w-4 h-4 mr-1.5"></i> Ke Menu Cetak</a>
+                            </div>
+
+                            <form id="form-modul" class="space-y-5 text-sm">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">topic *</label><input type="text" id="m-topic" value="Sistem Pencernaan Manusia" required class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">learning_model *</label>
+                                        <select id="m-model" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus">
+                                            <option value="Problem Based Learning (PBL)">Problem Based Learning (PBL)</option>
+                                            <option value="Project Based Learning (PjBL)">Project Based Learning (PjBL)</option>
+                                        </select>
+                                    </div>
+                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">time_allocation</label><input type="text" id="m-time" value="2 x 35 Menit" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">p3_profiles</label><input type="text" id="m-p3" value="Bernalar Kritis, Gotong Royong" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                                </div>
+                                <div><label class="block text-xs font-bold text-slate-700 mb-1.5">opening_activity</label><textarea id="m-open" rows="2" class="w-full p-3 border border-slate-200 rounded-xl text-xs bg-slate-50/50 form-input-focus">Guru memberikan salam, berdoa bersama, dan apersepsi berupa pertanyaan pemantik.</textarea></div>
+                                <div><label class="block text-xs font-bold text-slate-700 mb-1.5">main_activity</label><textarea id="m-main" rows="3" class="w-full p-3 border border-slate-200 rounded-xl text-xs bg-slate-50/50 form-input-focus">Siswa berdiskusi kelompok mengamati gambar dan model organ pencernaan manusia.</textarea></div>
+                                <div><label class="block text-xs font-bold text-slate-700 mb-1.5">closing_activity</label><textarea id="m-close" rows="2" class="w-full p-3 border border-slate-200 rounded-xl text-xs bg-slate-50/50 form-input-focus">Refleksi pembelajaran bersama siswa dan penutupan dengan salam serta doa.</textarea></div>
+
+                                <button type="submit" id="btn-save-module" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3.5 rounded-xl text-sm font-bold flex items-center justify-center shadow-lg shadow-blue-500/25 transition-all">
+                                    <i data-lucide="save" class="w-4 h-4 mr-2"></i> Simpan ke Sheet: MODULE_DATA
+                                </button>
+                            </form>
+                        </div>
+                    `;
+                    document.getElementById('form-modul').addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        const btn = document.getElementById('btn-save-module');
+                        btn.innerText = "Mengirim...";
+                        btn.disabled = true;
+
+                        const payload = {
+                            module_id: "MOD-" + Date.now(),
+                            atp_id: "ATP-DEFAULT",
+                            topic: document.getElementById('m-topic').value,
+                            learning_model: document.getElementById('m-model').value,
+                            time_allocation: document.getElementById('m-time').value,
+                            p3_profiles: document.getElementById('m-p3').value,
+                            opening_activity: document.getElementById('m-open').value,
+                            main_activity: document.getElementById('m-main').value,
+                            closing_activity: document.getElementById('m-close').value,
+                            created_at: new Date().toISOString()
+                        };
+
+                        await GoogleSheetsService.sendToSheet('SAVE_MODULE_DATA', payload);
+                        alert("Data Modul Ajar berhasil disimpan ke Sheet 'MODULE_DATA'!");
+                        renderRoute();
+                    });
+                    break;
+
+                // MENU KHUSUS PRATINJAU & CETAK DOKUMEN A4
                 case '#tool-print':
                     const lastCP = JSON.parse(localStorage.getItem('smart_teacher_last_cp') || JSON.stringify({
                         subject: "IPAS",
@@ -314,29 +628,28 @@
                     }));
 
                     content.innerHTML = `
-                        <div class="max-w-5xl mx-auto space-y-4">
-                            <div class="bg-white p-4 rounded-xl border shadow-sm flex items-center justify-between">
+                        <div class="max-w-5xl mx-auto space-y-6">
+                            <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center justify-between">
                                 <div>
-                                    <h1 class="text-lg font-bold text-slate-800">Menu Pratinjau & Cetak Dokumen A4</h1>
-                                    <p class="text-xs text-slate-500">Pilih jenis dokumen untuk dicetak langsung ke printer atau diekspor ke format PDF/Word.</p>
+                                    <h1 class="text-xl font-black text-slate-900">Menu Pratinjau & Cetak Dokumen A4</h1>
+                                    <p class="text-xs text-slate-500 mt-0.5">Siap cetak langsung ke printer atau diekspor ke format PDF/Word.</p>
                                 </div>
-                                <div class="flex items-center space-x-2">
-                                    <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded text-xs font-semibold flex items-center shadow-sm">
-                                        <i data-lucide="printer" class="w-4 h-4 mr-1.5"></i> Cetak Langsung (A4)
+                                <div class="flex items-center space-x-3">
+                                    <button onclick="window.print()" class="bg-slate-900 hover:bg-slate-950 text-white px-5 py-2.5 rounded-xl text-xs font-bold flex items-center shadow-lg shadow-slate-900/20 transition-all">
+                                        <i data-lucide="printer" class="w-4 h-4 mr-2"></i> Cetak Langsung (A4)
                                     </button>
                                 </div>
                             </div>
 
                             ${window.renderExportToolbar ? window.renderExportToolbar('print-document-area', 'Dokumen_Perangkat_Ajar') : ''}
 
-                            <!-- Area Pratinjau Kertas A4 Standard -->
-                            <div id="print-document-area" class="a4-preview text-slate-800 mx-auto bg-white p-10 border shadow-lg rounded">
+                            <div id="print-document-area" class="a4-preview text-slate-900 mx-auto bg-white p-12 border border-slate-300 shadow-2xl rounded-sm min-h-[1000px]">
                                 ${renderHeaderKop(school, 'CAPAIAN PEMBELAJARAN (CP)')}
-                                <div class="space-y-4 text-xs leading-relaxed">
+                                <div class="space-y-5 text-xs leading-relaxed mt-6">
                                     <p><strong>Mata Pelajaran:</strong> ${lastCP.subject} | <strong>Fase:</strong> ${lastCP.phase}</p>
-                                    <div class="border p-4 rounded bg-slate-50">
-                                        <p class="font-bold border-b pb-1 mb-2">Elemen: ${lastCP.element}</p>
-                                        <p class="text-justify leading-relaxed">${lastCP.cp_content}</p>
+                                    <div class="border border-slate-300 p-5 rounded-lg bg-slate-50/50">
+                                        <p class="font-bold border-b border-slate-300 pb-2 mb-3 text-slate-900">Elemen: ${lastCP.element}</p>
+                                        <p class="text-justify leading-relaxed text-slate-800">${lastCP.cp_content}</p>
                                     </div>
                                 </div>
                                 ${renderFooterSignatures(school)}
@@ -345,30 +658,30 @@
                     `;
                     break;
 
-                // FALLBACK MENU INPUT UTAMA LAINNYA
+                // FALLBACK TOOL LAINNYA
                 default:
                     const toolTitle = hash.replace('#', '').replace(/-/g, ' ').toUpperCase();
                     content.innerHTML = `
-                        <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl border shadow-sm space-y-6">
-                            <div class="flex items-center justify-between border-b pb-4">
+                        <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl border border-slate-200/80 shadow-sm space-y-6">
+                            <div class="flex items-center justify-between border-b border-slate-100 pb-5">
                                 <div>
-                                    <h1 class="text-xl font-bold text-slate-800">Input Form: ${toolTitle}</h1>
-                                    <p class="text-xs text-slate-500">Lengkapi kolom di bawah ini untuk dikirimkan ke Google Sheets.</p>
+                                    <h1 class="text-xl font-black text-slate-900">Input Form: ${toolTitle}</h1>
+                                    <p class="text-xs text-blue-600 font-semibold mt-0.5 flex items-center"><i data-lucide="database" class="w-3.5 h-3.5 mr-1"></i> Tersinkron dengan Sheet: <strong>DOCUMENT_HISTORY</strong></p>
                                 </div>
-                                <a href="#tool-print" class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1.5 rounded text-xs font-semibold flex items-center"><i data-lucide="printer" class="w-3.5 h-3.5 mr-1.5"></i> Ke Menu Cetak Dokumen</a>
+                                <a href="#tool-print" class="bg-amber-500 hover:bg-amber-600 text-slate-950 px-4 py-2 rounded-xl text-xs font-bold flex items-center shadow-sm shadow-amber-500/20 transition-all"><i data-lucide="printer" class="w-4 h-4 mr-1.5"></i> Ke Menu Cetak</a>
                             </div>
 
-                            <form id="form-dynamic" class="space-y-4 text-sm">
-                                <div><label class="block text-xs font-semibold text-slate-700 mb-1">Mata Pelajaran & Topik Utama *</label><input type="text" id="dyn-topic" value="IPAS - Sistem Pencernaan Manusia" class="w-full p-2.5 border rounded-lg text-sm bg-slate-50"></div>
-                                <div><label class="block text-xs font-semibold text-slate-700 mb-1">Rincian Deskripsi / Catatan Perangkat</label><textarea id="dyn-desc" rows="4" class="w-full p-2.5 border rounded-lg text-xs bg-slate-50">Menganalisis organ pencernaan manusia dan fungsinya secara aktif dan kontekstual.</textarea></div>
+                            <form id="form-dyn" class="space-y-5 text-sm">
+                                <div><label class="block text-xs font-bold text-slate-700 mb-1.5">Mata Pelajaran & Topik Utama *</label><input type="text" id="dyn-topic" value="IPAS - Sistem Pencernaan Manusia" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                                <div><label class="block text-xs font-bold text-slate-700 mb-1.5">Rincian Deskripsi Perangkat *</label><textarea id="dyn-desc" rows="4" class="w-full p-3 border border-slate-200 rounded-xl text-xs bg-slate-50/50 form-input-focus">Deskripsi rinci perangkat ajar untuk disimpan ke dalam log riwayat dokumen Google Sheets.</textarea></div>
                                 
-                                <button type="submit" id="btn-dyn-save" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg text-sm font-semibold flex items-center justify-center shadow-md">
+                                <button type="submit" id="btn-dyn-save" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3.5 rounded-xl text-sm font-bold flex items-center justify-center shadow-lg shadow-blue-500/25 transition-all">
                                     <i data-lucide="save" class="w-4 h-4 mr-2"></i> Simpan ke Google Sheets
                                 </button>
                             </form>
                         </div>
                     `;
-                    document.getElementById('form-dynamic').addEventListener('submit', async (e) => {
+                    document.getElementById('form-dyn').addEventListener('submit', async (e) => {
                         e.preventDefault();
                         const btn = document.getElementById('btn-dyn-save');
                         btn.innerText = "Mengirim...";
@@ -383,7 +696,7 @@
                             created_at: new Date().toISOString()
                         };
                         await GoogleSheetsService.sendToSheet('SAVE_DOCUMENT_LOG', payload);
-                        alert(`Data ${toolTitle} berhasil disimpan ke sheet Google Sheets!`);
+                        alert(`Data ${toolTitle} berhasil disimpan ke Google Sheets!`);
                         renderRoute();
                     });
                     break;
