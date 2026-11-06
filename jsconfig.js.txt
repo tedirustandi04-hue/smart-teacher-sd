@@ -8,9 +8,8 @@ const CONFIG = {
         SCHOOL_PROFILE: "smart_teacher_school_profile",
         AUTH_TOKEN: "smart_teacher_token"
     },
-    // Endpoint Google Apps Script (akan diisi pada Tahap 4)
-    GAS_API_URL: ""
+    // Masukkan URL Deployment Google Apps Script Anda di sini
+    GAS_API_URL: "https://script.google.com/macros/s/YOUR_EXEC_ID_HERE/exec"
 };
 
-// Expose globally
 window.CONFIG = CONFIG;

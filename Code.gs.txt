@@ -1,0 +1,42 @@
+/**
+ * SMART TEACHER - Backend Google Apps Script
+ * Entry Point Web App HTTP Request Handler
+ */
+
+// Konfigurasi ID Google Sheets Database (Isi ID Google Sheet Anda)
+const SPREADSHEET_ID = SpreadsheetApp.getActiveSpreadsheet().getId();
+const AI_API_KEY = "YOUR_CLAUDE_OR_GEMINI_API_KEY_HERE"; // Disimpan aman di backend
+
+function doGet(e) {
+  return handleRequest(e, "GET");
+}
+
+function doPost(e) {
+  return handleRequest(e, "POST");
+}
+
+function handleRequest(e, method) {
+  try {
+    let action = e.parameter.action;
+    let payload = {};
+
+    if (method === "POST" && e.postData && e.postData.contents) {
+      payload = JSON.parse(e.postData.contents);
+      if (!action) action = payload.action;
+    }
+
+    const response = Api.route(action, payload, e.parameter);
+    return createJsonResponse(response);
+  } catch (err) {
+    return createJsonResponse({
+      success: false,
+      error: err.toString(),
+      message: "Terjadi kesalahan pada server backend."
+    });
+  }
+}
+
+function createJsonResponse(data) {
+  return ContentService.createTextOutput(JSON.stringify(data))
+    .setMimeType(ContentService.MimeType.JSON);
+}

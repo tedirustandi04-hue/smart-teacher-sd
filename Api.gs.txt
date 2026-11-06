@@ -1,0 +1,35 @@
+/**
+ * API Gateway Controller
+ */
+
+const Api = {
+  route(action, payload, params) {
+    switch (action) {
+      case "PING":
+        return { success: true, message: "SMART TEACHER API Online!", timestamp: new Date() };
+
+      case "AUTH_REGISTER":
+        return Auth.registerUser(payload.email, payload.password, payload.name);
+
+      case "AUTH_LOGIN":
+        return Auth.loginUser(payload.email, payload.password);
+
+      case "GET_SCHOOL_PROFILE":
+        const profile = Database.findBy("SCHOOL_PROFILE", "user_id", params.user_id || "DEFAULT");
+        return { success: true, data: profile };
+
+      case "SAVE_SCHOOL_PROFILE":
+        const existing = Database.findBy("SCHOOL_PROFILE", "user_id", payload.user_id);
+        payload.updated_at = new Date().toISOString();
+        if (existing) {
+          Database.update("SCHOOL_PROFILE", "user_id", payload.user_id, payload);
+        } else {
+          Database.insert("SCHOOL_PROFILE", payload);
+        }
+        return { success: true, message: "Profil sekolah tersimpan di Google Sheets database." };
+
+      default:
+        return { success: false, message: "Aksi '" + action + "' tidak dikenali." };
+    }
+  }
+};

@@ -1,0 +1,74 @@
+/**
+ * Database Driver untuk Google Sheets RDBMS
+ */
+
+const Database = {
+  getDb() {
+    return SpreadsheetApp.openById(SPREADSHEET_ID);
+  },
+
+  getSheet(sheetName) {
+    const sheet = this.getDb().getSheetByName(sheetName);
+    if (!sheet) throw new Error("Sheet '" + sheetName + "' tidak ditemukan.");
+    return sheet;
+  },
+
+  // Mendapatkan semua baris sebagai Array of Object
+  getAll(sheetName) {
+    const sheet = this.getSheet(sheetName);
+    const data = sheet.getDataRange().getValues();
+    if (data.length <= 1) return [];
+
+    const headers = data[0];
+    const rows = data.slice(1);
+
+    return rows.map(row => {
+      let obj = {};
+      headers.forEach((header, index) => {
+        obj[header] = row[index];
+      });
+      return obj;
+    });
+  },
+
+  // Mencari satu data berdasarkan kolom kunci
+  findBy(sheetName, column, value) {
+    const records = this.getAll(sheetName);
+    return records.find(r => r[column] == value) || null;
+  },
+
+  // Menyimpan baris data baru
+  insert(sheetName, recordObj) {
+    const sheet = this.getSheet(sheetName);
+    const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+    
+    const rowToInsert = headers.map(header => {
+      return recordObj[header] !== undefined ? recordObj[header] : "";
+    });
+
+    sheet.appendRow(rowToInsert);
+    return recordObj;
+  },
+
+  // memperbarui data berdasarkan Unique ID
+  update(sheetName, idColumn, idValue, updateObj) {
+    const sheet = this.getSheet(sheetName);
+    const data = sheet.getDataRange().getValues();
+    const headers = data[0];
+    const idIndex = headers.indexOf(idColumn);
+
+    if (idIndex === -1) throw new Error("Kolom ID tidak valid.");
+
+    for (let i = 1; i < data.length; i++) {
+      if (data[i][idIndex] == idValue) {
+        headers.forEach((header, colIdx) => {
+          if (updateObj[header] !== undefined) {
+            sheet.getRange(i + 1, colIdx + 1).setValue(updateObj[header]);
+          }
+        });
+        return true;
+      }
+    }
+    return false;
+  }
+};
