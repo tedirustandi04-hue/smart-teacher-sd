@@ -67,7 +67,7 @@
 </head>
 <body class="bg-slate-100 flex h-screen overflow-hidden text-slate-800 font-sans">
 
-    <!-- Sidebar Navigation (Sesuai Struktur Asli) -->
+    <!-- Sidebar Navigation -->
     <aside id="sidebar" class="bg-slate-900 w-72 flex-shrink-0 h-full flex flex-col transition-all duration-300 z-20 shadow-2xl border-r border-slate-800">
         <div class="h-20 flex items-center px-6 border-b border-slate-800/80 bg-slate-950/50 backdrop-blur-md">
             <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-blue-500/30 mr-3">
@@ -383,6 +383,25 @@
                     });
                     break;
 
+                // 8. ATP_DATA
+                case '#tool-atp':
+                    content.innerHTML = renderFormContainer('ATP Generator', 'ATP_DATA', `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">sequence_order</label><input type="number" id="atp-seq" value="1" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">material_topic</label><input type="text" id="atp-topic" value="Sistem Pencernaan Manusia" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">jp_allocation</label><input type="text" id="atp-jp" value="6 JP" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">p3_dimension</label><input type="text" id="atp-p3" value="Bernalar Kritis, Gotong Royong" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        </div>
+                    `, 'form-atp', 'btn-atp', async (e) => {
+                        e.preventDefault();
+                        const p = { type: 'ATP', topic: document.getElementById('atp-topic').value, jp: document.getElementById('atp-jp').value, p3: document.getElementById('atp-p3').value };
+                        localStorage.setItem('smart_teacher_selected_doc', JSON.stringify(p));
+                        await GoogleSheetsService.sendToSheet('SAVE_ATP_DATA', p);
+                        alert("Data ATP_DATA Berhasil Disimpan!");
+                        window.location.hash = '#tool-print';
+                    });
+                    break;
+
                 // 12. MODULE_DATA
                 case '#tool-modul-ajar':
                     content.innerHTML = renderFormContainer('Modul Ajar Generator', 'MODULE_DATA', `
@@ -405,13 +424,49 @@
                     });
                     break;
 
+                // 16. ASESMEN & EVALUASI (DIAGNOSTIK, FORMATIF, SUMATIF)
+                case '#tool-diagnostik':
+                case '#tool-formatif':
+                case '#tool-sumatif':
+                    const assessType = hash === '#tool-diagnostik' ? 'Diagnostik' : (hash === '#tool-formatif' ? 'Formatif' : 'Sumatif');
+                    content.innerHTML = renderFormContainer(`Asesmen ${assessType}`, 'ASSESSMENT_DATA', `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">type</label><input type="text" id="asm-type" value="${assessType}" class="w-full p-3 border rounded-xl text-sm bg-slate-100" readonly></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">topic</label><input type="text" id="asm-topic" value="Tes Kognitif Sistem Pencernaan" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        </div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">scoring_guide</label><textarea id="asm-guide" rows="4" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Skor 100 untuk jawaban tepat, Skor 50 untuk jawaban setengah tepat.</textarea></div>
+                    `, 'form-asm', 'btn-asm', async (e) => {
+                        e.preventDefault();
+                        const p = { type: 'ASSESSMENT', assessType: document.getElementById('asm-type').value, topic: document.getElementById('asm-topic').value, guide: document.getElementById('asm-guide').value };
+                        localStorage.setItem('smart_teacher_selected_doc', JSON.stringify(p));
+                        await GoogleSheetsService.sendToSheet('SAVE_ASSESSMENT_DATA', p);
+                        alert(`Data Asesmen ${assessType} Berhasil Disimpan!`);
+                        window.location.hash = '#tool-print';
+                    });
+                    break;
+
+                // 17. BANK SOAL & KISI-KISI
+                case '#tool-kisi-kisi':
+                    content.innerHTML = renderFormContainer('Bank Soal & Kisi-Kisi', 'QUESTION_BANK', `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">question_type</label><input type="text" id="q-type" value="Pilihan Ganda" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">answer_key</label><input type="text" id="q-key" value="A" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        </div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">question_text</label><textarea id="q-text" rows="2" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Organ yang berfungsi menyerap sari makanan adalah...</textarea></div>
+                    `, 'form-qbank', 'btn-qbank', async (e) => {
+                        e.preventDefault();
+                        const p = { type: 'ASSESSMENT', assessType: 'Bank Soal', topic: document.getElementById('q-text').value, guide: 'Kunci: ' + document.getElementById('q-key').value };
+                        localStorage.setItem('smart_teacher_selected_doc', JSON.stringify(p));
+                        await GoogleSheetsService.sendToSheet('SAVE_QUESTION_BANK', p);
+                        alert("Data Bank Soal Berhasil Disimpan!");
+                        window.location.hash = '#tool-print';
+                    });
+                    break;
+
                 // MENU CETAK DINAMIS DENGAN ATURAN @media print
                 case '#tool-print':
                     const activeDoc = JSON.parse(localStorage.getItem('smart_teacher_selected_doc') || JSON.stringify({
-                        type: 'CP',
-                        subject: 'IPAS',
-                        phase: 'Fase B (Kelas 3-4)',
-                        element: 'Pemahaman IPAS (Sains & Sosial)',
+                        type: 'CP', subject: 'IPAS', phase: 'Fase B (Kelas 3-4)', element: 'Pemahaman IPAS (Sains & Sosial)',
                         cp_content: 'Di akhir Fase B, peserta didik menganalisis hubungan antara bentuk serta fungsi bagian tubuh pada manusia dan tumbuhan; mendeskripsikan siklus air dan wujud zat.'
                     }));
 
@@ -438,6 +493,17 @@
                                 <div class="border border-slate-300 p-4 rounded-lg bg-slate-50">
                                     <p class="font-bold border-b pb-1 mb-2">Kegiatan Inti Pembelajaran:</p>
                                     <p class="leading-relaxed">${activeDoc.main}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (activeDoc.type === 'ASSESSMENT') {
+                        docTitle = `INSTRUMEN ASESMEN (${activeDoc.assessType.toUpperCase()})`;
+                        docHTML = `
+                            <div class="space-y-4 text-xs">
+                                <p><strong>Jenis Asesmen:</strong> ${activeDoc.assessType} | <strong>Topik / Soal:</strong> ${activeDoc.topic}</p>
+                                <div class="border border-slate-300 p-4 rounded-lg bg-slate-50">
+                                    <p class="font-bold border-b pb-1 mb-2">Pedoman Penskoran / Kunci Jawaban:</p>
+                                    <p class="leading-relaxed">${activeDoc.guide}</p>
                                 </div>
                             </div>
                         `;
