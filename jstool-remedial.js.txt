@@ -1,0 +1,175 @@
+// js/tool-remedial.js
+
+class ToolRemedial {
+    static render() {
+        const school = window.schoolDataService.getProfile();
+        return `
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                    <div>
+                        <h1 class="text-xl font-bold text-slate-800 flex items-center">
+                            <i data-lucide="arrow-up-circle" class="w-6 h-6 text-blue-600 mr-2"></i> Remedial, Pengayaan, & Refleksi Guru
+                        </h1>
+                        <p class="text-xs text-slate-500 mt-1">Intervensi pembelajaran pasca-asesmen berdasarkan persentase ketuntasan dan hasil analisis soal.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Form Input & Pengaturan -->
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4 h-fit">
+                        <h2 class="font-semibold text-slate-700 border-b pb-2 text-sm">Sumber Data Analisis Belajar</h2>
+                        
+                        <button id="btn-sync-analysis" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 py-2 rounded-lg text-xs font-semibold flex items-center justify-center">
+                            <i data-lucide="link" class="w-3.5 h-3.5 mr-2"></i> Tarik Data dari Analisis Soal
+                        </button>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Mata Pelajaran & Topik</label>
+                            <input type="text" id="followup-topic" value="IPAS - Sistem Pencernaan Manusia" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Persentase Ketuntasan Klasikal (%)</label>
+                            <input type="number" id="followup-passrate" value="60" min="0" max="100" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm">
+                        </div>
+
+                        <button id="btn-generate-followup" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg text-sm font-semibold flex justify-center items-center shadow-sm">
+                            <i data-lucide="sparkles" class="w-4 h-4 mr-2"></i> Generate Tindak Lanjut
+                        </button>
+                    </div>
+
+                    <!-- Document A4 Preview -->
+                    <div class="lg:col-span-2">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs font-semibold text-slate-500">Pratinjau Dokumen Tindak Lanjut A4</span>
+                            <button onclick="window.print()" class="bg-slate-800 text-white px-3 py-1.5 rounded text-xs font-medium">
+                                <i data-lucide="printer" class="w-3.5 h-3.5 inline mr-1"></i> Cetak
+                            </button>
+                        </div>
+
+                        <div id="followup-a4-preview" class="a4-preview text-slate-800">
+                            <!-- Kop Sekolah -->
+                            <div class="text-center border-b-2 border-slate-800 pb-3 mb-6">
+                                <h2 class="text-base font-bold uppercase">${school.schoolName}</h2>
+                                <p class="text-xs">${school.address}, ${school.city}, ${school.province}</p>
+                                <p class="text-xs italic">NPSN: ${school.npsn} | Tahun Ajaran: ${school.academicYear}</p>
+                            </div>
+
+                            <h3 class="text-center font-bold text-sm uppercase underline mb-4">PROGRAM REMEDIAL, PENGAYAAN, DAN REFLEKSI GURU</h3>
+
+                            <div id="followup-preview-body" class="space-y-4 text-xs">
+                                <p class="italic text-slate-400">Klik "Generate Tindak Lanjut" untuk merumuskan lembar intervensi remedial, pengayaan, dan refleksi...</p>
+                            </div>
+
+                            <!-- Area Tanda Tangan -->
+                            <div class="mt-12 text-xs flex justify-between">
+                                <div>
+                                    <p>Mengetahui,</p>
+                                    <p class="font-semibold">Kepala ${school.schoolName}</p>
+                                    <br><br><br>
+                                    <p class="font-bold underline">${school.headmasterName}</p>
+                                    <p>NIP. ${school.headmasterNip}</p>
+                                </div>
+                                <div>
+                                    <p>${school.city}, 2026</p>
+                                    <p class="font-semibold">Guru Kelas / Mata Pelajaran</p>
+                                    <br><br><br>
+                                    <p class="font-bold underline">${school.teacherName}</p>
+                                    <p>NIP. ${school.teacherNip}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    static initEvents() {
+        const btnSync = document.getElementById('btn-sync-analysis');
+        const btnGen = document.getElementById('btn-generate-followup');
+
+        if (btnSync) {
+            btnSync.addEventListener('click', () => {
+                const passRateEl = document.getElementById('stat-pass-rate');
+                if (passRateEl) {
+                    const rateText = passRateEl.textContent.replace('%', '');
+                    document.getElementById('followup-passrate').value = parseInt(rateText) || 60;
+                    alert("Data persentase ketuntasan berhasil ditarik dari Mesin Analisis Soal!");
+                } else {
+                    alert("Data analisis soal belum dihitung. Jalankan Tool 17 (Analisis Soal) terlebih dahulu!");
+                }
+            });
+        }
+
+        if (btnGen) {
+            btnGen.addEventListener('click', () => {
+                const topic = document.getElementById('followup-topic').value;
+                const passRate = document.getElementById('followup-passrate').value;
+                const school = window.schoolDataService.getProfile();
+
+                const res = window.AIEngine.generateFollowUp({
+                    topic,
+                    subject: "IPAS",
+                    classLevel: "4",
+                    passRate
+                });
+
+                let html = `
+                    <!-- Box Ringkasan Status Klasikal -->
+                    <div class="bg-slate-50 p-3 rounded border border-slate-300 mb-4">
+                        <table class="w-full">
+                            <tr><td class="w-36 font-semibold">Mata Pelajaran / Topik</td><td>: ${topic}</td></tr>
+                            <tr><td class="font-semibold">Ketuntasan Klasikal</td><td>: <strong class="${passRate >= 75 ? 'text-emerald-700' : 'text-amber-700'}">${passRate}% Siswa Tuntas</strong></td></tr>
+                            <tr><td class="font-semibold">Status Intervensi</td><td>: ${passRate >= 75 ? 'Pengayaan Utama & Remedial Minor' : 'Remedial Terbimbing & Pengayaan Tutoring'}</td></tr>
+                        </table>
+                    </div>
+
+                    <!-- Section 1: Program Remedial -->
+                    <div class="space-y-2 border-b pb-3">
+                        <h4 class="font-bold text-sm text-red-800 flex items-center">
+                            <i data-lucide="arrow-down-circle" class="w-4 h-4 mr-1 text-red-600"></i> I. PROGRAM REMEDIAL
+                        </h4>
+                        <p><strong>Sasaran:</strong> ${res.remedial.targetPeserta}</p>
+                        <p><strong>Fokus Materi:</strong> ${res.remedial.materiRemedial}</p>
+                        <p><strong>Bentuk Intervensi:</strong> ${res.remedial.metodeRemedial}</p>
+                        <p><strong>Rincian Kegiatan:</strong></p>
+                        <ul class="list-disc pl-5 space-y-1">
+                            ${res.remedial.bentukKegiatan.map(k => `<li>${k}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <!-- Section 2: Program Pengayaan -->
+                    <div class="space-y-2 border-b pb-3 pt-2">
+                        <h4 class="font-bold text-sm text-emerald-800 flex items-center">
+                            <i data-lucide="arrow-up-circle" class="w-4 h-4 mr-1 text-emerald-600"></i> II. PROGRAM PENGAYAAN
+                        </h4>
+                        <p><strong>Sasaran:</strong> ${res.pengayaan.targetPeserta}</p>
+                        <p><strong>Fokus Materi:</strong> ${res.pengayaan.materiPengayaan}</p>
+                        <p><strong>Bentuk Kegiatan:</strong> ${res.pengayaan.metodePengayaan}</p>
+                        <ul class="list-disc pl-5 space-y-1">
+                            ${res.pengayaan.bentukKegiatan.map(k => `<li>${k}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <!-- Section 3: Refleksi Guru -->
+                    <div class="space-y-2 pt-2">
+                        <h4 class="font-bold text-sm text-blue-900 flex items-center">
+                            <i data-lucide="user-check" class="w-4 h-4 mr-1 text-blue-600"></i> III. LEMBAR REFLEKSI PEMBELAJARAN GURU
+                        </h4>
+                        <div class="space-y-2 bg-blue-50/50 p-3 rounded border border-blue-100">
+                            <p><strong>1. Capaian Keberhasilan:</strong><br>${res.refleksiGuru.keberhasilan}</p>
+                            <p><strong>2. Kendala Pembelajaran:</strong><br>${res.refleksiGuru.kendala}</p>
+                            <p><strong>3. Rencana Perbaikan Pembelajaran (Siklus Berikutnya):</strong><br>${res.refleksiGuru.rencanaPerbaikan}</p>
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById('followup-preview-body').innerHTML = html;
+                lucide.createIcons();
+            });
+        }
+    }
+}
+
+window.ToolRemedial = ToolRemedial;
