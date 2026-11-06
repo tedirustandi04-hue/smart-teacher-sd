@@ -1,0 +1,25 @@
+function renderExportToolbar(previewElementId, documentTitle = 'Dokumen_Perangkat_Ajar') {
+    return `
+        <div class="flex flex-wrap justify-between items-center mb-4 bg-slate-100 p-3 rounded-lg border border-slate-200 no-print">
+            <span class="text-xs font-semibold text-slate-600 flex items-center">
+                <i data-lucide="file-check" class="w-4 h-4 mr-1 text-emerald-600"></i> Pratinjau Dokumen Siap Cetak (A4)
+            </span>
+            <div class="flex flex-wrap gap-2 mt-2 sm:mt-0">
+                <button onclick="PDFExportEngine.exportToPDF('${previewElementId}', '${documentTitle}')" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded text-xs font-semibold flex items-center shadow-sm">
+                    PDF
+                </button>
+                <button onclick="DOCXExportEngine.exportToWord('${previewElementId}', '${documentTitle}')" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded text-xs font-semibold flex items-center shadow-sm">
+                    DOCX
+                </button>
+                <button onclick="ExcelExportEngine.exportTableToExcel('${previewElementId}', '${documentTitle}')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded text-xs font-semibold flex items-center shadow-sm">
+                    XLSX
+                </button>
+                <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-900 text-white px-3 py-1.5 rounded text-xs font-semibold flex items-center shadow-sm">
+                    Cetak A4
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+window.renderExportToolbar = renderExportToolbar;

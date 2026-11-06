@@ -1,0 +1,12 @@
+:root {
+    --color-navy: #0f172a;
+    --color-navy-dark: #020617;
+    --color-blue: #0ea5e9;
+    --color-blue-light: #e0f2fe;
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --doc-width: 210mm;
+    --doc-padding: 20mm;
+}
