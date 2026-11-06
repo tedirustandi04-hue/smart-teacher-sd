@@ -22,7 +22,7 @@
 </head>
 <body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800 font-sans">
 
-    <!-- Sidebar -->
+    <!-- Sidebar Navigation -->
     <aside id="sidebar" class="bg-navy w-72 flex-shrink-0 h-full flex flex-col transition-all duration-300 z-20">
         <div class="h-16 flex items-center px-6 border-b border-slate-700 bg-navy-dark">
             <i data-lucide="graduation-cap" class="text-blue-400 w-8 h-8 mr-3"></i>
@@ -119,7 +119,7 @@
     <script src="js/export-docx.js"></script>
     <script src="js/export-excel.js"></script>
 
-    <!-- Core App Module script -->
+    <!-- Core App Module Router -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
@@ -135,13 +135,13 @@
         function getSchoolProfile() {
             return JSON.parse(localStorage.getItem('smart_teacher_school_profile') || JSON.stringify({
                 schoolName: "SD DAYA SUSILA",
-                npsn: "20101234",
-                address: "Jl. Pendidikan No. 45",
-                city: "Garut",
+                npsn: "20227163",
+                address: "Jl. Pendidikan No. 45, Kecamatan Kota",
+                city: "Kabupaten Garut",
                 province: "Jawa Barat",
-                headmasterName: "Dr. H. Ahmad Dahlan, M.Pd.",
+                headmasterName: "TEDI RUSTANDI, S.Pd",
                 headmasterNip: "19680512 199303 1 002",
-                teacherName: "Budi Santoso, S.Pd.",
+                teacherName: "Tiara Putri Pertiwi, S.Pd",
                 teacherNip: "19850820 201001 1 015",
                 academicYear: "2026/2027",
                 semester: "1 (Ganjil)"
@@ -170,7 +170,7 @@
                         <p>NIP. ${school.headmasterNip}</p>
                     </div>
                     <div>
-                        <p>${school.city}, 2026</p>
+                        <p>${school.city || 'Garut'}, 2026</p>
                         <p class="font-semibold">Guru Kelas / Pengampu</p>
                         <br><br><br>
                         <p class="font-bold underline">${school.teacherName}</p>
@@ -256,6 +256,7 @@
                                         <option value="IPAS">IPAS</option>
                                         <option value="Matematika">Matematika</option>
                                         <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+                                        <option value="Pancasila">Pendidikan Pancasila</option>
                                     </select>
                                 </div>
                                 <div>
@@ -266,13 +267,13 @@
                                         <option value="Fase C">Fase C (Kelas 5-6)</option>
                                     </select>
                                 </div>
-                                <button id="btn-gen-cp" class="w-full bg-blue-600 text-white py-2 rounded text-sm font-semibold flex items-center justify-center"><i data-lucide="search" class="w-4 h-4 mr-2"></i> Muat Referensi CP</button>
+                                <button id="btn-gen-cp" class="w-full bg-blue-600 text-white py-2.5 rounded text-sm font-semibold flex items-center justify-center shadow-sm"><i data-lucide="search" class="w-4 h-4 mr-2"></i> Muat Referensi CP</button>
                             </div>
                             <div class="lg:col-span-2 space-y-4">
                                 ${window.renderExportToolbar ? window.renderExportToolbar('cp-preview', 'CP_Generator') : ''}
                                 <div id="cp-preview" class="a4-preview text-slate-800">
                                     ${renderHeaderKop(school, 'CAPAIAN PEMBELAJARAN (CP)')}
-                                    <div id="cp-out" class="space-y-4 text-xs"><p class="italic text-slate-400">Pilih parameter dan klik tombol di samping untuk memuat Capaian Pembelajaran...</p></div>
+                                    <div id="cp-out" class="space-y-4 text-xs"><p class="italic text-slate-400">Pilih parameter dan klik "Muat Referensi CP" untuk menampilkan data...</p></div>
                                     ${renderFooterSignatures(school)}
                                 </div>
                             </div>
@@ -294,63 +295,240 @@
                     break;
 
                 case '#tool-tp':
+                    content.innerHTML = `
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div class="bg-white p-6 rounded-xl border shadow-sm space-y-4 h-fit">
+                                <h2 class="font-semibold text-slate-700 border-b pb-2 text-sm">Generator Tujuan Pembelajaran</h2>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Mata Pelajaran & Topik</label>
+                                    <input type="text" id="tp-topic" value="IPAS - Sistem Pencernaan Manusia" class="w-full border p-2 rounded text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Jumlah TP Dihasilkan</label>
+                                    <input type="number" id="tp-count" value="3" min="1" max="5" class="w-full border p-2 rounded text-sm">
+                                </div>
+                                <button id="btn-gen-tp" class="w-full bg-emerald-600 text-white py-2.5 rounded text-sm font-semibold flex items-center justify-center shadow-sm"><i data-lucide="sparkles" class="w-4 h-4 mr-2"></i> Rumuskan TP AI</button>
+                            </div>
+                            <div class="lg:col-span-2 space-y-4">
+                                ${window.renderExportToolbar ? window.renderExportToolbar('tp-preview', 'Tujuan_Pembelajaran') : ''}
+                                <div id="tp-preview" class="a4-preview text-slate-800">
+                                    ${renderHeaderKop(school, 'TUJUAN PEMBELAJARAN (TP)')}
+                                    <div id="tp-out" class="space-y-3 text-xs"><p class="italic text-slate-400">Klik "Rumuskan TP AI" untuk menyusun rumusan Tujuan Pembelajaran...</p></div>
+                                    ${renderFooterSignatures(school)}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('btn-gen-tp').addEventListener('click', () => {
+                        const topic = document.getElementById('tp-topic').value;
+                        const count = parseInt(document.getElementById('tp-count').value);
+                        let html = `<p class="mb-2"><strong>Materi / Topik:</strong> ${topic}</p><ol class="list-decimal pl-4 space-y-2">`;
+                        for(let i=1; i<=count; i++) {
+                            html += `<li class="p-2 border rounded bg-slate-50">Peserta didik mampu menganalisis dan menjelaskan konsep ${topic} sub-bagian ${i} secara kritis dan mandiri.</li>`;
+                        }
+                        html += `</ol>`;
+                        document.getElementById('tp-out').innerHTML = html;
+                    });
+                    break;
+
                 case '#tool-atp':
+                    content.innerHTML = `
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div class="bg-white p-6 rounded-xl border shadow-sm space-y-4 h-fit">
+                                <h2 class="font-semibold text-slate-700 border-b pb-2 text-sm">Pengaturan ATP</h2>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Mata Pelajaran</label>
+                                    <input type="text" id="atp-subj" value="IPAS Kelas 4" class="w-full border p-2 rounded text-sm">
+                                </div>
+                                <button id="btn-gen-atp" class="w-full bg-blue-600 text-white py-2.5 rounded text-sm font-semibold flex items-center justify-center shadow-sm"><i data-lucide="git-merge" class="w-4 h-4 mr-2"></i> Petakan Alur ATP</button>
+                            </div>
+                            <div class="lg:col-span-2 space-y-4">
+                                ${window.renderExportToolbar ? window.renderExportToolbar('atp-preview', 'Alur_Tujuan_Pembelajaran') : ''}
+                                <div id="atp-preview" class="a4-preview text-slate-800">
+                                    ${renderHeaderKop(school, 'ALUR TUJUAN PEMBELAJARAN (ATP)')}
+                                    <div id="atp-out" class="space-y-4 text-xs"><p class="italic text-slate-400">Klik "Petakan Alur ATP" untuk menyusun alur pembelajaran...</p></div>
+                                    ${renderFooterSignatures(school)}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('btn-gen-atp').addEventListener('click', () => {
+                        const subj = document.getElementById('atp-subj').value;
+                        document.getElementById('atp-out').innerHTML = `
+                            <table class="w-full border-collapse border text-xs text-left">
+                                <thead><tr class="bg-slate-100"><th class="border p-2">Alur</th><th class="border p-2">Tujuan Pembelajaran (TP)</th><th class="border p-2">Materi Pokok</th><th class="border p-2">Alokasi JP</th></tr></thead>
+                                <tbody>
+                                    <tr><td class="border p-2 text-center font-bold">1</td><td class="border p-2">Mengidentifikasi organ pencernaan manusia dan fungsinya</td><td class="border p-2">Organ Pencernaan</td><td class="border p-2 text-center">6 JP</td></tr>
+                                    <tr><td class="border p-2 text-center font-bold">2</td><td class="border p-2">Menganalisis gangguan kesehatan organ pencernaan</td><td class="border p-2">Penyakit Pencernaan</td><td class="border p-2 text-center">4 JP</td></tr>
+                                </tbody>
+                            </table>
+                        `;
+                    });
+                    break;
+
                 case '#tool-prota':
                 case '#tool-promes':
                 case '#tool-kalender':
+                    const pTitle = hash.replace('#', '').replace(/-/g, ' ').toUpperCase();
+                    content.innerHTML = `
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div class="bg-white p-6 rounded-xl border shadow-sm space-y-4 h-fit">
+                                <h2 class="font-semibold text-slate-700 border-b pb-2 text-sm">Pengaturan ${pTitle}</h2>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Tahun Pelajaran</label>
+                                    <input type="text" value="${school.academicYear}" readonly class="w-full border p-2 rounded text-sm bg-slate-100">
+                                </div>
+                                <button id="btn-gen-plan" class="w-full bg-blue-600 text-white py-2.5 rounded text-sm font-semibold flex items-center justify-center shadow-sm"><i data-lucide="calendar" class="w-4 h-4 mr-2"></i> Kalkulasi ${pTitle}</button>
+                            </div>
+                            <div class="lg:col-span-2 space-y-4">
+                                ${window.renderExportToolbar ? window.renderExportToolbar('plan-preview', pTitle) : ''}
+                                <div id="plan-preview" class="a4-preview text-slate-800">
+                                    ${renderHeaderKop(school, pTitle)}
+                                    <div id="plan-out" class="space-y-4 text-xs"><p class="italic text-slate-400">Klik tombol di samping untuk menghasilkan dokumen...</p></div>
+                                    ${renderFooterSignatures(school)}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('btn-gen-plan').addEventListener('click', () => {
+                        document.getElementById('plan-out').innerHTML = `
+                            <table class="w-full border-collapse border text-xs">
+                                <thead><tr class="bg-slate-100"><th class="border p-2">No</th><th class="border p-2">Mata Pelajaran / Elemen</th><th class="border p-2">Alokasi Waktu Efektif</th></tr></thead>
+                                <tbody>
+                                    <tr><td class="border p-2 text-center">1</td><td class="border p-2">IPAS (Sains & Sosial)</td><td class="border p-2 text-center">144 Jam Pembelajaran</td></tr>
+                                    <tr><td class="border p-2 text-center">2</td><td class="border p-2">Bahasa Indonesia</td><td class="border p-2 text-center">216 Jam Pembelajaran</td></tr>
+                                </tbody>
+                            </table>
+                        `;
+                    });
+                    break;
+
                 case '#tool-modul-ajar':
+                    content.innerHTML = `
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div class="bg-white p-6 rounded-xl border shadow-sm space-y-4 h-fit">
+                                <h2 class="font-semibold text-slate-700 border-b pb-2 text-sm">Parameter Modul Ajar</h2>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Mata Pelajaran</label>
+                                    <input type="text" id="m-subj" value="IPAS Kelas 4" class="w-full border p-2 rounded text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Topik Utama</label>
+                                    <input type="text" id="m-topic" value="Sistem Pencernaan Manusia" class="w-full border p-2 rounded text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Model Pembelajaran</label>
+                                    <select id="m-model" class="w-full border p-2 rounded text-sm">
+                                        <option value="Problem Based Learning (PBL)">Problem Based Learning (PBL)</option>
+                                        <option value="Project Based Learning (PjBL)">Project Based Learning (PjBL)</option>
+                                    </select>
+                                </div>
+                                <button id="btn-gen-modul" class="w-full bg-blue-600 text-white py-2.5 rounded text-sm font-semibold flex items-center justify-center shadow-sm"><i data-lucide="book-open" class="w-4 h-4 mr-2"></i> Susun Modul Ajar AI</button>
+                            </div>
+                            <div class="lg:col-span-2 space-y-4">
+                                ${window.renderExportToolbar ? window.renderExportToolbar('modul-preview', 'Modul_Ajar') : ''}
+                                <div id="modul-preview" class="a4-preview text-slate-800">
+                                    ${renderHeaderKop(school, 'MODUL AJAR KURIKULUM MERDEKA')}
+                                    <div id="modul-out" class="space-y-4 text-xs"><p class="italic text-slate-400">Klik "Susun Modul Ajar AI" untuk membuat modul pembelajaran rincian lengkap...</p></div>
+                                    ${renderFooterSignatures(school)}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('btn-gen-modul').addEventListener('click', () => {
+                        const topic = document.getElementById('m-topic').value;
+                        const model = document.getElementById('m-model').value;
+                        document.getElementById('modul-out').innerHTML = `
+                            <div class="bg-slate-50 p-3 rounded border mb-3">
+                                <h4 class="font-bold border-b mb-2">I. INFORMASI UMUM</h4>
+                                <p><strong>Materi Pokok:</strong> ${topic}</p>
+                                <p><strong>Model Pembelajaran:</strong> ${model}</p>
+                                <p><strong>Alokasi Waktu:</strong> 2 x 35 Menit (1 Pertemuan)</p>
+                            </div>
+                            <div class="space-y-2">
+                                <h4 class="font-bold border-b">II. KEGIATAN PEMBELAJARAN</h4>
+                                <p><strong>1. Pendahuluan (10 Menit):</strong> Guru membuka kelas dengan salam, doa, apersepsi, dan menyampaikan tujuan pembelajaran.</p>
+                                <p><strong>2. Kegiatan Inti (50 Menit):</strong> Siswa berdiskusi kelompok mengamati gambar organ pencernaan dan mengerjakan LKPD.</p>
+                                <p><strong>3. Penutup (10 Menit):</strong> Refleksi bersama dan pemberian kuis formatif singkat.</p>
+                            </div>
+                        `;
+                    });
+                    break;
+
                 case '#tool-bahan-ajar':
                 case '#tool-lkpd':
                 case '#tool-media':
+                    const bTitle = hash.replace('#', '').replace(/-/g, ' ').toUpperCase();
+                    content.innerHTML = `
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div class="bg-white p-6 rounded-xl border shadow-sm space-y-4 h-fit">
+                                <h2 class="font-semibold text-slate-700 border-b pb-2 text-sm">Pengaturan ${bTitle}</h2>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Topik Pembelajaran</label>
+                                    <input type="text" id="b-topic" value="Sistem Pencernaan Manusia" class="w-full border p-2 rounded text-sm">
+                                </div>
+                                <button id="btn-gen-b" class="w-full bg-blue-600 text-white py-2.5 rounded text-sm font-semibold flex items-center justify-center shadow-sm"><i data-lucide="sparkles" class="w-4 h-4 mr-2"></i> Buat ${bTitle}</button>
+                            </div>
+                            <div class="lg:col-span-2 space-y-4">
+                                ${window.renderExportToolbar ? window.renderExportToolbar('b-preview', bTitle) : ''}
+                                <div id="b-preview" class="a4-preview text-slate-800">
+                                    ${renderHeaderKop(school, bTitle)}
+                                    <div id="b-out" class="space-y-4 text-xs"><p class="italic text-slate-400">Klik tombol di samping untuk membuat lembar ${bTitle}...</p></div>
+                                    ${renderFooterSignatures(school)}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('btn-gen-b').addEventListener('click', () => {
+                        const topic = document.getElementById('b-topic').value;
+                        document.getElementById('b-out').innerHTML = `
+                            <div class="border p-3 rounded bg-slate-50 mb-3">
+                                <h4 class="font-bold border-b pb-1 mb-2">Lembar ${bTitle}: ${topic}</h4>
+                                <p>Petunjuk: Bacalah instruksi berikut dan kerjakan tugas diskusi kelompok bersama teman sekelompokmu!</p>
+                            </div>
+                            <div class="border border-dashed p-4 rounded h-24 text-slate-400 italic">Ruang Isian / Jawaban Peserta Didik...</div>
+                        `;
+                    });
+                    break;
+
                 case '#tool-diagnostik':
                 case '#tool-formatif':
                 case '#tool-sumatif':
                 case '#tool-kisi-kisi':
                 case '#tool-kartu-soal':
                 case '#tool-rubrik':
-                case '#tool-remedial':
-                    const toolTitle = hash.replace('#', '').replace(/-/g, ' ').toUpperCase();
+                    const cTitle = hash.replace('#', '').replace(/-/g, ' ').toUpperCase();
                     content.innerHTML = `
                         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                             <div class="bg-white p-6 rounded-xl border shadow-sm space-y-4 h-fit">
-                                <h2 class="font-semibold text-slate-700 border-b pb-2 text-sm">Pengaturan ${toolTitle}</h2>
+                                <h2 class="font-semibold text-slate-700 border-b pb-2 text-sm">Pengaturan ${cTitle}</h2>
                                 <div>
-                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Mata Pelajaran / Topik</label>
-                                    <input type="text" id="gen-topic" value="IPAS - Sistem Pencernaan Manusia" class="w-full border p-2 rounded text-sm">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Topik Asesmen</label>
+                                    <input type="text" id="c-topic" value="Organ Pencernaan Manusia" class="w-full border p-2 rounded text-sm">
                                 </div>
-                                <div>
-                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Fase / Kelas</label>
-                                    <select class="w-full border p-2 rounded text-sm"><option>Fase B - Kelas 4</option></select>
-                                </div>
-                                <button id="btn-gen-dynamic" class="w-full bg-blue-600 text-white py-2 rounded text-sm font-semibold flex items-center justify-center"><i data-lucide="sparkles" class="w-4 h-4 mr-2"></i> Process & Generate</button>
+                                <button id="btn-gen-c" class="w-full bg-blue-600 text-white py-2.5 rounded text-sm font-semibold flex items-center justify-center shadow-sm"><i data-lucide="pie-chart" class="w-4 h-4 mr-2"></i> Buat ${cTitle}</button>
                             </div>
                             <div class="lg:col-span-2 space-y-4">
-                                ${window.renderExportToolbar ? window.renderExportToolbar('dynamic-preview', toolTitle) : ''}
-                                <div id="dynamic-preview" class="a4-preview text-slate-800">
-                                    ${renderHeaderKop(school, toolTitle)}
-                                    <div id="dynamic-out" class="space-y-4 text-xs">
-                                        <p class="italic text-slate-400">Klik "Process & Generate" untuk memuat hasil dokumen otomatis...</p>
-                                    </div>
+                                ${window.renderExportToolbar ? window.renderExportToolbar('c-preview', cTitle) : ''}
+                                <div id="c-preview" class="a4-preview text-slate-800">
+                                    ${renderHeaderKop(school, cTitle)}
+                                    <div id="c-out" class="space-y-4 text-xs"><p class="italic text-slate-400">Klik tombol di samping untuk memuat instrumen asesmen...</p></div>
                                     ${renderFooterSignatures(school)}
                                 </div>
                             </div>
                         </div>
                     `;
-                    document.getElementById('btn-gen-dynamic').addEventListener('click', () => {
-                        const topic = document.getElementById('gen-topic').value;
-                        document.getElementById('dynamic-out').innerHTML = `
-                            <div class="p-3 bg-blue-50 border border-blue-200 rounded mb-3">
-                                <p class="font-bold text-blue-900">Rancangan Perangkat Ajar: ${toolTitle}</p>
-                                <p class="mt-1">Topik Utama: <strong>${topic}</strong></p>
+                    document.getElementById('btn-gen-c').addEventListener('click', () => {
+                        const topic = document.getElementById('c-topic').value;
+                        document.getElementById('c-out').innerHTML = `
+                            <div class="space-y-3">
+                                <p><strong>Topik:</strong> ${topic}</p>
+                                <div class="border p-3 rounded">
+                                    <p class="font-bold mb-1">1. Instrumen Pertanyaan Penilaian:</p>
+                                    <p>Sebutkan fungsi utama usus halus dalam proses pencernaan manusia!</p>
+                                    <p class="text-blue-700 font-semibold mt-1">Kunci / Rubrik: Tempat penyerapan sari-sari makanan (Skor Maksimal: 10).</p>
+                                </div>
                             </div>
-                            <table class="w-full border-collapse border text-xs">
-                                <thead><tr class="bg-slate-100"><th class="border p-2">Komponen</th><th class="border p-2">Deskripsi & Rincian Pembelajaran</th></tr></thead>
-                                <tbody>
-                                    <tr><td class="border p-2 font-semibold">Tujuan Pembelajaran</td><td class="border p-2">Siswa mampu menganalisis konsep ${topic} melalui diskusi dan eksplorasi kelompok.</td></tr>
-                                    <tr><td class="border p-2 font-semibold">Kegiatan Pembelajaran</td><td class="border p-2">Pendahuluan (Apersepsi), Kegiatan Inti (Diskusi & Observasi), Penutup (Refleksi).</td></tr>
-                                    <tr><td class="border p-2 font-semibold">Penilaian / Asesmen</td><td class="border p-2">Formatif (Lembar Observasi Diskusi) & Sumatif (Tes Tertulis).</td></tr>
-                                </tbody>
-                            </table>
                         `;
                     });
                     break;
@@ -388,6 +566,44 @@
                                 <tr><td class="border p-2 font-bold">Soal 1</td><td class="border p-2">B</td><td class="border p-2">0.80 (Mudah)</td><td class="border p-2">0.40 (Baik)</td><td class="border p-2 font-semibold text-emerald-600">Diterima</td></tr>
                                 <tr><td class="border p-2 font-bold">Soal 2</td><td class="border p-2">C</td><td class="border p-2">0.60 (Sedang)</td><td class="border p-2">0.50 (Sangat Baik)</td><td class="border p-2 font-semibold text-emerald-600">Diterima</td></tr>
                             </table>
+                        `;
+                    });
+                    break;
+
+                case '#tool-remedial':
+                    content.innerHTML = `
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div class="bg-white p-6 rounded-xl border shadow-sm space-y-4 h-fit">
+                                <h2 class="font-semibold text-slate-700 border-b pb-2 text-sm">Pengaturan Tindak Lanjut</h2>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Mata Pelajaran & Topik</label>
+                                    <input type="text" id="r-topic" value="IPAS - Sistem Pencernaan Manusia" class="w-full border p-2 rounded text-sm">
+                                </div>
+                                <button id="btn-gen-r" class="w-full bg-blue-600 text-white py-2.5 rounded text-sm font-semibold flex items-center justify-center shadow-sm"><i data-lucide="sparkles" class="w-4 h-4 mr-2"></i> Generate Remedial & Refleksi</button>
+                            </div>
+                            <div class="lg:col-span-2 space-y-4">
+                                ${window.renderExportToolbar ? window.renderExportToolbar('r-preview', 'Remedial_Refleksi') : ''}
+                                <div id="r-preview" class="a4-preview text-slate-800">
+                                    ${renderHeaderKop(school, 'PROGRAM REMEDIAL, PENGAYAAN, DAN REFLEKSI GURU')}
+                                    <div id="r-out" class="space-y-4 text-xs"><p class="italic text-slate-400">Klik tombol di samping untuk menghasilkan lembar remedial dan refleksi guru...</p></div>
+                                    ${renderFooterSignatures(school)}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('btn-gen-r').addEventListener('click', () => {
+                        const topic = document.getElementById('r-topic').value;
+                        document.getElementById('r-out').innerHTML = `
+                            <div class="space-y-3">
+                                <div class="border p-3 rounded bg-red-50 border-red-200">
+                                    <h4 class="font-bold text-red-900 border-b border-red-200 pb-1 mb-1">I. PROGRAM REMEDIAL</h4>
+                                    <p>Bimbingan perorangan pada konsep ${topic} yang belum tuntas serta pengerjaan ulang soal remedial.</p>
+                                </div>
+                                <div class="border p-3 rounded bg-emerald-50 border-emerald-200">
+                                    <h4 class="font-bold text-emerald-900 border-b border-emerald-200 pb-1 mb-1">II. PROGRAM PENGAYAAN</h4>
+                                    <p>Tugas mandiri membuat infografis/bagan sederhana aplikasi ${topic} dalam kehidupan sehari-hari.</p>
+                                </div>
+                            </div>
                         `;
                     });
                     break;
