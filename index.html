@@ -15,24 +15,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
-    <!-- Custom Tailwind Configuration & Styling -->
+    <!-- Custom Tailwind Styling -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        navy: {
-                            DEFAULT: '#0f172a',
-                            dark: '#020617',
-                            light: '#1e293b'
-                        },
-                        brand: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                        }
+                        navy: { DEFAULT: '#0f172a', dark: '#020617', light: '#1e293b' }
                     }
                 }
             }
@@ -56,7 +45,7 @@
 </head>
 <body class="bg-slate-100 flex h-screen overflow-hidden text-slate-800 font-sans">
 
-    <!-- Sidebar Navigation Modern Dark Navy -->
+    <!-- Sidebar Navigation -->
     <aside id="sidebar" class="bg-slate-900 w-72 flex-shrink-0 h-full flex flex-col transition-all duration-300 z-20 shadow-2xl border-r border-slate-800">
         <div class="h-20 flex items-center px-6 border-b border-slate-800/80 bg-slate-950/50 backdrop-blur-md">
             <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-blue-500/30 mr-3">
@@ -72,13 +61,13 @@
             <div>
                 <ul class="space-y-1">
                     <li>
-                        <a href="#dashboard" class="nav-link active flex items-center px-4 py-3 text-sm font-medium text-slate-300 rounded-xl hover:text-white hover:bg-slate-800/60 transition-all group">
-                            <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3 text-blue-400 group-hover:scale-110 transition-transform"></i> Dashboard
+                        <a href="#dashboard" class="nav-link active flex items-center px-4 py-3 text-sm font-medium text-slate-300 rounded-xl hover:text-white hover:bg-slate-800/60 transition-all">
+                            <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3 text-blue-400"></i> Dashboard
                         </a>
                     </li>
                     <li>
-                        <a href="#profile-school" class="nav-link flex items-center px-4 py-3 text-sm font-medium text-slate-300 rounded-xl hover:text-white hover:bg-slate-800/60 transition-all group">
-                            <i data-lucide="school" class="w-5 h-5 mr-3 text-amber-400 group-hover:scale-110 transition-transform"></i> Profil Sekolah & Guru
+                        <a href="#profile-school" class="nav-link flex items-center px-4 py-3 text-sm font-medium text-slate-300 rounded-xl hover:text-white hover:bg-slate-800/60 transition-all">
+                            <i data-lucide="school" class="w-5 h-5 mr-3 text-amber-400"></i> Profil Sekolah & Guru
                         </a>
                     </li>
                 </ul>
@@ -87,45 +76,45 @@
             <div>
                 <div class="px-4 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">A. Perencanaan Pembelajaran</div>
                 <ul class="space-y-1">
-                    <li><a href="#tool-cp" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="target" class="w-4 h-4 mr-3 text-indigo-400"></i> CP Generator</a></li>
-                    <li><a href="#tool-tp" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="crosshair" class="w-4 h-4 mr-3 text-emerald-400"></i> TP Generator</a></li>
-                    <li><a href="#tool-atp" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="git-merge" class="w-4 h-4 mr-3 text-cyan-400"></i> ATP Generator</a></li>
-                    <li><a href="#tool-prota" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="calendar" class="w-4 h-4 mr-3 text-amber-400"></i> PROTA</a></li>
-                    <li><a href="#tool-promes" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="calendar-days" class="w-4 h-4 mr-3 text-purple-400"></i> PROMES</a></li>
-                    <li><a href="#tool-kalender" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="calendar-clock" class="w-4 h-4 mr-3 text-rose-400"></i> Kalender Akademik</a></li>
+                    <li><a href="#tool-cp" class="nav-link flex items-center px-4 py-2 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60"><i data-lucide="target" class="w-4 h-4 mr-3 text-indigo-400"></i> CP Generator</a></li>
+                    <li><a href="#tool-tp" class="nav-link flex items-center px-4 py-2 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60"><i data-lucide="crosshair" class="w-4 h-4 mr-3 text-emerald-400"></i> TP Generator</a></li>
+                    <li><a href="#tool-atp" class="nav-link flex items-center px-4 py-2 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60"><i data-lucide="git-merge" class="w-4 h-4 mr-3 text-cyan-400"></i> ATP Generator</a></li>
+                    <li><a href="#tool-prota" class="nav-link flex items-center px-4 py-2 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60"><i data-lucide="calendar" class="w-4 h-4 mr-3 text-amber-400"></i> PROTA</a></li>
+                    <li><a href="#tool-promes" class="nav-link flex items-center px-4 py-2 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60"><i data-lucide="calendar-days" class="w-4 h-4 mr-3 text-purple-400"></i> PROMES</a></li>
+                    <li><a href="#tool-kalender" class="nav-link flex items-center px-4 py-2 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60"><i data-lucide="calendar-clock" class="w-4 h-4 mr-3 text-rose-400"></i> Kalender Akademik</a></li>
                 </ul>
             </div>
 
             <div>
                 <div class="px-4 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">B. Pelaksanaan Pembelajaran</div>
                 <ul class="space-y-1">
-                    <li><a href="#tool-modul-ajar" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="book-open" class="w-4 h-4 mr-3 text-blue-400"></i> Modul Ajar</a></li>
-                    <li><a href="#tool-bahan-ajar" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="file-text" class="w-4 h-4 mr-3 text-teal-400"></i> Bahan Ajar</a></li>
-                    <li><a href="#tool-lkpd" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="clipboard-list" class="w-4 h-4 mr-3 text-orange-400"></i> LKPD</a></li>
-                    <li><a href="#tool-media" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="monitor-play" class="w-4 h-4 mr-3 text-pink-400"></i> Media Pembelajaran</a></li>
+                    <li><a href="#tool-modul-ajar" class="nav-link flex items-center px-4 py-2 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60"><i data-lucide="book-open" class="w-4 h-4 mr-3 text-blue-400"></i> Modul Ajar</a></li>
+                    <li><a href="#tool-bahan-ajar" class="nav-link flex items-center px-4 py-2 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60"><i data-lucide="file-text" class="w-4 h-4 mr-3 text-teal-400"></i> Bahan Ajar</a></li>
+                    <li><a href="#tool-lkpd" class="nav-link flex items-center px-4 py-2 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60"><i data-lucide="clipboard-list" class="w-4 h-4 mr-3 text-orange-400"></i> LKPD</a></li>
+                    <li><a href="#tool-media" class="nav-link flex items-center px-4 py-2 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60"><i data-lucide="monitor-play" class="w-4 h-4 mr-3 text-pink-400"></i> Media Pembelajaran</a></li>
                 </ul>
             </div>
 
             <div>
                 <div class="px-4 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">C. Asesmen & Evaluasi</div>
                 <ul class="space-y-1">
-                    <li><a href="#tool-diagnostik" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="stethoscope" class="w-4 h-4 mr-3 text-emerald-400"></i> Asesmen Diagnostik</a></li>
-                    <li><a href="#tool-formatif" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="bar-chart-2" class="w-4 h-4 mr-3 text-amber-400"></i> Asesmen Formatif</a></li>
-                    <li><a href="#tool-sumatif" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="pie-chart" class="w-4 h-4 mr-3 text-indigo-400"></i> Asesmen Sumatif</a></li>
-                    <li><a href="#tool-kisi-kisi" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="table" class="w-4 h-4 mr-3 text-cyan-400"></i> Kisi-kisi & Bank Soal</a></li>
-                    <li><a href="#tool-kartu-soal" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="layers" class="w-4 h-4 mr-3 text-violet-400"></i> Kartu Soal</a></li>
-                    <li><a href="#tool-rubrik" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="list-checks" class="w-4 h-4 mr-3 text-lime-400"></i> Rubrik Penilaian</a></li>
-                    <li><a href="#tool-analisis-soal" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="microscope" class="w-4 h-4 mr-3 text-fuchsia-400"></i> Analisis Soal (KR-20)</a></li>
+                    <li><a href="#tool-diagnostik" class="nav-link flex items-center px-4 py-2 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60"><i data-lucide="stethoscope" class="w-4 h-4 mr-3 text-emerald-400"></i> Asesmen Diagnostik</a></li>
+                    <li><a href="#tool-formatif" class="nav-link flex items-center px-4 py-2 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60"><i data-lucide="bar-chart-2" class="w-4 h-4 mr-3 text-amber-400"></i> Asesmen Formatif</a></li>
+                    <li><a href="#tool-sumatif" class="nav-link flex items-center px-4 py-2 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60"><i data-lucide="pie-chart" class="w-4 h-4 mr-3 text-indigo-400"></i> Asesmen Sumatif</a></li>
+                    <li><a href="#tool-kisi-kisi" class="nav-link flex items-center px-4 py-2 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60"><i data-lucide="table" class="w-4 h-4 mr-3 text-cyan-400"></i> Bank Soal</a></li>
+                    <li><a href="#tool-kartu-soal" class="nav-link flex items-center px-4 py-2 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60"><i data-lucide="layers" class="w-4 h-4 mr-3 text-violet-400"></i> Kartu Soal</a></li>
+                    <li><a href="#tool-rubrik" class="nav-link flex items-center px-4 py-2 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60"><i data-lucide="list-checks" class="w-4 h-4 mr-3 text-lime-400"></i> Rubrik Penilaian</a></li>
+                    <li><a href="#tool-analisis-soal" class="nav-link flex items-center px-4 py-2 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60"><i data-lucide="microscope" class="w-4 h-4 mr-3 text-fuchsia-400"></i> Analisis Soal (KR-20)</a></li>
                 </ul>
             </div>
 
             <div class="pt-2">
-                <div class="px-4 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">D. Cetak Dokumen</div>
+                <div class="px-4 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">D. Tindak Lanjut & Cetak</div>
                 <ul class="space-y-1">
-                    <li><a href="#tool-remedial" class="nav-link flex items-center px-4 py-2.5 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all"><i data-lucide="arrow-up-circle" class="w-4 h-4 mr-3 text-teal-400"></i> Remedial & Refleksi</a></li>
+                    <li><a href="#tool-remedial" class="nav-link flex items-center px-4 py-2 text-xs text-slate-300 rounded-lg hover:text-white hover:bg-slate-800/60"><i data-lucide="arrow-up-circle" class="w-4 h-4 mr-3 text-teal-400"></i> Remedial & Refleksi</a></li>
                     <li>
-                        <a href="#tool-print" class="nav-link flex items-center px-4 py-3 text-xs font-semibold text-amber-300 bg-amber-500/10 border border-amber-500/20 rounded-xl hover:bg-amber-500 hover:text-slate-950 transition-all group shadow-sm">
-                            <i data-lucide="printer" class="w-4 h-4 mr-3 group-hover:scale-110 transition-transform"></i> Menu Cetak Perangkat (A4)
+                        <a href="#tool-print" class="nav-link flex items-center px-4 py-3 text-xs font-semibold text-amber-300 bg-amber-500/10 border border-amber-500/20 rounded-xl hover:bg-amber-500 hover:text-slate-950 transition-all">
+                            <i data-lucide="printer" class="w-4 h-4 mr-3"></i> Menu Cetak Perangkat (A4)
                         </a>
                     </li>
                 </ul>
@@ -133,48 +122,38 @@
         </div>
     </aside>
 
-    <!-- Main Container Layout -->
+    <!-- Main Container -->
     <div class="flex flex-col flex-1 w-full h-full min-w-0">
-        <!-- Top App Bar Modern Header -->
         <header class="h-20 bg-white/80 backdrop-blur-md border-b border-slate-200/80 flex items-center justify-between px-8 z-10 shadow-sm sticky top-0">
             <div class="flex items-center">
                 <button id="mobile-menu-btn" class="lg:hidden mr-4 p-2 text-slate-600 hover:text-slate-900 rounded-lg bg-slate-100"><i data-lucide="menu"></i></button>
                 <div class="relative hidden md:block">
                     <i data-lucide="search" class="absolute left-3.5 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4"></i>
-                    <input type="text" placeholder="Cari modul atau dokumen..." class="pl-10 pr-4 py-2 border border-slate-200 rounded-full text-xs focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 w-72 bg-slate-50/70 transition-all">
+                    <input type="text" placeholder="Cari modul atau dokumen..." class="pl-10 pr-4 py-2 border border-slate-200 rounded-full text-xs focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 w-72 bg-slate-50/70">
                 </div>
             </div>
             
             <div class="flex items-center space-x-5">
-                <div class="px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/80 flex items-center shadow-sm">
+                <div class="px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center shadow-sm">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping mr-2"></span>
-                    <span class="w-2 h-2 rounded-full bg-emerald-600 mr-2 -ml-4"></span>
                     23 Sheets RDBMS Connected
                 </div>
-                <button class="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-colors relative">
-                    <i data-lucide="bell" class="w-5 h-5"></i>
-                    <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full"></span>
-                </button>
                 <div class="h-8 w-px bg-slate-200"></div>
-                <div class="flex items-center cursor-pointer group">
-                    <div class="relative">
-                        <img id="user-avatar" src="https://ui-avatars.com/api/?name=Tedi+Rustandi&background=2563eb&color=fff&bold=true" class="w-10 h-10 rounded-full ring-2 ring-blue-500/30 group-hover:ring-blue-500 transition-all shadow-sm">
-                    </div>
+                <div class="flex items-center cursor-pointer">
+                    <img id="user-avatar" src="https://ui-avatars.com/api/?name=Tedi+Rustandi&background=2563eb&color=fff&bold=true" class="w-10 h-10 rounded-full ring-2 ring-blue-500/30">
                     <div class="ml-3 hidden md:block">
-                        <p id="user-name" class="text-xs font-bold text-slate-800 group-hover:text-blue-600 transition-colors">Tedi Rustandi, S.Pd</p>
+                        <p id="user-name" class="text-xs font-bold text-slate-800">Tedi Rustandi, S.Pd</p>
                         <p id="user-role" class="text-[11px] text-slate-500">Guru SD Daya Susila</p>
                     </div>
                 </div>
             </div>
         </header>
 
-        <!-- Main Content Area -->
         <main id="app-content" class="flex-1 overflow-x-hidden overflow-y-auto bg-slate-100 p-8">
-            <!-- Dynamic Views loaded here -->
+            <!-- Dynamic Routing Views -->
         </main>
     </div>
 
-    <!-- Script Ingestion -->
     <script src="js/config.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/cp-reference.js"></script>
@@ -183,16 +162,14 @@
     <script src="js/export-docx.js"></script>
     <script src="js/export-excel.js"></script>
 
-    <!-- Google Sheets Integration & Routing -->
     <script>
         class GoogleSheetsService {
             static async sendToSheet(action, payload) {
                 const apiUrl = window.CONFIG?.GAS_API_URL;
                 if (!apiUrl || apiUrl === "") {
-                    console.log("GAS_API_URL belum diatur. Menyimpan lokal...");
+                    console.log("GAS_API_URL belum diatur. Menyimpan secara lokal...");
                     return { success: true, mode: 'local' };
                 }
-
                 try {
                     const response = await fetch(`${apiUrl}?action=${action}`, {
                         method: 'POST',
@@ -266,6 +243,31 @@
             `;
         }
 
+        function renderFormContainer(title, sheetName, formContent, formId, submitBtnId, onSubmit) {
+            const html = `
+                <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl border border-slate-200/80 shadow-sm space-y-6">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-5">
+                        <div>
+                            <h1 class="text-xl font-black text-slate-900">${title}</h1>
+                            <p class="text-xs text-blue-600 font-semibold mt-0.5 flex items-center"><i data-lucide="database" class="w-3.5 h-3.5 mr-1"></i> Tersinkron dengan Sheet: <strong>${sheetName}</strong></p>
+                        </div>
+                        <a href="#tool-print" class="bg-amber-500 hover:bg-amber-600 text-slate-950 px-4 py-2 rounded-xl text-xs font-bold flex items-center shadow-sm transition-all"><i data-lucide="printer" class="w-4 h-4 mr-1.5"></i> Ke Menu Cetak</a>
+                    </div>
+                    <form id="${formId}" class="space-y-5 text-xs">
+                        ${formContent}
+                        <button type="submit" id="${submitBtnId}" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3.5 rounded-xl text-sm font-bold flex items-center justify-center shadow-lg shadow-blue-500/25 transition-all">
+                            <i data-lucide="save" class="w-4 h-4 mr-2"></i> Simpan ke Sheet: ${sheetName}
+                        </button>
+                    </form>
+                </div>
+            `;
+            setTimeout(() => {
+                const form = document.getElementById(formId);
+                if (form) form.addEventListener('submit', onSubmit);
+            }, 0);
+            return html;
+        }
+
         function renderRoute() {
             const hash = window.location.hash || '#dashboard';
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
@@ -278,378 +280,372 @@
             switch(hash) {
                 case '#dashboard':
                     content.innerHTML = `
-                        <div class="mb-8">
-                            <h1 class="text-2xl font-black text-slate-900 tracking-tight">Dashboard Utama</h1>
-                            <p class="text-xs text-slate-500 mt-1">Selamat Datang kembali di <strong>${school.schoolName}</strong> (TA ${school.academicYear} Semester ${school.semester}).</p>
-                        </div>
+                        <div class="mb-8"><h1 class="text-2xl font-black text-slate-900">Dashboard Utama</h1><p class="text-xs text-slate-500 mt-1">Selamat Datang di <strong>${school.schoolName}</strong> (TA ${school.academicYear} Semester ${school.semester}).</p></div>
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                            <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all flex items-center">
-                                <div class="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600 mr-4 border border-blue-100">
-                                    <i data-lucide="folders" class="w-7 h-7"></i>
-                                </div>
-                                <div>
-                                    <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Total Perangkat</p>
-                                    <h3 class="text-3xl font-black text-slate-900 mt-0.5">142</h3>
-                                </div>
-                            </div>
-                            <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all flex items-center">
-                                <div class="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 mr-4 border border-emerald-100">
-                                    <i data-lucide="book-open" class="w-7 h-7"></i>
-                                </div>
-                                <div>
-                                    <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Modul Ajar</p>
-                                    <h3 class="text-3xl font-black text-slate-900 mt-0.5">36</h3>
-                                </div>
-                            </div>
-                            <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all flex items-center">
-                                <div class="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center text-amber-600 mr-4 border border-amber-100">
-                                    <i data-lucide="pie-chart" class="w-7 h-7"></i>
-                                </div>
-                                <div>
-                                    <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Asesmen & Bank Soal</p>
-                                    <h3 class="text-3xl font-black text-slate-900 mt-0.5">58</h3>
-                                </div>
-                            </div>
-                            <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all flex items-center">
-                                <div class="w-14 h-14 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-600 mr-4 border border-purple-100">
-                                    <i data-lucide="clipboard-list" class="w-7 h-7"></i>
-                                </div>
-                                <div>
-                                    <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">LKPD & Media</p>
-                                    <h3 class="text-3xl font-black text-slate-900 mt-0.5">48</h3>
-                                </div>
-                            </div>
+                            <div class="bg-white p-6 rounded-2xl border shadow-sm flex items-center"><div class="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600 mr-4"><i data-lucide="folders"></i></div><div><p class="text-xs text-slate-500 font-semibold uppercase">Total Perangkat</p><h3 class="text-3xl font-black">142</h3></div></div>
+                            <div class="bg-white p-6 rounded-2xl border shadow-sm flex items-center"><div class="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 mr-4"><i data-lucide="book-open"></i></div><div><p class="text-xs text-slate-500 font-semibold uppercase">Modul Ajar</p><h3 class="text-3xl font-black">36</h3></div></div>
+                            <div class="bg-white p-6 rounded-2xl border shadow-sm flex items-center"><div class="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center text-amber-600 mr-4"><i data-lucide="pie-chart"></i></div><div><p class="text-xs text-slate-500 font-semibold uppercase">Asesmen & Bank Soal</p><h3 class="text-3xl font-black">58</h3></div></div>
+                            <div class="bg-white p-6 rounded-2xl border shadow-sm flex items-center"><div class="w-14 h-14 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-600 mr-4"><i data-lucide="clipboard-list"></i></div><div><p class="text-xs text-slate-500 font-semibold uppercase">LKPD & Media</p><h3 class="text-3xl font-black">48</h3></div></div>
                         </div>
                     `;
                     break;
 
-                // TAB 2: SCHOOL_PROFILE
+                // 2. SCHOOL_PROFILE
                 case '#profile-school':
-                    content.innerHTML = `
-                        <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl border border-slate-200/80 shadow-sm space-y-6">
-                            <div class="flex items-center justify-between border-b border-slate-100 pb-5">
-                                <div>
-                                    <h1 class="text-xl font-black text-slate-900">Profil Sekolah & Identitas Guru</h1>
-                                    <p class="text-xs text-blue-600 font-semibold mt-0.5 flex items-center"><i data-lucide="database" class="w-3.5 h-3.5 mr-1"></i> Tersinkron dengan Sheet: <strong>SCHOOL_PROFILE</strong></p>
-                                </div>
-                                <a href="#tool-print" class="bg-amber-500 hover:bg-amber-600 text-slate-950 px-4 py-2 rounded-xl text-xs font-bold flex items-center shadow-sm shadow-amber-500/20 transition-all"><i data-lucide="printer" class="w-4 h-4 mr-1.5"></i> Ke Menu Cetak</a>
-                            </div>
-
-                            <form id="form-profile" class="space-y-5 text-xs">
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                    <div><label class="block font-bold mb-1.5 text-slate-700">school_name *</label><input type="text" id="p-school" value="${school.schoolName}" required class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
-                                    <div><label class="block font-bold mb-1.5 text-slate-700">npsn *</label><input type="text" id="p-npsn" value="${school.npsn}" required class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
-                                    <div><label class="block font-bold mb-1.5 text-slate-700">address</label><input type="text" id="p-address" value="${school.address}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
-                                    <div><label class="block font-bold mb-1.5 text-slate-700">city</label><input type="text" id="p-city" value="${school.city}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
-                                    <div><label class="block font-bold mb-1.5 text-slate-700">province</label><input type="text" id="p-province" value="${school.province}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
-                                    <div><label class="block font-bold mb-1.5 text-slate-700">headmaster_name</label><input type="text" id="p-headmaster" value="${school.headmasterName}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
-                                    <div><label class="block font-bold mb-1.5 text-slate-700">headmaster_nip</label><input type="text" id="p-headmaster-nip" value="${school.headmasterNip}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
-                                    <div><label class="block font-bold mb-1.5 text-slate-700">teacher_name</label><input type="text" id="p-teacher" value="${school.teacherName}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
-                                    <div><label class="block font-bold mb-1.5 text-slate-700">teacher_nip</label><input type="text" id="p-teacher-nip" value="${school.teacherNip}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
-                                    <div><label class="block font-bold mb-1.5 text-slate-700">academic_year</label><input type="text" id="p-year" value="${school.academicYear}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
-                                    <div><label class="block font-bold mb-1.5 text-slate-700">semester</label><input type="text" id="p-sem" value="${school.semester}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
-                                </div>
-                                <button type="submit" id="btn-save-profile" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3.5 rounded-xl text-sm font-bold flex items-center justify-center shadow-lg shadow-blue-500/25 transition-all">
-                                    <i data-lucide="save" class="w-4 h-4 mr-2"></i> Simpan ke Sheet: SCHOOL_PROFILE
-                                </button>
-                            </form>
+                    content.innerHTML = renderFormContainer('Profil Sekolah & Identitas Guru', 'SCHOOL_PROFILE', `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">school_name *</label><input type="text" id="p-school" value="${school.schoolName}" required class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">npsn *</label><input type="text" id="p-npsn" value="${school.npsn}" required class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">address</label><input type="text" id="p-address" value="${school.address}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">city</label><input type="text" id="p-city" value="${school.city}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">province</label><input type="text" id="p-province" value="${school.province}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">headmaster_name</label><input type="text" id="p-headmaster" value="${school.headmasterName}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">headmaster_nip</label><input type="text" id="p-headmaster-nip" value="${school.headmasterNip}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">teacher_name</label><input type="text" id="p-teacher" value="${school.teacherName}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">teacher_nip</label><input type="text" id="p-teacher-nip" value="${school.teacherNip}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">academic_year</label><input type="text" id="p-year" value="${school.academicYear}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">semester</label><input type="text" id="p-sem" value="${school.semester}" class="w-full border border-slate-200 p-3 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
                         </div>
-                    `;
-                    document.getElementById('form-profile').addEventListener('submit', async (e) => {
+                    `, 'form-profile', 'btn-profile', async (e) => {
                         e.preventDefault();
-                        const btn = document.getElementById('btn-save-profile');
-                        btn.innerText = "Mengirim ke Google Sheets...";
-                        btn.disabled = true;
-
-                        const updated = {
+                        const p = {
                             user_id: "USR-001",
-                            school_name: document.getElementById('p-school').value,
-                            npsn: document.getElementById('p-npsn').value,
-                            address: document.getElementById('p-address').value,
-                            city: document.getElementById('p-city').value,
-                            province: document.getElementById('p-province').value,
-                            headmaster_name: document.getElementById('p-headmaster').value,
-                            headmaster_nip: document.getElementById('p-headmaster-nip').value,
-                            teacher_name: document.getElementById('p-teacher').value,
-                            teacher_nip: document.getElementById('p-teacher-nip').value,
-                            academic_year: document.getElementById('p-year').value,
-                            semester: document.getElementById('p-sem').value,
-                            updated_at: new Date().toISOString()
+                            school_name: document.getElementById('p-school').value, npsn: document.getElementById('p-npsn').value,
+                            address: document.getElementById('p-address').value, city: document.getElementById('p-city').value,
+                            province: document.getElementById('p-province').value, headmaster_name: document.getElementById('p-headmaster').value,
+                            headmaster_nip: document.getElementById('p-headmaster-nip').value, teacher_name: document.getElementById('p-teacher').value,
+                            teacher_nip: document.getElementById('p-teacher-nip').value, academic_year: document.getElementById('p-year').value,
+                            semester: document.getElementById('p-sem').value
                         };
-
                         localStorage.setItem('smart_teacher_school_profile', JSON.stringify({
-                            schoolName: updated.school_name, npsn: updated.npsn, address: updated.address, city: updated.city, province: updated.province,
-                            headmasterName: updated.headmaster_name, headmasterNip: updated.headmaster_nip, teacherName: updated.teacher_name, teacherNip: updated.teacher_nip,
-                            academicYear: updated.academic_year, semester: updated.semester
+                            schoolName: p.school_name, npsn: p.npsn, address: p.address, city: p.city, province: p.province,
+                            headmasterName: p.headmaster_name, headmasterNip: p.headmaster_nip, teacherName: p.teacher_name, teacherNip: p.teacher_nip,
+                            academicYear: p.academic_year, semester: p.semester
                         }));
-
-                        await GoogleSheetsService.sendToSheet('SAVE_SCHOOL_PROFILE', updated);
-                        alert("Profil Sekolah berhasil disimpan ke Sheet 'SCHOOL_PROFILE'!");
-                        renderRoute();
+                        await GoogleSheetsService.sendToSheet('SAVE_SCHOOL_PROFILE', p);
+                        alert("Data SCHOOL_PROFILE Berhasil Disimpan!");
                     });
                     break;
 
-                // TAB 6: CP_DATA
+                // 6. CP_DATA
                 case '#tool-cp':
-                    content.innerHTML = `
-                        <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl border border-slate-200/80 shadow-sm space-y-6">
-                            <div class="flex items-center justify-between border-b border-slate-100 pb-5">
-                                <div>
-                                    <h1 class="text-xl font-black text-slate-900">Capaian Pembelajaran (CP) Generator</h1>
-                                    <p class="text-xs text-blue-600 font-semibold mt-0.5 flex items-center"><i data-lucide="database" class="w-3.5 h-3.5 mr-1"></i> Tersinkron dengan Sheet: <strong>CP_DATA</strong></p>
-                                </div>
-                                <a href="#tool-print" class="bg-amber-500 hover:bg-amber-600 text-slate-950 px-4 py-2 rounded-xl text-xs font-bold flex items-center shadow-sm shadow-amber-500/20 transition-all"><i data-lucide="printer" class="w-4 h-4 mr-1.5"></i> Ke Menu Cetak</a>
-                            </div>
-
-                            <form id="form-cp" class="space-y-5 text-sm">
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 mb-1.5">subject (Mata Pelajaran) *</label>
-                                    <select id="cp-subject" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus">
-                                        <option value="IPAS">IPAS (Sains & Sosial)</option>
-                                        <option value="Matematika">Matematika</option>
-                                        <option value="Bahasa Indonesia">Bahasa Indonesia</option>
-                                        <option value="Pendidikan Pancasila">Pendidikan Pancasila</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 mb-1.5">phase (Fase / Kelas) *</label>
-                                    <select id="cp-phase" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus">
-                                        <option value="Fase A">Fase A (Kelas 1-2)</option>
-                                        <option value="Fase B" selected>Fase B (Kelas 3-4)</option>
-                                        <option value="Fase C">Fase C (Kelas 5-6)</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 mb-1.5">element (Elemen CP) *</label>
-                                    <input type="text" id="cp-element" value="Pemahaman IPAS (Sains & Sosial)" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 mb-1.5">cp_content (Naskah Deskripsi CP) *</label>
-                                    <textarea id="cp-content" rows="6" class="w-full p-4 border border-slate-200 rounded-xl text-xs leading-relaxed bg-slate-50/50 form-input-focus">Di akhir Fase B, peserta didik menganalisis hubungan antara bentuk serta fungsi bagian tubuh pada manusia dan tumbuhan; mendeskripsikan siklus air dan wujud zat dalam kehidupan sehari-hari.</textarea>
-                                </div>
-
-                                <button type="submit" id="btn-save-cp" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3.5 rounded-xl text-sm font-bold flex items-center justify-center shadow-lg shadow-blue-500/25 transition-all">
-                                    <i data-lucide="save" class="w-4 h-4 mr-2"></i> Simpan ke Sheet: CP_DATA
-                                </button>
-                            </form>
-                        </div>
-                    `;
-                    document.getElementById('form-cp').addEventListener('submit', async (e) => {
+                    content.innerHTML = renderFormContainer('CP Generator', 'CP_DATA', `
+                        <div><label class="block font-bold mb-1.5 text-slate-700">subject *</label><input type="text" id="cp-subj" value="IPAS" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">phase *</label><input type="text" id="cp-phase" value="Fase B" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">element *</label><input type="text" id="cp-elem" value="Pemahaman IPAS (Sains & Sosial)" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">cp_content *</label><textarea id="cp-content" rows="5" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Di akhir Fase B, peserta didik menganalisis hubungan antara bentuk serta fungsi bagian tubuh pada manusia dan tumbuhan; mendeskripsikan siklus air dan wujud zat.</textarea></div>
+                    `, 'form-cp', 'btn-cp', async (e) => {
                         e.preventDefault();
-                        const btn = document.getElementById('btn-save-cp');
-                        btn.innerText = "Mengirim...";
-                        btn.disabled = true;
-
-                        const payload = {
-                            cp_id: "CP-" + Date.now(),
-                            subject: document.getElementById('cp-subject').value,
-                            phase: document.getElementById('cp-phase').value,
-                            element: document.getElementById('cp-element').value,
-                            cp_content: document.getElementById('cp-content').value
-                        };
-
-                        localStorage.setItem('smart_teacher_last_cp', JSON.stringify(payload));
-                        await GoogleSheetsService.sendToSheet('SAVE_CP_DATA', payload);
-                        alert("Data CP berhasil disimpan ke Sheet 'CP_DATA'!");
-                        renderRoute();
+                        const p = { cp_id: "CP-"+Date.now(), subject: document.getElementById('cp-subj').value, phase: document.getElementById('cp-phase').value, element: document.getElementById('cp-elem').value, cp_content: document.getElementById('cp-content').value };
+                        localStorage.setItem('smart_teacher_last_cp', JSON.stringify(p));
+                        await GoogleSheetsService.sendToSheet('SAVE_CP_DATA', p);
+                        alert("Data CP_DATA Berhasil Disimpan!");
                     });
                     break;
 
-                // TAB 7: TP_DATA
+                // 7. TP_DATA
                 case '#tool-tp':
-                    content.innerHTML = `
-                        <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl border border-slate-200/80 shadow-sm space-y-6">
-                            <div class="flex items-center justify-between border-b border-slate-100 pb-5">
-                                <div>
-                                    <h1 class="text-xl font-black text-slate-900">Tujuan Pembelajaran (TP) Generator</h1>
-                                    <p class="text-xs text-blue-600 font-semibold mt-0.5 flex items-center"><i data-lucide="database" class="w-3.5 h-3.5 mr-1"></i> Tersinkron dengan Sheet: <strong>TP_DATA</strong></p>
-                                </div>
-                                <a href="#tool-print" class="bg-amber-500 hover:bg-amber-600 text-slate-950 px-4 py-2 rounded-xl text-xs font-bold flex items-center shadow-sm shadow-amber-500/20 transition-all"><i data-lucide="printer" class="w-4 h-4 mr-1.5"></i> Ke Menu Cetak</a>
-                            </div>
-
-                            <form id="form-tp" class="space-y-5 text-sm">
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">cp_id</label><input type="text" id="tp-cpid" value="CP-DEFAULT" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-100/70" readonly></div>
-                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">subject</label><input type="text" id="tp-subject" value="IPAS" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
-                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">phase</label><input type="text" id="tp-phase" value="Fase B" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
-                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">bloom_level</label>
-                                        <select id="tp-bloom" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus">
-                                            <option value="C2 - Memahami">C2 - Memahami</option>
-                                            <option value="C4 - Menganalisis" selected>C4 - Menganalisis</option>
-                                            <option value="C5 - Evaluasi">C5 - Evaluasi</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 mb-1.5">tp_content (Rumusan Tujuan Pembelajaran)</label>
-                                    <textarea id="tp-content" rows="4" class="w-full p-4 border border-slate-200 rounded-xl text-xs bg-slate-50/50 form-input-focus">Peserta didik mampu menganalisis sistem pencernaan pada manusia beserta fungsi dari tiap organ secara kontekstual.</textarea>
-                                </div>
-
-                                <button type="submit" id="btn-save-tp" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 rounded-xl text-sm font-bold flex items-center justify-center shadow-lg shadow-emerald-500/25 transition-all">
-                                    <i data-lucide="save" class="w-4 h-4 mr-2"></i> Simpan ke Sheet: TP_DATA
-                                </button>
-                            </form>
+                    content.innerHTML = renderFormContainer('TP Generator', 'TP_DATA', `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">cp_id</label><input type="text" id="tp-cpid" value="CP-DEFAULT" class="w-full p-3 border rounded-xl text-sm bg-slate-100" readonly></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">subject</label><input type="text" id="tp-subj" value="IPAS" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">phase</label><input type="text" id="tp-phase" value="Fase B" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">bloom_level</label><input type="text" id="tp-bloom" value="C4 - Menganalisis" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
                         </div>
-                    `;
-                    document.getElementById('form-tp').addEventListener('submit', async (e) => {
+                        <div><label class="block font-bold mb-1.5 text-slate-700">tp_content</label><textarea id="tp-content" rows="3" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Peserta didik mampu menganalisis sistem pencernaan pada manusia dan fungsinya secara kontekstual.</textarea></div>
+                    `, 'form-tp', 'btn-tp', async (e) => {
                         e.preventDefault();
-                        const btn = document.getElementById('btn-save-tp');
-                        btn.innerText = "Mengirim...";
-                        btn.disabled = true;
-
-                        const payload = {
-                            tp_id: "TP-" + Date.now(),
-                            cp_id: document.getElementById('tp-cpid').value,
-                            subject: document.getElementById('tp-subject').value,
-                            phase: document.getElementById('tp-phase').value,
-                            bloom_level: document.getElementById('tp-bloom').value,
-                            tp_content: document.getElementById('tp-content').value
-                        };
-                        await GoogleSheetsService.sendToSheet('SAVE_TP_DATA', payload);
-                        alert("Data TP berhasil disimpan ke Sheet 'TP_DATA'!");
-                        renderRoute();
+                        const p = { tp_id: "TP-"+Date.now(), cp_id: document.getElementById('tp-cpid').value, subject: document.getElementById('tp-subj').value, phase: document.getElementById('tp-phase').value, bloom_level: document.getElementById('tp-bloom').value, tp_content: document.getElementById('tp-content').value };
+                        await GoogleSheetsService.sendToSheet('SAVE_TP_DATA', p);
+                        alert("Data TP_DATA Berhasil Disimpan!");
                     });
                     break;
 
-                // TAB 8: ATP_DATA
+                // 8. ATP_DATA
                 case '#tool-atp':
-                    content.innerHTML = `
-                        <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl border border-slate-200/80 shadow-sm space-y-6">
-                            <div class="flex items-center justify-between border-b border-slate-100 pb-5">
-                                <div>
-                                    <h1 class="text-xl font-black text-slate-900">Alur Tujuan Pembelajaran (ATP) Generator</h1>
-                                    <p class="text-xs text-blue-600 font-semibold mt-0.5 flex items-center"><i data-lucide="database" class="w-3.5 h-3.5 mr-1"></i> Tersinkron dengan Sheet: <strong>ATP_DATA</strong></p>
-                                </div>
-                                <a href="#tool-print" class="bg-amber-500 hover:bg-amber-600 text-slate-950 px-4 py-2 rounded-xl text-xs font-bold flex items-center shadow-sm shadow-amber-500/20 transition-all"><i data-lucide="printer" class="w-4 h-4 mr-1.5"></i> Ke Menu Cetak</a>
-                            </div>
-
-                            <form id="form-atp" class="space-y-5 text-sm">
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">sequence_order</label><input type="number" id="atp-seq" value="1" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
-                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">material_topic</label><input type="text" id="atp-topic" value="Organ Pencernaan Manusia" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
-                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">jp_allocation</label><input type="text" id="atp-jp" value="6 JP" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
-                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">p3_dimension</label><input type="text" id="atp-p3" value="Bernalar Kritis, Gotong Royong" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
-                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">assessment_type</label><input type="text" id="atp-assess" value="Formatif Unjuk Kerja" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
-                                </div>
-
-                                <button type="submit" id="btn-save-atp" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3.5 rounded-xl text-sm font-bold flex items-center justify-center shadow-lg shadow-blue-500/25 transition-all">
-                                    <i data-lucide="save" class="w-4 h-4 mr-2"></i> Simpan ke Sheet: ATP_DATA
-                                </button>
-                            </form>
+                    content.innerHTML = renderFormContainer('ATP Generator', 'ATP_DATA', `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">tp_id</label><input type="text" id="atp-tpid" value="TP-DEFAULT" class="w-full p-3 border rounded-xl text-sm bg-slate-100" readonly></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">sequence_order</label><input type="number" id="atp-seq" value="1" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">material_topic</label><input type="text" id="atp-topic" value="Organ Pencernaan Manusia" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">jp_allocation</label><input type="text" id="atp-jp" value="6 JP" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">p3_dimension</label><input type="text" id="atp-p3" value="Bernalar Kritis, Gotong Royong" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">assessment_type</label><input type="text" id="atp-assess" value="Formatif Unjuk Kerja" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
                         </div>
-                    `;
-                    document.getElementById('form-atp').addEventListener('submit', async (e) => {
+                    `, 'form-atp', 'btn-atp', async (e) => {
                         e.preventDefault();
-                        const btn = document.getElementById('btn-save-atp');
-                        btn.innerText = "Mengirim...";
-                        btn.disabled = true;
-
-                        const payload = {
-                            atp_id: "ATP-" + Date.now(),
-                            tp_id: "TP-DEFAULT",
-                            sequence_order: document.getElementById('atp-seq').value,
-                            material_topic: document.getElementById('atp-topic').value,
-                            jp_allocation: document.getElementById('atp-jp').value,
-                            p3_dimension: document.getElementById('atp-p3').value,
-                            assessment_type: document.getElementById('atp-assess').value
-                        };
-                        await GoogleSheetsService.sendToSheet('SAVE_ATP_DATA', payload);
-                        alert("Data ATP berhasil disimpan ke Sheet 'ATP_DATA'!");
-                        renderRoute();
+                        const p = { atp_id: "ATP-"+Date.now(), tp_id: document.getElementById('atp-tpid').value, sequence_order: document.getElementById('atp-seq').value, material_topic: document.getElementById('atp-topic').value, jp_allocation: document.getElementById('atp-jp').value, p3_dimension: document.getElementById('atp-p3').value, assessment_type: document.getElementById('atp-assess').value };
+                        await GoogleSheetsService.sendToSheet('SAVE_ATP_DATA', p);
+                        alert("Data ATP_DATA Berhasil Disimpan!");
                     });
                     break;
 
-                // TAB 12: MODULE_DATA
+                // 9. PROTA_DATA
+                case '#tool-prota':
+                    content.innerHTML = renderFormContainer('Program Tahunan (PROTA)', 'PROTA_DATA', `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">academic_year</label><input type="text" id="prt-year" value="2026/2027" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">subject</label><input type="text" id="prt-subj" value="IPAS" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">class_name</label><input type="text" id="prt-cls" value="Kelas IV SD" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">atp_id</label><input type="text" id="prt-atpid" value="ATP-DEFAULT" class="w-full p-3 border rounded-xl text-sm bg-slate-100" readonly></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">target_jp</label><input type="text" id="prt-jp" value="36 JP" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">semester</label><input type="text" id="prt-sem" value="1 (Ganjil)" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        </div>
+                    `, 'form-prota', 'btn-prota', async (e) => {
+                        e.preventDefault();
+                        const p = { prota_id: "PRT-"+Date.now(), academic_year: document.getElementById('prt-year').value, subject: document.getElementById('prt-subj').value, class_name: document.getElementById('prt-cls').value, atp_id: document.getElementById('prt-atpid').value, target_jp: document.getElementById('prt-jp').value, semester: document.getElementById('prt-sem').value };
+                        await GoogleSheetsService.sendToSheet('SAVE_PROTA_DATA', p);
+                        alert("Data PROTA_DATA Berhasil Disimpan!");
+                    });
+                    break;
+
+                // 10. PROMES_DATA
+                case '#tool-promes':
+                    content.innerHTML = renderFormContainer('Program Semester (PROMES)', 'PROMES_DATA', `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">prota_id</label><input type="text" id="prm-prtid" value="PRT-DEFAULT" class="w-full p-3 border rounded-xl text-sm bg-slate-100" readonly></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">semester</label><input type="text" id="prm-sem" value="1 (Ganjil)" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">month_name</label><input type="text" id="prm-month" value="Agustus" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">effective_week</label><input type="text" id="prm-week" value="Minggu 2" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">topic</label><input type="text" id="prm-topic" value="Sistem Pencernaan Manusia" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">jp</label><input type="text" id="prm-jp" value="4 JP" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        </div>
+                    `, 'form-promes', 'btn-promes', async (e) => {
+                        e.preventDefault();
+                        const p = { promes_id: "PRM-"+Date.now(), prota_id: document.getElementById('prm-prtid').value, semester: document.getElementById('prm-sem').value, month_name: document.getElementById('prm-month').value, effective_week: document.getElementById('prm-week').value, topic: document.getElementById('prm-topic').value, jp: document.getElementById('prm-jp').value };
+                        await GoogleSheetsService.sendToSheet('SAVE_PROMES_DATA', p);
+                        alert("Data PROMES_DATA Berhasil Disimpan!");
+                    });
+                    break;
+
+                // 11. CALENDAR_DATA
+                case '#tool-kalender':
+                    content.innerHTML = renderFormContainer('Kalender Akademik', 'CALENDAR_DATA', `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">academic_year</label><input type="text" id="cal-year" value="2026/2027" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">event_date</label><input type="text" id="cal-date" value="2026-08-17" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">event_name</label><input type="text" id="cal-name" value="HUT Kemerdekaan RI" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">event_type</label><input type="text" id="cal-type" value="Libur Nasional" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        </div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">description</label><textarea id="cal-desc" rows="3" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Peringatan Hari Ulang Tahun Kemerdekaan Republik Indonesia ke-81.</textarea></div>
+                    `, 'form-cal', 'btn-cal', async (e) => {
+                        e.preventDefault();
+                        const p = { event_id: "CAL-"+Date.now(), academic_year: document.getElementById('cal-year').value, event_date: document.getElementById('cal-date').value, event_name: document.getElementById('cal-name').value, event_type: document.getElementById('cal-type').value, description: document.getElementById('cal-desc').value };
+                        await GoogleSheetsService.sendToSheet('SAVE_CALENDAR_DATA', p);
+                        alert("Data CALENDAR_DATA Berhasil Disimpan!");
+                    });
+                    break;
+
+                // 12. MODULE_DATA
                 case '#tool-modul-ajar':
-                    content.innerHTML = `
-                        <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl border border-slate-200/80 shadow-sm space-y-6">
-                            <div class="flex items-center justify-between border-b border-slate-100 pb-5">
-                                <div>
-                                    <h1 class="text-xl font-black text-slate-900">Modul Ajar Generator</h1>
-                                    <p class="text-xs text-blue-600 font-semibold mt-0.5 flex items-center"><i data-lucide="database" class="w-3.5 h-3.5 mr-1"></i> Tersinkron dengan Sheet: <strong>MODULE_DATA</strong></p>
-                                </div>
-                                <a href="#tool-print" class="bg-amber-500 hover:bg-amber-600 text-slate-950 px-4 py-2 rounded-xl text-xs font-bold flex items-center shadow-sm shadow-amber-500/20 transition-all"><i data-lucide="printer" class="w-4 h-4 mr-1.5"></i> Ke Menu Cetak</a>
-                            </div>
-
-                            <form id="form-modul" class="space-y-5 text-sm">
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">topic *</label><input type="text" id="m-topic" value="Sistem Pencernaan Manusia" required class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
-                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">learning_model *</label>
-                                        <select id="m-model" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus">
-                                            <option value="Problem Based Learning (PBL)">Problem Based Learning (PBL)</option>
-                                            <option value="Project Based Learning (PjBL)">Project Based Learning (PjBL)</option>
-                                        </select>
-                                    </div>
-                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">time_allocation</label><input type="text" id="m-time" value="2 x 35 Menit" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
-                                    <div><label class="block text-xs font-bold text-slate-700 mb-1.5">p3_profiles</label><input type="text" id="m-p3" value="Bernalar Kritis, Gotong Royong" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
-                                </div>
-                                <div><label class="block text-xs font-bold text-slate-700 mb-1.5">opening_activity</label><textarea id="m-open" rows="2" class="w-full p-3 border border-slate-200 rounded-xl text-xs bg-slate-50/50 form-input-focus">Guru memberikan salam, berdoa bersama, dan apersepsi berupa pertanyaan pemantik.</textarea></div>
-                                <div><label class="block text-xs font-bold text-slate-700 mb-1.5">main_activity</label><textarea id="m-main" rows="3" class="w-full p-3 border border-slate-200 rounded-xl text-xs bg-slate-50/50 form-input-focus">Siswa berdiskusi kelompok mengamati gambar dan model organ pencernaan manusia.</textarea></div>
-                                <div><label class="block text-xs font-bold text-slate-700 mb-1.5">closing_activity</label><textarea id="m-close" rows="2" class="w-full p-3 border border-slate-200 rounded-xl text-xs bg-slate-50/50 form-input-focus">Refleksi pembelajaran bersama siswa dan penutupan dengan salam serta doa.</textarea></div>
-
-                                <button type="submit" id="btn-save-module" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3.5 rounded-xl text-sm font-bold flex items-center justify-center shadow-lg shadow-blue-500/25 transition-all">
-                                    <i data-lucide="save" class="w-4 h-4 mr-2"></i> Simpan ke Sheet: MODULE_DATA
-                                </button>
-                            </form>
+                    content.innerHTML = renderFormContainer('Modul Ajar Generator', 'MODULE_DATA', `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">atp_id</label><input type="text" id="m-atpid" value="ATP-DEFAULT" class="w-full p-3 border rounded-xl text-sm bg-slate-100" readonly></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">topic *</label><input type="text" id="m-topic" value="Sistem Pencernaan Manusia" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">learning_model</label><input type="text" id="m-model" value="Problem Based Learning (PBL)" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">time_allocation</label><input type="text" id="m-time" value="2 x 35 Menit" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">p3_profiles</label><input type="text" id="m-p3" value="Bernalar Kritis, Gotong Royong" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
                         </div>
-                    `;
-                    document.getElementById('form-modul').addEventListener('submit', async (e) => {
+                        <div><label class="block font-bold mb-1.5 text-slate-700">opening_activity</label><textarea id="m-open" rows="2" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Guru membuka pelajaran dengan doa dan apersepsi.</textarea></div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">main_activity</label><textarea id="m-main" rows="3" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Siswa berdiskusi mengamati gambar organ pencernaan manusia.</textarea></div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">closing_activity</label><textarea id="m-close" rows="2" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Refleksi pembelajaran bersama siswa dan penutupan.</textarea></div>
+                    `, 'form-module', 'btn-module', async (e) => {
                         e.preventDefault();
-                        const btn = document.getElementById('btn-save-module');
-                        btn.innerText = "Mengirim...";
-                        btn.disabled = true;
-
-                        const payload = {
-                            module_id: "MOD-" + Date.now(),
-                            atp_id: "ATP-DEFAULT",
-                            topic: document.getElementById('m-topic').value,
-                            learning_model: document.getElementById('m-model').value,
-                            time_allocation: document.getElementById('m-time').value,
-                            p3_profiles: document.getElementById('m-p3').value,
-                            opening_activity: document.getElementById('m-open').value,
-                            main_activity: document.getElementById('m-main').value,
-                            closing_activity: document.getElementById('m-close').value,
-                            created_at: new Date().toISOString()
-                        };
-
-                        await GoogleSheetsService.sendToSheet('SAVE_MODULE_DATA', payload);
-                        alert("Data Modul Ajar berhasil disimpan ke Sheet 'MODULE_DATA'!");
-                        renderRoute();
+                        const p = { module_id: "MOD-"+Date.now(), atp_id: document.getElementById('m-atpid').value, topic: document.getElementById('m-topic').value, learning_model: document.getElementById('m-model').value, time_allocation: document.getElementById('m-time').value, p3_profiles: document.getElementById('m-p3').value, opening_activity: document.getElementById('m-open').value, main_activity: document.getElementById('m-main').value, closing_activity: document.getElementById('m-close').value };
+                        await GoogleSheetsService.sendToSheet('SAVE_MODULE_DATA', p);
+                        alert("Data MODULE_DATA Berhasil Disimpan!");
                     });
                     break;
 
-                // MENU KHUSUS PRATINJAU & CETAK DOKUMEN A4
+                // 13. MATERIAL_DATA
+                case '#tool-bahan-ajar':
+                    content.innerHTML = renderFormContainer('Bahan Ajar Siswa', 'MATERIAL_DATA', `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">module_id</label><input type="text" id="mat-modid" value="MOD-DEFAULT" class="w-full p-3 border rounded-xl text-sm bg-slate-100" readonly></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">topic</label><input type="text" id="mat-topic" value="Organ Pencernaan Utama" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        </div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">summary_text</label><textarea id="mat-summary" rows="4" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Ringkasan materi organ mulut, kerongkongan, lambung, usus halus, usus besar, dan anus.</textarea></div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">glossary</label><input type="text" id="mat-gloss" value="Enzim, Peristaltik, Digesti" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">reading_sources</label><input type="text" id="mat-sources" value="Buku IPAS Kelas IV Kemendikbudristek 2024" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                    `, 'form-mat', 'btn-mat', async (e) => {
+                        e.preventDefault();
+                        const p = { material_id: "MAT-"+Date.now(), module_id: document.getElementById('mat-modid').value, topic: document.getElementById('mat-topic').value, summary_text: document.getElementById('mat-summary').value, glossary: document.getElementById('mat-gloss').value, reading_sources: document.getElementById('mat-sources').value };
+                        await GoogleSheetsService.sendToSheet('SAVE_MATERIAL_DATA', p);
+                        alert("Data MATERIAL_DATA Berhasil Disimpan!");
+                    });
+                    break;
+
+                // 14. LKPD_DATA
+                case '#tool-lkpd':
+                    content.innerHTML = renderFormContainer('Lembar Kerja Peserta Didik (LKPD)', 'LKPD_DATA', `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">module_id</label><input type="text" id="lk-modid" value="MOD-DEFAULT" class="w-full p-3 border rounded-xl text-sm bg-slate-100" readonly></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">title</label><input type="text" id="lk-title" value="LKPD - Alur Pencernaan Makanan" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">group_target</label><input type="text" id="lk-target" value="Kelompok (4-5 Siswa)" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        </div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">instructions</label><textarea id="lk-inst" rows="3" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Amati gambar organ pencernaan lalu cocokkan nama organ dan fungsinya secara berdiskusi.</textarea></div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">questions</label><textarea id="lk-quest" rows="3" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">1. Sebutkan urutan organ pencernaan manusia! 2. Apa fungsi usus halus?</textarea></div>
+                    `, 'form-lkpd', 'btn-lkpd', async (e) => {
+                        e.preventDefault();
+                        const p = { lkpd_id: "LKPD-"+Date.now(), module_id: document.getElementById('lk-modid').value, title: document.getElementById('lk-title').value, group_target: document.getElementById('lk-target').value, instructions: document.getElementById('lk-inst').value, questions: document.getElementById('lk-quest').value };
+                        await GoogleSheetsService.sendToSheet('SAVE_LKPD_DATA', p);
+                        alert("Data LKPD_DATA Berhasil Disimpan!");
+                    });
+                    break;
+
+                // 15. MEDIA_DATA
+                case '#tool-media':
+                    content.innerHTML = renderFormContainer('Media Pembelajaran', 'MEDIA_DATA', `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">module_id</label><input type="text" id="med-modid" value="MOD-DEFAULT" class="w-full p-3 border rounded-xl text-sm bg-slate-100" readonly></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">media_name</label><input type="text" id="med-name" value="Video Animasi Sistem Pencernaan" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">media_type</label><input type="text" id="med-type" value="Audio Visual (Video Youtube)" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">resource_url</label><input type="text" id="med-url" value="https://youtube.com/watch?v=sample" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        </div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">scenario</label><textarea id="med-scen" rows="3" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Ditayangkan pada kegiatan inti selama 10 menit sebagai pemantik diskusi.</textarea></div>
+                    `, 'form-media', 'btn-media', async (e) => {
+                        e.preventDefault();
+                        const p = { media_id: "MED-"+Date.now(), module_id: document.getElementById('med-modid').value, media_name: document.getElementById('med-name').value, media_type: document.getElementById('med-type').value, scenario: document.getElementById('med-scen').value, resource_url: document.getElementById('med-url').value };
+                        await GoogleSheetsService.sendToSheet('SAVE_MEDIA_DATA', p);
+                        alert("Data MEDIA_DATA Berhasil Disimpan!");
+                    });
+                    break;
+
+                // 16. ASSESSMENT_DATA
+                case '#tool-diagnostik':
+                case '#tool-formatif':
+                case '#tool-sumatif':
+                    const assessType = hash === '#tool-diagnostik' ? 'Diagnostik' : (hash === '#tool-formatif' ? 'Formatif' : 'Sumatif');
+                    content.innerHTML = renderFormContainer(`Instrumen Asesmen (${assessType})`, 'ASSESSMENT_DATA', `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">module_id</label><input type="text" id="asm-modid" value="MOD-DEFAULT" class="w-full p-3 border rounded-xl text-sm bg-slate-100" readonly></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">type</label><input type="text" id="asm-type" value="${assessType}" class="w-full p-3 border rounded-xl text-sm bg-slate-100" readonly></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">topic</label><input type="text" id="asm-topic" value="Tes Kognitif Sistem Pencernaan" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        </div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">scoring_guide</label><textarea id="asm-guide" rows="4" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Skor 100 untuk jawaban lengkap, Skor 50 untuk jawaban setengah tepat.</textarea></div>
+                    `, 'form-asm', 'btn-asm', async (e) => {
+                        e.preventDefault();
+                        const p = { assessment_id: "ASM-"+Date.now(), module_id: document.getElementById('asm-modid').value, type: document.getElementById('asm-type').value, topic: document.getElementById('asm-topic').value, scoring_guide: document.getElementById('asm-guide').value };
+                        await GoogleSheetsService.sendToSheet('SAVE_ASSESSMENT_DATA', p);
+                        alert("Data ASSESSMENT_DATA Berhasil Disimpan!");
+                    });
+                    break;
+
+                // 17. QUESTION_BANK
+                case '#tool-kisi-kisi':
+                    content.innerHTML = renderFormContainer('Kisi-kisi & Bank Soal', 'QUESTION_BANK', `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">assessment_id</label><input type="text" id="q-asmid" value="ASM-DEFAULT" class="w-full p-3 border rounded-xl text-sm bg-slate-100" readonly></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">question_type</label><input type="text" id="q-type" value="Pilihan Ganda" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">answer_key</label><input type="text" id="q-key" value="A" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">bloom_level</label><input type="text" id="q-bloom" value="C4 - Menganalisis" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        </div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">question_text</label><textarea id="q-text" rows="2" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Organ yang berfungsi menyerap sari-sari makanan adalah...</textarea></div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div><label class="block font-bold text-slate-700">option_a</label><input type="text" id="q-opt-a" value="Usus Halus" class="w-full p-2 border rounded-lg text-xs"></div>
+                            <div><label class="block font-bold text-slate-700">option_b</label><input type="text" id="q-opt-b" value="Lambung" class="w-full p-2 border rounded-lg text-xs"></div>
+                            <div><label class="block font-bold text-slate-700">option_c</label><input type="text" id="q-opt-c" value="Usus Besar" class="w-full p-2 border rounded-lg text-xs"></div>
+                            <div><label class="block font-bold text-slate-700">option_d</label><input type="text" id="q-opt-d" value="Kerongkongan" class="w-full p-2 border rounded-lg text-xs"></div>
+                        </div>
+                    `, 'form-qbank', 'btn-qbank', async (e) => {
+                        e.preventDefault();
+                        const p = { question_id: "Q-"+Date.now(), assessment_id: document.getElementById('q-asmid').value, question_type: document.getElementById('q-type').value, question_text: document.getElementById('q-text').value, option_a: document.getElementById('q-opt-a').value, option_b: document.getElementById('q-opt-b').value, option_c: document.getElementById('q-opt-c').value, option_d: document.getElementById('q-opt-d').value, answer_key: document.getElementById('q-key').value, bloom_level: document.getElementById('q-bloom').value };
+                        await GoogleSheetsService.sendToSheet('SAVE_QUESTION_BANK', p);
+                        alert("Data QUESTION_BANK Berhasil Disimpan!");
+                    });
+                    break;
+
+                // 18. QUESTION_CARDS
+                case '#tool-kartu-soal':
+                    content.innerHTML = renderFormContainer('Kartu Soal', 'QUESTION_CARDS', `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">question_id</label><input type="text" id="card-qid" value="Q-DEFAULT" class="w-full p-3 border rounded-xl text-sm bg-slate-100" readonly></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">difficulty_level</label><input type="text" id="card-diff" value="Sedang" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">author_name</label><input type="text" id="card-author" value="${school.teacherName}" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        </div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">indicator</label><textarea id="card-ind" rows="3" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Disajikan gambar organ pencernaan, siswa dapat menentukan fungsi usus halus dengan benar.</textarea></div>
+                    `, 'form-card', 'btn-card', async (e) => {
+                        e.preventDefault();
+                        const p = { card_id: "CRD-"+Date.now(), question_id: document.getElementById('card-qid').value, indicator: document.getElementById('card-ind').value, difficulty_level: document.getElementById('card-diff').value, author_name: document.getElementById('card-author').value };
+                        await GoogleSheetsService.sendToSheet('SAVE_QUESTION_CARDS', p);
+                        alert("Data QUESTION_CARDS Berhasil Disimpan!");
+                    });
+                    break;
+
+                // 19. RUBRIC_DATA
+                case '#tool-rubrik':
+                    content.innerHTML = renderFormContainer('Rubrik Penilaian', 'RUBRIC_DATA', `
+                        <div><label class="block font-bold mb-1.5 text-slate-700">assessment_id</label><input type="text" id="rub-asmid" value="ASM-DEFAULT" class="w-full p-3 border rounded-xl text-sm bg-slate-100" readonly></div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">criteria</label><input type="text" id="rub-crit" value="Kemampuan Menjelaskan Alur Pencernaan" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div><label class="block font-bold text-slate-700">score_4 (Sangat Baik)</label><input type="text" id="rub-s4" value="Menjelaskan urutan organ dan fungsi 100% tepat" class="w-full p-2 border rounded-lg text-xs"></div>
+                            <div><label class="block font-bold text-slate-700">score_3 (Baik)</label><input type="text" id="rub-s3" value="Menjelaskan urutan tepat tetapi fungsi ada 1 salah" class="w-full p-2 border rounded-lg text-xs"></div>
+                            <div><label class="block font-bold text-slate-700">score_2 (Cukup)</label><input type="text" id="rub-s2" value="Menjelaskan urutan kurang tepat" class="w-full p-2 border rounded-lg text-xs"></div>
+                            <div><label class="block font-bold text-slate-700">score_1 (Perlu Bimbingan)</label><input type="text" id="rub-s1" value="Belum mampu menjelaskan" class="w-full p-2 border rounded-lg text-xs"></div>
+                        </div>
+                    `, 'form-rubric', 'btn-rubric', async (e) => {
+                        e.preventDefault();
+                        const p = { rubric_id: "RUB-"+Date.now(), assessment_id: document.getElementById('rub-asmid').value, criteria: document.getElementById('rub-crit').value, score_4: document.getElementById('rub-s4').value, score_3: document.getElementById('rub-s3').value, score_2: document.getElementById('rub-s2').value, score_1: document.getElementById('rub-s1').value };
+                        await GoogleSheetsService.sendToSheet('SAVE_RUBRIC_DATA', p);
+                        alert("Data RUBRIC_DATA Berhasil Disimpan!");
+                    });
+                    break;
+
+                // 21. ITEM_ANALYSIS
+                case '#tool-analisis-soal':
+                    content.innerHTML = renderFormContainer('Analisis Soal Statistik Real (KR-20)', 'ITEM_ANALYSIS', `
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">difficulty_p (Tingkat Kesukaran)</label><input type="text" id="ans-p" value="0.75" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">discriminant_d (Daya Beda)</label><input type="text" id="ans-d" value="0.42" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">kr20_reliability (Reliabilitas)</label><input type="text" id="ans-kr20" value="0.81" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        </div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">recommendation</label><input type="text" id="ans-rec" value="Soal Sangat Baik (Diterima di Bank Soal)" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                    `, 'form-ans', 'btn-ans', async (e) => {
+                        e.preventDefault();
+                        const p = { analysis_id: "ANS-"+Date.now(), assessment_id: "ASM-DEFAULT", question_id: "Q-DEFAULT", difficulty_p: document.getElementById('ans-p').value, discriminant_d: document.getElementById('ans-d').value, kr20_reliability: document.getElementById('ans-kr20').value, recommendation: document.getElementById('ans-rec').value };
+                        await GoogleSheetsService.sendToSheet('SAVE_ITEM_ANALYSIS', p);
+                        alert("Data ITEM_ANALYSIS Berhasil Disimpan!");
+                    });
+                    break;
+
+                // 22. FOLLOW_UP
+                case '#tool-remedial':
+                    content.innerHTML = renderFormContainer('Remedial, Pengayaan, & Refleksi', 'FOLLOW_UP', `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">assessment_id</label><input type="text" id="fol-asmid" value="ASM-DEFAULT" class="w-full p-3 border rounded-xl text-sm bg-slate-100" readonly></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">pass_rate</label><input type="text" id="fol-rate" value="85%" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        </div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">remedial_plan</label><textarea id="fol-rem" rows="2" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Bimbingan perorangan pada topik organ usus halus bagi 3 siswa.</textarea></div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">enrichment_plan</label><textarea id="fol-enr" rows="2" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Pemberian tugas proyek poster keterkaitan pola makan sehat.</textarea></div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">teacher_reflection</label><textarea id="fol-refl" rows="2" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Pembelajaran berjalan interaktif, perlu penambahan durasi tayang video.</textarea></div>
+                    `, 'form-fol', 'btn-fol', async (e) => {
+                        e.preventDefault();
+                        const p = { followup_id: "FOL-"+Date.now(), assessment_id: document.getElementById('fol-asmid').value, remedial_plan: document.getElementById('fol-rem').value, enrichment_plan: document.getElementById('fol-enr').value, teacher_reflection: document.getElementById('fol-refl').value, pass_rate: document.getElementById('fol-rate').value };
+                        await GoogleSheetsService.sendToSheet('SAVE_FOLLOW_UP', p);
+                        alert("Data FOLLOW_UP Berhasil Disimpan!");
+                    });
+                    break;
+
+                // MENU CETAK DOKUMEN A4
                 case '#tool-print':
                     const lastCP = JSON.parse(localStorage.getItem('smart_teacher_last_cp') || JSON.stringify({
-                        subject: "IPAS",
-                        phase: "Fase B (Kelas 3-4)",
-                        element: "Pemahaman IPAS (Sains & Sosial)",
+                        subject: "IPAS", phase: "Fase B (Kelas 3-4)", element: "Pemahaman IPAS (Sains & Sosial)",
                         cp_content: "Di akhir Fase B, peserta didik menganalisis hubungan antara bentuk serta fungsi bagian tubuh pada manusia dan tumbuhan; mendeskripsikan siklus air dan wujud zat."
                     }));
 
                     content.innerHTML = `
                         <div class="max-w-5xl mx-auto space-y-6">
-                            <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center justify-between">
-                                <div>
-                                    <h1 class="text-xl font-black text-slate-900">Menu Pratinjau & Cetak Dokumen A4</h1>
-                                    <p class="text-xs text-slate-500 mt-0.5">Siap cetak langsung ke printer atau diekspor ke format PDF/Word.</p>
-                                </div>
-                                <div class="flex items-center space-x-3">
-                                    <button onclick="window.print()" class="bg-slate-900 hover:bg-slate-950 text-white px-5 py-2.5 rounded-xl text-xs font-bold flex items-center shadow-lg shadow-slate-900/20 transition-all">
-                                        <i data-lucide="printer" class="w-4 h-4 mr-2"></i> Cetak Langsung (A4)
-                                    </button>
-                                </div>
+                            <div class="bg-white p-5 rounded-2xl border shadow-sm flex items-center justify-between">
+                                <div><h1 class="text-xl font-black text-slate-900">Menu Pratinjau & Cetak Dokumen A4</h1><p class="text-xs text-slate-500">Siap cetak langsung ke printer atau diekspor ke PDF/Word.</p></div>
+                                <button onclick="window.print()" class="bg-slate-900 hover:bg-slate-950 text-white px-5 py-2.5 rounded-xl text-xs font-bold flex items-center shadow-lg"><i data-lucide="printer" class="w-4 h-4 mr-2"></i> Cetak Langsung (A4)</button>
                             </div>
-
-                            ${window.renderExportToolbar ? window.renderExportToolbar('print-document-area', 'Dokumen_Perangkat_Ajar') : ''}
-
-                            <div id="print-document-area" class="a4-preview text-slate-900 mx-auto bg-white p-12 border border-slate-300 shadow-2xl rounded-sm min-h-[1000px]">
+                            <div id="print-document-area" class="a4-preview text-slate-900 mx-auto bg-white p-12 border shadow-2xl rounded-sm min-h-[1000px]">
                                 ${renderHeaderKop(school, 'CAPAIAN PEMBELAJARAN (CP)')}
                                 <div class="space-y-5 text-xs leading-relaxed mt-6">
                                     <p><strong>Mata Pelajaran:</strong> ${lastCP.subject} | <strong>Fase:</strong> ${lastCP.phase}</p>
-                                    <div class="border border-slate-300 p-5 rounded-lg bg-slate-50/50">
-                                        <p class="font-bold border-b border-slate-300 pb-2 mb-3 text-slate-900">Elemen: ${lastCP.element}</p>
-                                        <p class="text-justify leading-relaxed text-slate-800">${lastCP.cp_content}</p>
+                                    <div class="border p-5 rounded-lg bg-slate-50/50">
+                                        <p class="font-bold border-b pb-2 mb-3">Elemen: ${lastCP.element}</p>
+                                        <p class="text-justify leading-relaxed">${lastCP.cp_content}</p>
                                     </div>
                                 </div>
                                 ${renderFooterSignatures(school)}
@@ -658,47 +654,8 @@
                     `;
                     break;
 
-                // FALLBACK TOOL LAINNYA
                 default:
-                    const toolTitle = hash.replace('#', '').replace(/-/g, ' ').toUpperCase();
-                    content.innerHTML = `
-                        <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl border border-slate-200/80 shadow-sm space-y-6">
-                            <div class="flex items-center justify-between border-b border-slate-100 pb-5">
-                                <div>
-                                    <h1 class="text-xl font-black text-slate-900">Input Form: ${toolTitle}</h1>
-                                    <p class="text-xs text-blue-600 font-semibold mt-0.5 flex items-center"><i data-lucide="database" class="w-3.5 h-3.5 mr-1"></i> Tersinkron dengan Sheet: <strong>DOCUMENT_HISTORY</strong></p>
-                                </div>
-                                <a href="#tool-print" class="bg-amber-500 hover:bg-amber-600 text-slate-950 px-4 py-2 rounded-xl text-xs font-bold flex items-center shadow-sm shadow-amber-500/20 transition-all"><i data-lucide="printer" class="w-4 h-4 mr-1.5"></i> Ke Menu Cetak</a>
-                            </div>
-
-                            <form id="form-dyn" class="space-y-5 text-sm">
-                                <div><label class="block text-xs font-bold text-slate-700 mb-1.5">Mata Pelajaran & Topik Utama *</label><input type="text" id="dyn-topic" value="IPAS - Sistem Pencernaan Manusia" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-slate-50/50 form-input-focus"></div>
-                                <div><label class="block text-xs font-bold text-slate-700 mb-1.5">Rincian Deskripsi Perangkat *</label><textarea id="dyn-desc" rows="4" class="w-full p-3 border border-slate-200 rounded-xl text-xs bg-slate-50/50 form-input-focus">Deskripsi rinci perangkat ajar untuk disimpan ke dalam log riwayat dokumen Google Sheets.</textarea></div>
-                                
-                                <button type="submit" id="btn-dyn-save" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3.5 rounded-xl text-sm font-bold flex items-center justify-center shadow-lg shadow-blue-500/25 transition-all">
-                                    <i data-lucide="save" class="w-4 h-4 mr-2"></i> Simpan ke Google Sheets
-                                </button>
-                            </form>
-                        </div>
-                    `;
-                    document.getElementById('form-dyn').addEventListener('submit', async (e) => {
-                        e.preventDefault();
-                        const btn = document.getElementById('btn-dyn-save');
-                        btn.innerText = "Mengirim...";
-                        btn.disabled = true;
-
-                        const payload = {
-                            history_id: "HIS-" + Date.now(),
-                            user_id: "USR-001",
-                            document_type: toolTitle,
-                            topic: document.getElementById('dyn-topic').value,
-                            export_format: "A4_PRINT",
-                            created_at: new Date().toISOString()
-                        };
-                        await GoogleSheetsService.sendToSheet('SAVE_DOCUMENT_LOG', payload);
-                        alert(`Data ${toolTitle} berhasil disimpan ke Google Sheets!`);
-                        renderRoute();
-                    });
+                    window.location.hash = '#dashboard';
                     break;
             }
             lucide.createIcons();
