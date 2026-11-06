@@ -1,0 +1,78 @@
+// js/tool-atp.js
+
+class ToolATP {
+    static render() {
+        const school = window.schoolDataService.getProfile();
+        return `
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                    <div>
+                        <h1 class="text-xl font-bold text-slate-800 flex items-center">
+                            <i data-lucide="git-merge" class="w-6 h-6 text-blue-600 mr-2"></i> Alur Tujuan Pembelajaran (ATP)
+                        </h1>
+                        <p class="text-xs text-slate-500 mt-1">Menyusun alur linier logis Tujuan Pembelajaran beserta alokasi JP dan strategi asesmen.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <button id="btn-build-atp" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center mb-6">
+                        <i data-lucide="refresh-cw" class="w-4 h-4 mr-2"></i> Petakan ATP dari Rumusan TP
+                    </button>
+
+                    <div id="atp-a4-preview" class="a4-preview text-slate-800">
+                        <h3 class="text-center font-bold text-sm uppercase underline mb-4">ALUR TUJUAN PEMBELAJARAN (ATP)</h3>
+                        <div id="atp-table-container">
+                            <p class="italic text-xs text-slate-400">Klik "Petakan ATP dari Rumusan TP" untuk menyusun tabel Alur Tujuan Pembelajaran.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    static initEvents() {
+        const btnBuild = document.getElementById('btn-build-atp');
+        if (btnBuild) {
+            btnBuild.addEventListener('click', () => {
+                const tps = JSON.parse(localStorage.getItem('active_tp_data') || '[]');
+                if (tps.length === 0) {
+                    alert("Rumusan TP belum tersedia. Jalankan TP Generator terlebih dahulu!");
+                    return;
+                }
+
+                const atpData = window.AIEngine.generateATP(tps);
+                let html = `
+                    <table class="w-full text-xs border-collapse border border-slate-400">
+                        <thead>
+                            <tr class="bg-slate-100">
+                                <th class="border border-slate-400 p-2">Alur</th>
+                                <th class="border border-slate-400 p-2">Tujuan Pembelajaran</th>
+                                <th class="border border-slate-400 p-2">Materi Pokok</th>
+                                <th class="border border-slate-400 p-2">JP</th>
+                                <th class="border border-slate-400 p-2">Dimensi Profil Pancasila</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                atpData.forEach(item => {
+                    html += `
+                        <tr>
+                            <td class="border border-slate-400 p-2 text-center font-bold">${item.alurKe}</td>
+                            <td class="border border-slate-400 p-2">${item.tpText}</td>
+                            <td class="border border-slate-400 p-2">${item.materiPokok}</td>
+                            <td class="border border-slate-400 p-2 text-center">${item.alokasiJp}</td>
+                            <td class="border border-slate-400 p-2">${item.profilPancasila}</td>
+                        </tr>
+                    `;
+                });
+
+                html += `</tbody></table>`;
+                document.getElementById('atp-table-container').innerHTML = html;
+                localStorage.setItem('active_atp_data', JSON.stringify(atpData));
+            });
+        }
+    }
+}
+
+window.ToolATP = ToolATP;

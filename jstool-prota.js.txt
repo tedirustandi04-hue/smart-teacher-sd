@@ -1,0 +1,80 @@
+// js/tool-prota.js
+
+class ToolPROTA {
+    static render() {
+        const school = window.schoolDataService.getProfile();
+        return `
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                    <div>
+                        <h1 class="text-xl font-bold text-slate-800 flex items-center">
+                            <i data-lucide="calendar" class="w-6 h-6 text-blue-600 mr-2"></i> Program Tahunan (PROTA)
+                        </h1>
+                        <p class="text-xs text-slate-500 mt-1">Pemetaan Alokasi Jam Pembelajaran Efektif Selama Satu Tahun Ajaran.</p>
+                    </div>
+                    <button id="btn-generate-prota" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold">
+                        Kalkulasi PROTA
+                    </button>
+                </div>
+
+                <div id="prota-a4-preview" class="a4-preview text-slate-800">
+                    <h3 class="text-center font-bold text-sm uppercase underline mb-4">PROGRAM TAHUNAN (PROTA)</h3>
+                    <p class="text-xs mb-2">Tahun Pelajaran: <strong>${school.academicYear}</strong></p>
+                    <div id="prota-content" class="text-xs space-y-2">
+                        <p class="italic text-slate-400">Klik "Kalkulasi PROTA" untuk memetakan alokasi tahunan.</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    static initEvents() {
+        const btn = document.getElementById('btn-generate-prota');
+        if (btn) {
+            btn.addEventListener('click', () => {
+                const atpData = JSON.parse(localStorage.getItem('active_atp_data') || '[]');
+                if (atpData.length === 0) {
+                    alert("Data ATP belum ditemukan! Selesaikan pembuatan ATP terlebih dahulu.");
+                    return;
+                }
+
+                let totalJp = 0;
+                let html = `
+                    <table class="w-full border-collapse border border-slate-400 text-xs">
+                        <thead>
+                            <tr class="bg-slate-100">
+                                <th class="border border-slate-400 p-2">No</th>
+                                <th class="border border-slate-400 p-2">Alur Tujuan Pembelajaran</th>
+                                <th class="border border-slate-400 p-2">Alokasi JP</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                atpData.forEach((item, idx) => {
+                    totalJp += item.alokasiJp;
+                    html += `
+                        <tr>
+                            <td class="border border-slate-400 p-2 text-center">${idx + 1}</td>
+                            <td class="border border-slate-400 p-2">${item.tpText}</td>
+                            <td class="border border-slate-400 p-2 text-center">${item.alokasiJp} JP</td>
+                        </tr>
+                    `;
+                });
+
+                html += `
+                        <tr class="font-bold bg-slate-50">
+                            <td colspan="2" class="border border-slate-400 p-2 text-right">Total Jam Pembelajaran Effective:</td>
+                            <td class="border border-slate-400 p-2 text-center">${totalJp} JP</td>
+                        </tr>
+                    </tbody>
+                </table>
+                `;
+
+                document.getElementById('prota-content').innerHTML = html;
+            });
+        }
+    }
+}
+
+window.ToolPROTA = ToolPROTA;

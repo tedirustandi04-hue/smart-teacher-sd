@@ -1,0 +1,30 @@
+// js/cp-reference.js
+
+const CP_REFERENCE_DATABASE = {
+    "IPAS": {
+        "Fase A": [
+            { element: "Pemahaman IPAS", content: "Di akhir Fase A, peserta didik mengenal anggota tubuh, pancaindra, cara merawat kesehatan, serta mengidentifikasi benda-benda di sekitar dan lingkungannya." }
+        ],
+        "Fase B": [
+            { element: "Pemahaman IPAS (Sains & Sosial)", content: "Peserta didik menganalisis hubungan antara bentuk serta fungsi bagian tubuh pada manusia dan tumbuhan; mendeskripsikan proses siklus air, wujud zat, serta perubahan wujud zat dalam kehidupan sehari-hari." },
+            { element: "Keterampilan Proses", content: "Peserta didik mengamati fenomena alam, mengajukan pertanyaan, merencanakan dan melakukan penyelidikan sederhana, mengorganisasikan data, dan mengomunikasikan hasil." }
+        ],
+        "Fase C": [
+            { element: "Pemahaman IPAS", content: "Peserta didik melakukan simulasi dengan menggunakan gambar/bagan/alat peraga sederhana tentang sistem organ tubuh manusia (sistem pernapasan, pencernaan, dan peredaran darah) yang dikaitkan dengan cara menjaga kesehatan organ tubuhnya." }
+        ]
+    },
+    "Matematika": {
+        "Fase B": [
+            { element: "Bilangan", content: "Peserta didik dapat menunjukkan pemahaman dan intuisi bilangan (number sense) pada bilangan cacah sampai 10.000. Mereka dapat membaca, menulis, membandingkan, mengurutkan, dan menentukan nilai tempat." },
+            { element: "Geometri", content: "Peserta didik dapat mendeskripsikan ciri berbagai bentuk bangun datar (segiempat, segitiga, segibanyak) dan bangun ruang (kubus, balok)." }
+        ]
+    },
+    "Bahasa Indonesia": {
+        "Fase B": [
+            { element: "Menyimak", content: "Peserta didik mampu memahami ide pokok (gagasan) suatu pesan lisan, informasi dari teks drama, dan instruksi lisan yang berkaitan dengan tujuan berkomunikasi." },
+            { element: "Membaca dan Memirsa", content: "Peserta didik mampu memahami pesan dan informasi tentang kehidupan sehari-hari, teks narasi, dan puisi anak dalam bentuk cetak atau elektronik." }
+        ]
+    }
+};
+
+window.CP_REFERENCE_DATABASE = CP_REFERENCE_DATABASE;

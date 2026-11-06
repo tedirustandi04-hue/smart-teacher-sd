@@ -1,0 +1,73 @@
+// js/tool-tp.js
+
+class ToolTP {
+    static render() {
+        const school = window.schoolDataService.getProfile();
+        return `
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                    <div>
+                        <h1 class="text-xl font-bold text-slate-800 flex items-center">
+                            <i data-lucide="crosshair" class="w-6 h-6 text-blue-600 mr-2"></i> Generator Tujuan Pembelajaran (TP)
+                        </h1>
+                        <p class="text-xs text-slate-500 mt-1">Sintesis CP menjadi Tujuan Pembelajaran berprinsip Pembelajaran Mendalam (Deep Learning).</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4 h-fit">
+                        <h2 class="font-semibold text-slate-700 border-b pb-2 text-sm">Generator Otomatis</h2>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Jumlah TP yang Dihasilkan</label>
+                            <input type="number" id="tp-count" value="3" min="1" max="10" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm">
+                        </div>
+                        <button id="btn-generate-tp" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 rounded-lg text-sm font-semibold flex justify-center items-center">
+                            <i data-lucide="sparkles" class="w-4 h-4 mr-2"></i> Ambil CP & Rumuskan TP
+                        </button>
+                    </div>
+
+                    <div class="lg:col-span-2">
+                        <div id="tp-a4-preview" class="a4-preview text-slate-800">
+                            <div class="text-center border-b-2 border-slate-800 pb-3 mb-6">
+                                <h2 class="text-base font-bold uppercase">${school.schoolName}</h2>
+                                <p class="text-xs">RUMUSAN TUJUAN PEMBELAJARAN (TP) - KURIKULUM MERDEKA</p>
+                            </div>
+                            <div id="tp-output-list" class="space-y-3 text-xs">
+                                <p class="italic text-slate-400">Klik "Ambil CP & Rumuskan TP" untuk mengolah data TP secara otomatis...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    static initEvents() {
+        const btnGen = document.getElementById('btn-generate-tp');
+        if (btnGen) {
+            btnGen.addEventListener('click', () => {
+                const activeCP = JSON.parse(localStorage.getItem('active_cp_data') || '{}');
+                const count = parseInt(document.getElementById('tp-count').value);
+
+                if (!activeCP.elements) {
+                    alert("Silakan jalankan CP Generator (Tool 1) terlebih dahulu untuk mengambil referensi CP!");
+                    return;
+                }
+
+                const cpText = activeCP.elements[0].content;
+                const generatedTPs = window.AIEngine.generateTP(cpText, count);
+
+                let html = `<div class="mb-4"><strong>Mata Pelajaran:</strong> ${activeCP.subject} | <strong>Fase:</strong> ${activeCP.phase}</div><ol class="list-decimal pl-4 space-y-2">`;
+                generatedTPs.forEach(tp => {
+                    html += `<li class="p-2 border border-slate-200 rounded bg-slate-50">${tp}</li>`;
+                });
+                html += `</ol>`;
+
+                document.getElementById('tp-output-list').innerHTML = html;
+                localStorage.setItem('active_tp_data', JSON.stringify(generatedTPs));
+            });
+        }
+    }
+}
+
+window.ToolTP = ToolTP;

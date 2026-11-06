@@ -1,0 +1,74 @@
+// js/tool-promes.js
+
+class ToolPROMES {
+    static render() {
+        const school = window.schoolDataService.getProfile();
+        return `
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                    <div>
+                        <h1 class="text-xl font-bold text-slate-800 flex items-center">
+                            <i data-lucide="calendar-days" class="w-6 h-6 text-blue-600 mr-2"></i> Program Semester (PROMES)
+                        </h1>
+                        <p class="text-xs text-slate-500 mt-1">Distribusi Alokasi Waktu per Bulan dan Minggu Efektif Semester ${school.semester}.</p>
+                    </div>
+                    <button id="btn-generate-promes" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold">
+                        Generate PROMES
+                    </button>
+                </div>
+
+                <div id="promes-a4-preview" class="a4-preview text-slate-800">
+                    <h3 class="text-center font-bold text-sm uppercase underline mb-4">PROGRAM SEMESTER (PROMES)</h3>
+                    <div id="promes-content" class="text-xs">
+                        <p class="italic text-slate-400">Klik "Generate PROMES" untuk memetakan distribusi minggu efektif.</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    static initEvents() {
+        const btn = document.getElementById('btn-generate-promes');
+        if (btn) {
+            btn.addEventListener('click', () => {
+                const atpData = JSON.parse(localStorage.getItem('active_atp_data') || '[]');
+                if (atpData.length === 0) {
+                    alert("Data ATP belum tersedia!");
+                    return;
+                }
+
+                const school = window.schoolDataService.getProfile();
+                const promesList = window.AIEngine.generateProtaPromes(atpData, school.academicYear, school.semester);
+
+                let html = `
+                    <table class="w-full border-collapse border border-slate-400 text-xs">
+                        <thead>
+                            <tr class="bg-slate-100">
+                                <th class="border border-slate-400 p-2">Materi / TP</th>
+                                <th class="border border-slate-400 p-2">Alokasi JP</th>
+                                <th class="border border-slate-400 p-2">Bulan Target</th>
+                                <th class="border border-slate-400 p-2">Minggu Efektif</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                promesList.forEach(item => {
+                    html += `
+                        <tr>
+                            <td class="border border-slate-400 p-2">${item.tpText}</td>
+                            <td class="border border-slate-400 p-2 text-center">${item.alokasiJp} JP</td>
+                            <td class="border border-slate-400 p-2 text-center">${item.bulan}</td>
+                            <td class="border border-slate-400 p-2 text-center">${item.mingguKe}</td>
+                        </tr>
+                    `;
+                });
+
+                html += `</tbody></table>`;
+                document.getElementById('promes-content').innerHTML = html;
+            });
+        }
+    }
+}
+
+window.ToolPROMES = ToolPROMES;

@@ -1,0 +1,127 @@
+// js/tool-cp.js
+
+class ToolCP {
+    static render() {
+        const school = window.schoolDataService.getProfile();
+        return `
+            <div class="space-y-6">
+                <!-- Header Tool -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                    <div>
+                        <h1 class="text-xl font-bold text-slate-800 flex items-center">
+                            <i data-lucide="target" class="w-6 h-6 text-blue-600 mr-2"></i> Generator Capaian Pembelajaran (CP)
+                        </h1>
+                        <p class="text-xs text-slate-500 mt-1">Verifikasi dan sesuaikan Capaian Pembelajaran berdasarkan Fase & Mata Pelajaran Kurikulum Merdeka.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Form Input -->
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4 h-fit">
+                        <h2 class="font-semibold text-slate-700 border-b pb-2 text-sm">Parameter CP</h2>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Mata Pelajaran</label>
+                            <select id="cp-subject" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm">
+                                <option value="IPAS">IPAS</option>
+                                <option value="Matematika">Matematika</option>
+                                <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Fase / Kelas</label>
+                            <select id="cp-phase" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm">
+                                <option value="Fase A">Fase A (Kelas 1-2)</option>
+                                <option value="Fase B" selected>Fase B (Kelas 3-4)</option>
+                                <option value="Fase C">Fase C (Kelas 5-6)</option>
+                            </select>
+                        </div>
+                        <button id="btn-fetch-cp" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm font-semibold flex justify-center items-center">
+                            <i data-lucide="search" class="w-4 h-4 mr-2"></i> Muat Referensi CP Resmi
+                        </button>
+                    </div>
+
+                    <!-- Preview Kertas A4 -->
+                    <div class="lg:col-span-2">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs font-semibold text-slate-500">Pratinjau Dokumen A4</span>
+                            <div class="space-x-2">
+                                <button onclick="window.print()" class="bg-slate-800 text-white px-3 py-1.5 rounded text-xs font-medium"><i data-lucide="printer" class="w-3.5 h-3.5 inline mr-1"></i> Cetak</button>
+                            </div>
+                        </div>
+
+                        <div id="cp-a4-preview" class="a4-preview text-slate-800">
+                            <!-- Kop Sekolah -->
+                            <div class="text-center border-b-2 border-slate-800 pb-3 mb-6">
+                                <h2 class="text-base font-bold uppercase">${school.schoolName}</h2>
+                                <p class="text-xs">${school.address}, ${school.city}, ${school.province}</p>
+                                <p class="text-xs italic">NPSN: ${school.npsn} | Tahun Ajaran: ${school.academicYear}</p>
+                            </div>
+
+                            <h3 class="text-center font-bold text-sm uppercase underline mb-4">CAPAIAN PEMBELAJARAN (CP)</h3>
+
+                            <table class="w-full text-xs mb-4">
+                                <tr><td class="w-28 font-semibold">Mata Pelajaran</td><td>: <span id="preview-subject">IPAS</span></td></tr>
+                                <tr><td class="font-semibold">Fase / Kelas</td><td>: <span id="preview-phase">Fase B (Kelas 4)</span></td></tr>
+                            </table>
+
+                            <div id="cp-content-area" class="space-y-4 text-xs leading-relaxed">
+                                <p class="italic text-slate-400">Pilih parameter dan klik "Muat Referensi CP Resmi" untuk menampilkan data...</p>
+                            </div>
+
+                            <!-- Area Tanda Tangan -->
+                            <div class="mt-12 text-xs flex justify-between">
+                                <div>
+                                    <p>Mengetahui,</p>
+                                    <p class="font-semibold">Kepala ${school.schoolName}</p>
+                                    <br><br><br>
+                                    <p class="font-bold underline">${school.headmasterName}</p>
+                                    <p>NIP. ${school.headmasterNip}</p>
+                                </div>
+                                <div>
+                                    <p>${school.city}, 2026</p>
+                                    <p class="font-semibold">Guru Mata Pelajaran / Kelas</p>
+                                    <br><br><br>
+                                    <p class="font-bold underline">${school.teacherName}</p>
+                                    <p>NIP. ${school.teacherNip}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    static initEvents() {
+        const btnFetch = document.getElementById('btn-fetch-cp');
+        if (btnFetch) {
+            btnFetch.addEventListener('click', () => {
+                const subject = document.getElementById('cp-subject').value;
+                const phase = document.getElementById('cp-phase').value;
+
+                document.getElementById('preview-subject').textContent = subject;
+                document.getElementById('preview-phase').textContent = phase;
+
+                const db = window.CP_REFERENCE_DATABASE[subject]?.[phase] || [
+                    { element: "Umum", content: "Capaian Pembelajaran standar belum dikonfigurasi untuk kombinasi mata pelajaran dan fase ini." }
+                ];
+
+                let html = "";
+                db.forEach((item, index) => {
+                    html += `
+                        <div class="border border-slate-300 p-3 rounded">
+                            <p class="font-bold text-blue-900 border-b pb-1 mb-2">${index + 1}. Elemen: ${item.element}</p>
+                            <p class="text-justify">${item.content}</p>
+                        </div>
+                    `;
+                });
+
+                document.getElementById('cp-content-area').innerHTML = html;
+                // Simpan ke storage lokal agar bisa ditarik oleh TP Generator
+                localStorage.setItem('active_cp_data', JSON.stringify({ subject, phase, elements: db }));
+            });
+        }
+    }
+}
+
+window.ToolCP = ToolCP;
