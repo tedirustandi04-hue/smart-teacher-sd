@@ -2,7 +2,6 @@
 
 class AIEngine {
     static generateTP(cpContent, targetCount = 3) {
-        // Simulasi ekstraksi AI (Kompetensi + Konten)
         const sampleTPs = [
             `Menganalisis dan menjelaskan konsep utama dari: "${cpContent.substring(0, 40)}..." secara kontekstual.`,
             `Mengidentifikasi dan menerapkan prinsip dasar pembelajaran melalui diskusi kelompok dan observasi.`,
@@ -34,6 +33,124 @@ class AIEngine {
                 mingguKe: assignedWeek
             };
         });
+    }
+
+    // ==========================================
+    // LOGIKA GENERATOR KELOMPOK B
+    // ==========================================
+
+    static generateModulAjar(params) {
+        const { subject, phase, classLevel, topic, tpText, modelPembelajaran } = params;
+        return {
+            identitas: {
+                mataPelajaran: subject,
+                faseKelas: `${phase} / Kelas ${classLevel}`,
+                alokasiWaktu: "2 x 35 Menit (1 Pertemuan)",
+                materiPokok: topic,
+                modelPembelajaran: modelPembelajaran || "Problem Based Learning (PBL)"
+            },
+            profilPancasila: ["Bernalar Kritis", "Gotong Royong", "Kreatif"],
+            saranaPrasarana: ["LCD Projector", "Kartu Bergambar", "Lembar Kerja Siswa", "Benda Konkret Lingkungan Sekolah"],
+            targetPesertaDidik: "Peserta Didik Reguler / Tipikal (28 Siswa)",
+            komponenInti: {
+                tujuanPembelajaran: tpText || `Peserta didik mampu memahami dan menganalisis ${topic} melalui pendekatan kontekstual dan eksplorasi mandiri.`,
+                pemahamanBermakna: `Memahami ${topic} membantu peserta didik menyelesaikan permasalahan sehari-hari dan meningkatkan kepedulian terhadap lingkungan sekitar.`,
+                pertanyaanPemantik: [
+                    `Pernahkah kalian mengamati fenomena ${topic} di lingkungan rumah?`,
+                    `Apa yang akan terjadi jika kita tidak memahami konsep ${topic} dengan benar?`
+                ],
+                kegiatanPembelajaran: {
+                    pendahuluan: [
+                        "Guru membuka pembelajaran dengan salam, doa bersama, dan mengecek kehadiran.",
+                        "Guru melakukan apersepsi dengan mengaitkan materi sebelumnya dan memberikan pertanyaan pemantik.",
+                        "Guru menyampaikan tujuan pembelajaran dan alur kegiatan yang akan dilakukan."
+                    ],
+                    inti: [
+                        "<strong>Orientasi Masalah:</strong> Guru menampilkan gambar/video pemicu terkait materi " + topic + ".",
+                        "<strong>Organisasi Belajar:</strong> Peserta didik dibagi menjadi beberapa kelompok heterogen (4-5 siswa).",
+                        "<strong>Penyelidikan Terbimbing:</strong> Setiap kelompok berdiskusi mengerjakan LKPD menggunakan bahan ajar konkret.",
+                        "<strong>Pengembangan Karya:</strong> Masing-masing kelompok menyusun hasil diskusi ke dalam lembar presentasi.",
+                        "<strong>Analisis & Evaluasi:</strong> Perwakilan kelompok mempresentasikan hasil karya dan menanggapi umpan balik dari kelompok lain."
+                    ],
+                    penutup: [
+                        "Peserta didik bersama guru menyimpulkan poin-poin utama materi pembelajaran hari ini.",
+                        "Guru memberikan refleksi singkat dan kuis formatif cepat.",
+                        "Guru memberikan apresiasi dan menutup kegiatan dengan doa."
+                    ]
+                },
+                asesmen: {
+                    diagnostik: "Tanya jawab lisan awal pembelajaran",
+                    formatif: "Penilaian kinerja kelompok pada LKPD & Observasi Diskusi",
+                    sumatif: "Tes tertulis pilihan ganda/esai singkat di akhir bab"
+                }
+            }
+        };
+    }
+
+    static generateBahanAjar(topic, tpText) {
+        return {
+            judul: `Bahan Ajar Tematik: ${topic}`,
+            ringkasanMateri: `Materi ini membahas secara mendalam konsep ${topic}. Peserta didik diajak untuk mengamati, menganalisis, dan mengaplikasikan pengetahuan dalam kehidupan sehari-hari.`,
+            subBab: [
+                {
+                    subJudul: `1. Pengertian dan Konsep Dasar ${topic}`,
+                    uraian: `Secara umum, ${topic} merupakan bagian penting dalam pemahaman ilmu pengetahuan di Sekolah Dasar. Melalui pemahaman yang utuh, kita dapat mengenali keterkaitan antara teori dan praktik nyata.`
+                },
+                {
+                    subJudul: `2. Karakteristik dan Penerapan Kontekstual`,
+                    uraian: `Penerapan ${topic} dapat dijumpai pada kehidupan sehari-hari. Contohnya meliputi interaksi lingkungan, penggunaan alat bantu, serta pola penyelesaian masalah sederhana.`
+                }
+            ],
+            glosarium: [
+                { istilah: "Kontekstual", arti: "Berhubungan dengan situasi atau kejadian nyata di sekitar siswa." },
+                { istilah: "Eksplorasi", arti: "Kegiatan menjelajahi atau menyelidiki untuk menemukan pengetahuan baru." }
+            ]
+        };
+    }
+
+    static generateLKPD(topic, tpText) {
+        return {
+            judulLKPD: `LEMBAR KERJA PESERTA DIDIK (LKPD)`,
+            subJudul: `Eksplorasi Kelompok: ${topic}`,
+            alokasiWaktu: "30 Menit",
+            petunjukKerja: [
+                "Isilah nama anggota kelompok pada kolom yang tersedia.",
+                "Bacalah setiap instruksi soal dan bahan bacaan dengan cermat.",
+                "Diskusikan pertanyaan berikut bersama teman sekelompokmu.",
+                "Tuliskan hasil kesepakatan diskusi pada kotak jawaban yang disediakan."
+            ],
+            tugasDiskusi: [
+                {
+                    no: 1,
+                    pertanyaan: `Amatilah media atau bahan ajar yang diberikan. Tuliskan 3 hal penting yang kalian temukan terkait ${topic}!`,
+                    ruangJawab: "..................................................................................................................................."
+                },
+                {
+                    no: 2,
+                    pertanyaan: `Bagaimana langkah kelompokmu dalam menyelesaikan permasalahan ${topic} yang disajikan oleh guru?`,
+                    ruangJawab: "..................................................................................................................................."
+                },
+                {
+                    no: 3,
+                    pertanyaan: `Buatlah kesimpulan singkat berdasarkan hasil pengamatan kelompokmu!`,
+                    ruangJawab: "..................................................................................................................................."
+                }
+            ]
+        };
+    }
+
+    static generateMediaPembelajaran(topic) {
+        return {
+            namaMedia: `Kartu Edukasi & Media Visual: ${topic}`,
+            jenisMedia: "Visual Konkret & Digital Slide",
+            fungsiMedia: "Mempermudah pemahaman konsep abstrak siswa melalui visualisasi bergambar dan kartu pasang.",
+            alatBahan: ["Kertas Karton / Manila", "Gambar Ilustrasi Cetak", "Spidol Warna", "Proyektor / Layar"],
+            langkahPenggunaan: [
+                "Guru menampilkan slide visual / menempelkan kartu ilustrasi di papan tulis.",
+                "Peserta didik secara bergantian mencocokkan kartu pernyataan dengan gambar yang sesuai.",
+                "Guru mengonfirmasi jawaban siswa dan memberikan penguatan visual."
+            ]
+        };
     }
 }
 

@@ -1,0 +1,93 @@
+// js/tool-lkpd.js
+
+class ToolLKPD {
+    static render() {
+        const school = window.schoolDataService.getProfile();
+        return `
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                    <div>
+                        <h1 class="text-xl font-bold text-slate-800 flex items-center">
+                            <i data-lucide="clipboard-list" class="w-6 h-6 text-blue-600 mr-2"></i> Generator LKPD (Lembar Kerja Peserta Didik)
+                        </h1>
+                        <p class="text-xs text-slate-500 mt-1">Lembar aktivitas kelompok/individu berbasis kerja kolaboratif dan penalaran kritis.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4 h-fit">
+                        <h2 class="font-semibold text-slate-700 border-b pb-2 text-sm">Pengaturan LKPD</h2>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Topik Aktivitas</label>
+                            <input type="text" id="lkpd-topic" value="Sistem Pencernaan Manusia" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm">
+                        </div>
+
+                        <button id="btn-generate-lkpd" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg text-sm font-semibold flex justify-center items-center shadow-sm">
+                            <i data-lucide="sparkles" class="w-4 h-4 mr-2"></i> Generate LKPD
+                        </button>
+                    </div>
+
+                    <div class="lg:col-span-2">
+                        <div id="lkpd-a4-preview" class="a4-preview text-slate-800">
+                            <div class="text-center border-b-2 border-slate-800 pb-3 mb-4">
+                                <h2 class="text-base font-bold uppercase">${school.schoolName}</h2>
+                                <p class="text-xs font-bold uppercase">LEMBAR KERJA PESERTA DIDIK (LKPD)</p>
+                            </div>
+
+                            <div class="border border-slate-300 p-3 rounded mb-4 text-xs">
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div>Nama Kelompok / Siswa : ...........................................</div>
+                                    <div>Kelas / Semester : IV / ${school.semester}</div>
+                                    <div>Mata Pelajaran : IPAS</div>
+                                    <div>Alokasi Waktu : 30 Menit</div>
+                                </div>
+                            </div>
+
+                            <div id="lkpd-preview-body" class="space-y-4 text-xs">
+                                <p class="italic text-slate-400">Klik "Generate LKPD" untuk menampilkan struktur lembar kerja siswa...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    static initEvents() {
+        const btnGen = document.getElementById('btn-generate-lkpd');
+        if (btnGen) {
+            btnGen.addEventListener('click', () => {
+                const topic = document.getElementById('lkpd-topic').value;
+                const lkpd = window.AIEngine.generateLKPD(topic);
+
+                let html = `
+                    <div class="mb-3">
+                        <h4 class="font-bold text-slate-800 mb-1">A. Petunjuk Pengerjaan:</h4>
+                        <ol class="list-decimal pl-5 space-y-1">
+                            ${lkpd.petunjukKerja.map(p => `<li>${p}</li>`).join('')}
+                        </ol>
+                    </div>
+
+                    <div class="space-y-4 pt-2">
+                        <h4 class="font-bold text-slate-800 border-b pb-1">B. Pertanyaan & Lembar Diskusi:</h4>
+                `;
+
+                lkpd.tugasDiskusi.forEach(item => {
+                    html += `
+                        <div class="space-y-1">
+                            <p class="font-semibold">${item.no}. ${item.pertanyaan}</p>
+                            <div class="w-full h-20 border border-dashed border-slate-400 rounded p-2 bg-slate-50/30 text-slate-400 italic">
+                                Kolom Jawaban Siswa...
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `</div>`;
+                document.getElementById('lkpd-preview-body').innerHTML = html;
+            });
+        }
+    }
+}
+
+window.ToolLKPD = ToolLKPD;

@@ -1,0 +1,82 @@
+// js/tool-media.js
+
+class ToolMedia {
+    static render() {
+        const school = window.schoolDataService.getProfile();
+        return `
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                    <div>
+                        <h1 class="text-xl font-bold text-slate-800 flex items-center">
+                            <i data-lucide="monitor-play" class="w-6 h-6 text-blue-600 mr-2"></i> Generator Media Pembelajaran
+                        </h1>
+                        <p class="text-xs text-slate-500 mt-1">Panduan alat peraga, kartu visual bergambar, dan skenario pengunaan media di kelas.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4 h-fit">
+                        <h2 class="font-semibold text-slate-700 border-b pb-2 text-sm">Parameter Media</h2>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Topik Pembelajaran</label>
+                            <input type="text" id="media-topic" value="Sistem Pencernaan Manusia" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm">
+                        </div>
+
+                        <button id="btn-generate-media" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg text-sm font-semibold flex justify-center items-center shadow-sm">
+                            <i data-lucide="sparkles" class="w-4 h-4 mr-2"></i> Buat Panduan Media
+                        </button>
+                    </div>
+
+                    <div class="lg:col-span-2">
+                        <div id="media-a4-preview" class="a4-preview text-slate-800">
+                            <div class="text-center border-b-2 border-slate-800 pb-3 mb-4">
+                                <h2 class="text-base font-bold uppercase">${school.schoolName}</h2>
+                                <p class="text-xs font-bold uppercase">PANDUAN & RANCANGAN MEDIA PEMBELAJARAN</p>
+                            </div>
+
+                            <div id="media-preview-body" class="space-y-4 text-xs">
+                                <p class="italic text-slate-400">Klik "Buat Panduan Media" untuk menghasilkan panduan pembuatan dan skenario penggunaan media...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    static initEvents() {
+        const btnGen = document.getElementById('btn-generate-media');
+        if (btnGen) {
+            btnGen.addEventListener('click', () => {
+                const topic = document.getElementById('media-topic').value;
+                const media = window.AIEngine.generateMediaPembelajaran(topic);
+
+                let html = `
+                    <div class="bg-blue-50 p-3 rounded border border-blue-200">
+                        <h3 class="font-bold text-sm text-blue-900">${media.namaMedia}</h3>
+                        <p class="mt-1"><strong>Jenis Media:</strong> ${media.jenisMedia}</p>
+                        <p class="mt-1"><strong>Fungsi Media:</strong> ${media.fungsiMedia}</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold border-b pb-1 text-slate-800">Alat dan Bahan yang Disiapkan:</h4>
+                        <ul class="list-disc pl-5 mt-2 space-y-1">
+                            ${media.alatBahan.map(a => `<li>${a}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold border-b pb-1 text-slate-800">Skenario / Langkah Penggunaan di Kelas:</h4>
+                        <ol class="list-decimal pl-5 mt-2 space-y-1">
+                            ${media.langkahPenggunaan.map(l => `<li>${l}</li>`).join('')}
+                        </ol>
+                    </div>
+                `;
+
+                document.getElementById('media-preview-body').innerHTML = html;
+            });
+        }
+    }
+}
+
+window.ToolMedia = ToolMedia;
