@@ -15,7 +15,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
-    <!-- Custom Tailwind Styling -->
+    <!-- Custom Styling -->
     <script>
         tailwind.config = {
             theme: {
@@ -32,7 +32,6 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
     
-    <!-- CSS KHUSUS PRINT: Mencegah Sidebar & Header Terikut Cetak -->
     <style>
         .custom-scrollbar::-webkit-scrollbar { width: 5px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #0f172a; }
@@ -144,7 +143,7 @@
         </div>
     </aside>
 
-    <!-- Main Container Layout -->
+    <!-- Main Container -->
     <div class="flex flex-col flex-1 w-full h-full min-w-0">
         <header class="h-20 bg-white/80 backdrop-blur-md border-b border-slate-200/80 flex items-center justify-between px-8 z-10 shadow-sm sticky top-0 no-print">
             <div class="flex items-center">
@@ -173,10 +172,11 @@
 
         <!-- Main Content Area -->
         <main id="app-content" class="flex-1 overflow-x-hidden overflow-y-auto bg-slate-100 p-8">
-            <!-- Content render -->
+            <!-- Dynamic Routing Content -->
         </main>
     </div>
 
+    <!-- Script Ingestion -->
     <script src="js/config.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/cp-reference.js"></script>
@@ -346,7 +346,7 @@
                     });
                     break;
 
-                // 6. CP_DATA
+                // A.1. CP_DATA
                 case '#tool-cp':
                     content.innerHTML = renderFormContainer('CP Generator', 'CP_DATA', `
                         <div><label class="block font-bold mb-1.5 text-slate-700">subject *</label><input type="text" id="cp-subj" value="IPAS" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
@@ -363,7 +363,7 @@
                     });
                     break;
 
-                // 7. TP_DATA
+                // A.2. TP_DATA
                 case '#tool-tp':
                     content.innerHTML = renderFormContainer('TP Generator', 'TP_DATA', `
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -383,7 +383,7 @@
                     });
                     break;
 
-                // 8. ATP_DATA
+                // A.3. ATP_DATA
                 case '#tool-atp':
                     content.innerHTML = renderFormContainer('ATP Generator', 'ATP_DATA', `
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -391,10 +391,11 @@
                             <div><label class="block font-bold mb-1.5 text-slate-700">material_topic</label><input type="text" id="atp-topic" value="Sistem Pencernaan Manusia" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
                             <div><label class="block font-bold mb-1.5 text-slate-700">jp_allocation</label><input type="text" id="atp-jp" value="6 JP" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
                             <div><label class="block font-bold mb-1.5 text-slate-700">p3_dimension</label><input type="text" id="atp-p3" value="Bernalar Kritis, Gotong Royong" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">assessment_type</label><input type="text" id="atp-assess" value="Formatif Unjuk Kerja" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
                         </div>
                     `, 'form-atp', 'btn-atp', async (e) => {
                         e.preventDefault();
-                        const p = { type: 'ATP', topic: document.getElementById('atp-topic').value, jp: document.getElementById('atp-jp').value, p3: document.getElementById('atp-p3').value };
+                        const p = { type: 'ATP', topic: document.getElementById('atp-topic').value, jp: document.getElementById('atp-jp').value, p3: document.getElementById('atp-p3').value, assess: document.getElementById('atp-assess').value };
                         localStorage.setItem('smart_teacher_selected_doc', JSON.stringify(p));
                         await GoogleSheetsService.sendToSheet('SAVE_ATP_DATA', p);
                         alert("Data ATP_DATA Berhasil Disimpan!");
@@ -402,7 +403,67 @@
                     });
                     break;
 
-                // 12. MODULE_DATA
+                // A.4. PROTA_DATA
+                case '#tool-prota':
+                    content.innerHTML = renderFormContainer('Program Tahunan (PROTA)', 'PROTA_DATA', `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">academic_year</label><input type="text" id="prt-year" value="${school.academicYear}" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">subject</label><input type="text" id="prt-subj" value="IPAS" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">class_name</label><input type="text" id="prt-cls" value="Kelas IV" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">target_jp</label><input type="text" id="prt-jp" value="144 JP" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">semester</label><input type="text" id="prt-sem" value="${school.semester}" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        </div>
+                    `, 'form-prota', 'btn-prota', async (e) => {
+                        e.preventDefault();
+                        const p = { type: 'PROTA', year: document.getElementById('prt-year').value, subject: document.getElementById('prt-subj').value, className: document.getElementById('prt-cls').value, targetJp: document.getElementById('prt-jp').value };
+                        localStorage.setItem('smart_teacher_selected_doc', JSON.stringify(p));
+                        await GoogleSheetsService.sendToSheet('SAVE_PROTA_DATA', p);
+                        alert("Data PROTA Berhasil Disimpan!");
+                        window.location.hash = '#tool-print';
+                    });
+                    break;
+
+                // A.5. PROMES_DATA
+                case '#tool-promes':
+                    content.innerHTML = renderFormContainer('Program Semester (PROMES)', 'PROMES_DATA', `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">semester</label><input type="text" id="prm-sem" value="${school.semester}" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">month_name</label><input type="text" id="prm-month" value="Agustus" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">effective_week</label><input type="text" id="prm-week" value="Minggu ke-2" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">topic</label><input type="text" id="prm-topic" value="Sistem Pencernaan Manusia" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">jp</label><input type="text" id="prm-jp" value="6 JP" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        </div>
+                    `, 'form-promes', 'btn-promes', async (e) => {
+                        e.preventDefault();
+                        const p = { type: 'PROMES', month: document.getElementById('prm-month').value, week: document.getElementById('prm-week').value, topic: document.getElementById('prm-topic').value, jp: document.getElementById('prm-jp').value };
+                        localStorage.setItem('smart_teacher_selected_doc', JSON.stringify(p));
+                        await GoogleSheetsService.sendToSheet('SAVE_PROMES_DATA', p);
+                        alert("Data PROMES Berhasil Disimpan!");
+                        window.location.hash = '#tool-print';
+                    });
+                    break;
+
+                // A.6. CALENDAR_DATA
+                case '#tool-kalender':
+                    content.innerHTML = renderFormContainer('Kalender Akademik', 'CALENDAR_DATA', `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">academic_year</label><input type="text" id="cal-year" value="${school.academicYear}" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">event_date</label><input type="date" id="cal-date" value="2026-08-17" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">event_name</label><input type="text" id="cal-name" value="HUT Kemerdekaan RI" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">event_type</label><input type="text" id="cal-type" value="Libur Nasional" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        </div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">description</label><textarea id="cal-desc" rows="3" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Upacara Bendera memperingati Kemerdekaan Indonesia.</textarea></div>
+                    `, 'form-cal', 'btn-cal', async (e) => {
+                        e.preventDefault();
+                        const p = { type: 'CALENDAR', date: document.getElementById('cal-date').value, name: document.getElementById('cal-name').value, eventType: document.getElementById('cal-type').value, desc: document.getElementById('cal-desc').value };
+                        localStorage.setItem('smart_teacher_selected_doc', JSON.stringify(p));
+                        await GoogleSheetsService.sendToSheet('SAVE_CALENDAR_DATA', p);
+                        alert("Data Kalender Akademik Berhasil Disimpan!");
+                        window.location.hash = '#tool-print';
+                    });
+                    break;
+
+                // B.1. MODULE_DATA
                 case '#tool-modul-ajar':
                     content.innerHTML = renderFormContainer('Modul Ajar Generator', 'MODULE_DATA', `
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -424,7 +485,64 @@
                     });
                     break;
 
-                // 16. ASESMEN & EVALUASI (DIAGNOSTIK, FORMATIF, SUMATIF)
+                // B.2. MATERIAL_DATA
+                case '#tool-bahan-ajar':
+                    content.innerHTML = renderFormContainer('Bahan Ajar Siswa', 'MATERIAL_DATA', `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">topic</label><input type="text" id="mat-topic" value="Organ Utama Pencernaan" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">glossary</label><input type="text" id="mat-gloss" value="Enzim, Peristaltik, Digesti" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        </div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">summary_text</label><textarea id="mat-summary" rows="3" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Proses pencernaan dimulai dari mulut, lambung, hingga usus halus untuk penyerapan nutrisi.</textarea></div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">reading_sources</label><input type="text" id="mat-sources" value="Buku IPAS Kurikulum Merdeka Kelas IV" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                    `, 'form-mat', 'btn-mat', async (e) => {
+                        e.preventDefault();
+                        const p = { type: 'MATERIAL', topic: document.getElementById('mat-topic').value, summary: document.getElementById('mat-summary').value, glossary: document.getElementById('mat-gloss').value, sources: document.getElementById('mat-sources').value };
+                        localStorage.setItem('smart_teacher_selected_doc', JSON.stringify(p));
+                        await GoogleSheetsService.sendToSheet('SAVE_MATERIAL_DATA', p);
+                        alert("Data Bahan Ajar Berhasil Disimpan!");
+                        window.location.hash = '#tool-print';
+                    });
+                    break;
+
+                // B.3. LKPD_DATA
+                case '#tool-lkpd':
+                    content.innerHTML = renderFormContainer('LKPD Generator', 'LKPD_DATA', `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">title</label><input type="text" id="lk-title" value="LKPD Kelompok - Alur Pencernaan" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">group_target</label><input type="text" id="lk-target" value="Kelompok 4-5 Orang" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        </div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">instructions</label><textarea id="lk-inst" rows="2" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Tempelkan gambar organ pencernaan pada bagan yang sesuai.</textarea></div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">questions</label><textarea id="lk-quest" rows="3" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">1. Sebutkan nama organ X! 2. Apa akibat jika lambung terluka?</textarea></div>
+                    `, 'form-lkpd', 'btn-lkpd', async (e) => {
+                        e.preventDefault();
+                        const p = { type: 'LKPD', title: document.getElementById('lk-title').value, instructions: document.getElementById('lk-inst').value, questions: document.getElementById('lk-quest').value };
+                        localStorage.setItem('smart_teacher_selected_doc', JSON.stringify(p));
+                        await GoogleSheetsService.sendToSheet('SAVE_LKPD_DATA', p);
+                        alert("Data LKPD Berhasil Disimpan!");
+                        window.location.hash = '#tool-print';
+                    });
+                    break;
+
+                // B.4. MEDIA_DATA
+                case '#tool-media':
+                    content.innerHTML = renderFormContainer('Media Pembelajaran', 'MEDIA_DATA', `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">media_name</label><input type="text" id="med-name" value="Video Animasi Sistem Pencernaan" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">media_type</label><input type="text" id="med-type" value="Video Interaktif" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        </div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">scenario</label><textarea id="med-scen" rows="2" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Ditayangkan pada awal sesi eksplorasi kelompok.</textarea></div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">resource_url</label><input type="text" id="med-url" value="https://youtube.com/watch?v=sample" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                    `, 'form-media', 'btn-media', async (e) => {
+                        e.preventDefault();
+                        const p = { type: 'MEDIA', name: document.getElementById('med-name').value, mediaType: document.getElementById('med-type').value, scenario: document.getElementById('med-scen').value, url: document.getElementById('med-url').value };
+                        localStorage.setItem('smart_teacher_selected_doc', JSON.stringify(p));
+                        await GoogleSheetsService.sendToSheet('SAVE_MEDIA_DATA', p);
+                        alert("Data Media Pembelajaran Berhasil Disimpan!");
+                        window.location.hash = '#tool-print';
+                    });
+                    break;
+
+                // C.1, C.2, C.3. ASSESSMENT_DATA
                 case '#tool-diagnostik':
                 case '#tool-formatif':
                 case '#tool-sumatif':
@@ -445,20 +563,97 @@
                     });
                     break;
 
-                // 17. BANK SOAL & KISI-KISI
+                // C.4. QUESTION_BANK
                 case '#tool-kisi-kisi':
                     content.innerHTML = renderFormContainer('Bank Soal & Kisi-Kisi', 'QUESTION_BANK', `
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div><label class="block font-bold mb-1.5 text-slate-700">question_type</label><input type="text" id="q-type" value="Pilihan Ganda" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
                             <div><label class="block font-bold mb-1.5 text-slate-700">answer_key</label><input type="text" id="q-key" value="A" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">bloom_level</label><input type="text" id="q-bloom" value="C4 - Menganalisis" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
                         </div>
                         <div><label class="block font-bold mb-1.5 text-slate-700">question_text</label><textarea id="q-text" rows="2" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Organ yang berfungsi menyerap sari makanan adalah...</textarea></div>
                     `, 'form-qbank', 'btn-qbank', async (e) => {
                         e.preventDefault();
-                        const p = { type: 'ASSESSMENT', assessType: 'Bank Soal', topic: document.getElementById('q-text').value, guide: 'Kunci: ' + document.getElementById('q-key').value };
+                        const p = { type: 'QUESTION_BANK', questionType: document.getElementById('q-type').value, text: document.getElementById('q-text').value, key: document.getElementById('q-key').value, bloom: document.getElementById('q-bloom').value };
                         localStorage.setItem('smart_teacher_selected_doc', JSON.stringify(p));
                         await GoogleSheetsService.sendToSheet('SAVE_QUESTION_BANK', p);
                         alert("Data Bank Soal Berhasil Disimpan!");
+                        window.location.hash = '#tool-print';
+                    });
+                    break;
+
+                // C.5. QUESTION_CARDS
+                case '#tool-kartu-soal':
+                    content.innerHTML = renderFormContainer('Kartu Soal', 'QUESTION_CARDS', `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">difficulty_level</label><input type="text" id="crd-diff" value="Sedang" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">author_name</label><input type="text" id="crd-author" value="${school.teacherName}" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        </div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">indicator</label><textarea id="crd-ind" rows="3" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Siswa dapat mengidentifikasi fungsi organ usus halus berdasarkan gambar.</textarea></div>
+                    `, 'form-card', 'btn-card', async (e) => {
+                        e.preventDefault();
+                        const p = { type: 'KARTU_SOAL', indicator: document.getElementById('crd-ind').value, diff: document.getElementById('crd-diff').value, author: document.getElementById('crd-author').value };
+                        localStorage.setItem('smart_teacher_selected_doc', JSON.stringify(p));
+                        await GoogleSheetsService.sendToSheet('SAVE_QUESTION_CARDS', p);
+                        alert("Data Kartu Soal Berhasil Disimpan!");
+                        window.location.hash = '#tool-print';
+                    });
+                    break;
+
+                // C.6. RUBRIC_DATA
+                case '#tool-rubrik':
+                    content.innerHTML = renderFormContainer('Rubrik Penilaian', 'RUBRIC_DATA', `
+                        <div><label class="block font-bold mb-1.5 text-slate-700">criteria</label><input type="text" id="rub-crit" value="Penguasaan Materi Sistem Pencernaan" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        <div class="grid grid-cols-2 gap-3 mt-3">
+                            <div><label class="block font-bold text-slate-700">Skor 4 (Sangat Baik)</label><input type="text" id="rub-s4" value="Sangat fasih & tepat" class="w-full p-2 border rounded-lg text-xs"></div>
+                            <div><label class="block font-bold text-slate-700">Skor 3 (Baik)</label><input type="text" id="rub-s3" value="Fasih dengan 1 kesalahan" class="w-full p-2 border rounded-lg text-xs"></div>
+                            <div><label class="block font-bold text-slate-700">Skor 2 (Cukup)</label><input type="text" id="rub-s2" value="Kurang fasih" class="w-full p-2 border rounded-lg text-xs"></div>
+                            <div><label class="block font-bold text-slate-700">Skor 1 (Perlu Bimbingan)</label><input type="text" id="rub-s1" value="Belum mampu" class="w-full p-2 border rounded-lg text-xs"></div>
+                        </div>
+                    `, 'form-rubric', 'btn-rubric', async (e) => {
+                        e.preventDefault();
+                        const p = { type: 'RUBRIK', criteria: document.getElementById('rub-crit').value, s4: document.getElementById('rub-s4').value, s3: document.getElementById('rub-s3').value };
+                        localStorage.setItem('smart_teacher_selected_doc', JSON.stringify(p));
+                        await GoogleSheetsService.sendToSheet('SAVE_RUBRIC_DATA', p);
+                        alert("Data Rubrik Penilaian Berhasil Disimpan!");
+                        window.location.hash = '#tool-print';
+                    });
+                    break;
+
+                // C.7. ITEM_ANALYSIS
+                case '#tool-analisis-soal':
+                    content.innerHTML = renderFormContainer('Analisis Soal (KR-20)', 'ITEM_ANALYSIS', `
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">difficulty_p</label><input type="text" id="ans-p" value="0.75" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">discriminant_d</label><input type="text" id="ans-d" value="0.45" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                            <div><label class="block font-bold mb-1.5 text-slate-700">kr20_reliability</label><input type="text" id="ans-kr" value="0.82" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        </div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">recommendation</label><input type="text" id="ans-rec" value="Soal Baik (Diterima)" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                    `, 'form-ans', 'btn-ans', async (e) => {
+                        e.preventDefault();
+                        const p = { type: 'ANALYSIS', pVal: document.getElementById('ans-p').value, dVal: document.getElementById('ans-d').value, krVal: document.getElementById('ans-kr').value, rec: document.getElementById('ans-rec').value };
+                        localStorage.setItem('smart_teacher_selected_doc', JSON.stringify(p));
+                        await GoogleSheetsService.sendToSheet('SAVE_ITEM_ANALYSIS', p);
+                        alert("Data Analisis Soal Berhasil Disimpan!");
+                        window.location.hash = '#tool-print';
+                    });
+                    break;
+
+                // D.1. FOLLOW_UP (REMEDIAL & REFLEKSI)
+                case '#tool-remedial':
+                    content.innerHTML = renderFormContainer('Remedial & Refleksi Guru', 'FOLLOW_UP', `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block font-bold mb-1.5 text-slate-700">pass_rate</label><input type="text" id="fol-rate" value="88%" class="w-full p-3 border rounded-xl text-sm bg-slate-50/50"></div>
+                        </div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">remedial_plan</label><textarea id="fol-rem" rows="2" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Bimbingan individu mengenai alur usus halus.</textarea></div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">enrichment_plan</label><textarea id="fol-enr" rows="2" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Pemberian kuis tantangan tambahan tentang penyakit digesti.</textarea></div>
+                        <div><label class="block font-bold mb-1.5 text-slate-700">teacher_reflection</label><textarea id="fol-refl" rows="2" class="w-full p-3 border rounded-xl text-xs bg-slate-50/50">Penggunaan video animasi sangat membantu minat belajar siswa.</textarea></div>
+                    `, 'form-fol', 'btn-fol', async (e) => {
+                        e.preventDefault();
+                        const p = { type: 'REMEDIAL', passRate: document.getElementById('fol-rate').value, remedial: document.getElementById('fol-rem').value, reflection: document.getElementById('fol-refl').value };
+                        localStorage.setItem('smart_teacher_selected_doc', JSON.stringify(p));
+                        await GoogleSheetsService.sendToSheet('SAVE_FOLLOW_UP', p);
+                        alert("Data Remedial & Refleksi Berhasil Disimpan!");
                         window.location.hash = '#tool-print';
                     });
                     break;
@@ -484,6 +679,17 @@
                                 </div>
                             </div>
                         `;
+                    } else if (activeDoc.type === 'ATP') {
+                        docTitle = 'ALUR TUJUAN PEMBELAJARAN (ATP)';
+                        docHTML = `
+                            <div class="space-y-4 text-xs">
+                                <p><strong>Topik Materi:</strong> ${activeDoc.topic} | <strong>Alokasi Waktu:</strong> ${activeDoc.jp}</p>
+                                <div class="border border-slate-300 p-4 rounded-lg bg-slate-50">
+                                    <p class="font-bold border-b pb-1 mb-2">Profil Pelajar Pancasila & Jenis Asesmen:</p>
+                                    <p class="leading-relaxed">${activeDoc.p3} | ${activeDoc.assess}</p>
+                                </div>
+                            </div>
+                        `;
                     } else if (activeDoc.type === 'MODULE') {
                         docTitle = 'MODUL AJAR KURIKULUM MERDEKA';
                         docHTML = `
@@ -500,7 +706,7 @@
                         docTitle = `INSTRUMEN ASESMEN (${activeDoc.assessType.toUpperCase()})`;
                         docHTML = `
                             <div class="space-y-4 text-xs">
-                                <p><strong>Jenis Asesmen:</strong> ${activeDoc.assessType} | <strong>Topik / Soal:</strong> ${activeDoc.topic}</p>
+                                <p><strong>Jenis Asesmen:</strong> ${activeDoc.assessType} | <strong>Topik:</strong> ${activeDoc.topic}</p>
                                 <div class="border border-slate-300 p-4 rounded-lg bg-slate-50">
                                     <p class="font-bold border-b pb-1 mb-2">Pedoman Penskoran / Kunci Jawaban:</p>
                                     <p class="leading-relaxed">${activeDoc.guide}</p>
