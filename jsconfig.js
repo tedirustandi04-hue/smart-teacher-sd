@@ -6,7 +6,7 @@ const CONFIG = {
         SCHOOL_PROFILE: "smart_teacher_school_profile"
     },
     // Paste URL Web App Google Apps Script Anda di bawah ini
-    GAS_API_URL: "https://script.google.com/macros/s/AKfycbydbrRF88okj_HF2UsUB5LREFUr7TV64KwxOj4G2Vj17BiyB0UYLUAtjbpEI3u7kWOp/exec"
+    GAS_API_URL: "https://script.google.com/macros/s/AKfycbxnNRJ8nXoGhW3JU-jvnGWMrufviFiIbdhOa0Fdx_38Qisj7FimTbDFlbWx2D9tMQvJ/exec"
 };
 
 window.CONFIG = CONFIG;
