@@ -1,0 +1,55 @@
+// js/tool-kartu-soal.js
+
+class ToolKartuSoal {
+    static render() {
+        const school = window.schoolDataService.getProfile();
+        return `
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                    <div>
+                        <h1 class="text-xl font-bold text-slate-800 flex items-center">
+                            <i data-lucide="layers" class="w-6 h-6 text-blue-600 mr-2"></i> Kartu Soal Standar
+                        </h1>
+                        <p class="text-xs text-slate-500 mt-1">Kartu soal instrumen penilaian beserta kunci jawaban dan pedoman penskoran.</p>
+                    </div>
+                    <button id="btn-generate-kartu" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold">
+                        Buat Kartu Soal
+                    </button>
+                </div>
+
+                <div id="kartu-a4-preview" class="a4-preview text-slate-800">
+                    <h3 class="text-center font-bold text-sm uppercase underline mb-4">KARTU SOAL PILIHAN GANDA</h3>
+                    <div id="kartu-preview-body" class="text-xs">
+                        <p class="italic text-slate-400">Klik "Buat Kartu Soal" untuk memetakan kartu soal...</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    static initEvents() {
+        const btnGen = document.getElementById('btn-generate-kartu');
+        if (btnGen) {
+            btnGen.addEventListener('click', () => {
+                let html = `
+                    <div class="border-2 border-slate-800 p-4 rounded text-xs space-y-2">
+                        <div class="flex justify-between border-b pb-2 font-bold">
+                            <span>Mata Pelajaran: IPAS</span>
+                            <span>Nomor Soal: 01</span>
+                        </div>
+                        <p><strong>Materi:</strong> Organ Pencernaan Manusia</p>
+                        <p><strong>Indikator Soal:</strong> Memilih organ penyerapan sari makanan.</p>
+                        <p><strong>Kunci Jawaban:</strong> C (Usus Halus)</p>
+                        <div class="border p-2 bg-slate-50 rounded">
+                            <p class="font-bold">Butir Soal:</p>
+                            <p>Proses penyerapan sari-sari makanan terjadi pada organ...</p>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('kartu-preview-body').innerHTML = html;
+            });
+        }
+    }
+}
+
+window.ToolKartuSoal = ToolKartuSoal;

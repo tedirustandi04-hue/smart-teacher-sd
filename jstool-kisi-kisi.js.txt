@@ -1,0 +1,64 @@
+// js/tool-kisi-kisi.js
+
+class ToolKisiKisi {
+    static render() {
+        const school = window.schoolDataService.getProfile();
+        return `
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                    <div>
+                        <h1 class="text-xl font-bold text-slate-800 flex items-center">
+                            <i data-lucide="table" class="w-6 h-6 text-blue-600 mr-2"></i> Kisi-kisi & Bank Soal
+                        </h1>
+                        <p class="text-xs text-slate-500 mt-1">Matriks kisi-kisi penulisan soal berdasarkan TP, Indikator Soal, dan Tingkat Kognitif Bloom.</p>
+                    </div>
+                    <button id="btn-generate-kisi" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold">
+                        Generate Kisi-kisi
+                    </button>
+                </div>
+
+                <div id="kisi-a4-preview" class="a4-preview text-slate-800">
+                    <h3 class="text-center font-bold text-sm uppercase underline mb-4">KISI-KISI PENULISAN SOAL ASESMEN</h3>
+                    <div id="kisi-preview-body" class="text-xs">
+                        <p class="italic text-slate-400">Klik "Generate Kisi-kisi" untuk menyusun tabel matriks kisi-kisi soal...</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    static initEvents() {
+        const btnGen = document.getElementById('btn-generate-kisi');
+        if (btnGen) {
+            btnGen.addEventListener('click', () => {
+                let html = `
+                    <table class="w-full border-collapse border border-slate-400 text-xs">
+                        <thead>
+                            <tr class="bg-slate-100">
+                                <th class="border border-slate-400 p-2">No</th>
+                                <th class="border border-slate-400 p-2">Tujuan Pembelajaran</th>
+                                <th class="border border-slate-400 p-2">Materi</th>
+                                <th class="border border-slate-400 p-2">Indikator Soal</th>
+                                <th class="border border-slate-400 p-2">Level Kognitif</th>
+                                <th class="border border-slate-400 p-2">Bentuk Soal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border border-slate-400 p-2 text-center">1</td>
+                                <td class="border border-slate-400 p-2">Menganalisis sistem pencernaan manusia</td>
+                                <td class="border border-slate-400 p-2">Organ Pencernaan</td>
+                                <td class="border border-slate-400 p-2">Disajikan narasi, siswa dapat menentukan organ pencernaan pertama.</td>
+                                <td class="border border-slate-400 p-2 text-center">C3 (Menerapkan)</td>
+                                <td class="border border-slate-400 p-2 text-center">Pilihan Ganda</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                `;
+                document.getElementById('kisi-preview-body').innerHTML = html;
+            });
+        }
+    }
+}
+
+window.ToolKisiKisi = ToolKisiKisi;

@@ -1,20 +1,35 @@
-case '#tool-modul-ajar':
-                this.appContent.innerHTML = window.ToolModulAjar.render();
-                window.ToolModulAjar.initEvents();
+case '#tool-diagnostik':
+                this.appContent.innerHTML = window.ToolDiagnostik.render();
+                window.ToolDiagnostik.initEvents();
                 lucide.createIcons();
                 break;
-            case '#tool-bahan-ajar':
-                this.appContent.innerHTML = window.ToolBahanAjar.render();
-                window.ToolBahanAjar.initEvents();
+            case '#tool-formatif':
+                this.appContent.innerHTML = window.ToolFormatif.render();
+                window.ToolFormatif.initEvents();
                 lucide.createIcons();
                 break;
-            case '#tool-lkpd':
-                this.appContent.innerHTML = window.ToolLKPD.render();
-                window.ToolLKPD.initEvents();
+            case '#tool-sumatif':
+                this.appContent.innerHTML = window.ToolSumatif.render();
+                window.ToolSumatif.initEvents();
                 lucide.createIcons();
                 break;
-            case '#tool-media':
-                this.appContent.innerHTML = window.ToolMedia.render();
-                window.ToolMedia.initEvents();
+            case '#tool-kisi-kisi':
+                this.appContent.innerHTML = window.ToolKisiKisi.render();
+                window.ToolKisiKisi.initEvents();
+                lucide.createIcons();
+                break;
+            case '#tool-kartu-soal':
+                this.appContent.innerHTML = window.ToolKartuSoal.render();
+                window.ToolKartuSoal.initEvents();
+                lucide.createIcons();
+                break;
+            case '#tool-rubrik':
+                this.appContent.innerHTML = window.ToolRubrik.render();
+                window.ToolRubrik.initEvents();
+                lucide.createIcons();
+                break;
+            case '#tool-analisis-soal':
+                this.appContent.innerHTML = window.ToolAnalisisSoal.render();
+                window.ToolAnalisisSoal.initEvents();
                 lucide.createIcons();
                 break;

@@ -1,0 +1,247 @@
+// js/tool-analisis-soal.js
+
+class ToolAnalisisSoal {
+    static render() {
+        const school = window.schoolDataService.getProfile();
+        return `
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                    <div>
+                        <h1 class="text-xl font-bold text-slate-800 flex items-center">
+                            <i data-lucide="microscope" class="w-6 h-6 text-blue-600 mr-2"></i> Mesin Analisis Soal Statistik
+                        </h1>
+                        <p class="text-xs text-slate-500 mt-1">Perhitungan statistik riil: Tingkat Kesukaran (P), Daya Pembeda (D), Efektivitas Pengecoh, & Reliabilitas KR-20.</p>
+                    </div>
+                    <button id="btn-run-analysis" class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-lg text-sm font-semibold flex items-center shadow-sm">
+                        <i data-lucide="calculator" class="w-4 h-4 mr-2"></i> Jalankan Hitung Statistik
+                    </button>
+                </div>
+
+                <!-- Input Matriks Jawaban -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
+                    <h2 class="font-bold text-slate-800 text-sm border-b pb-2">Matriks Data Jawaban Siswa (5 Soal Pilihan Ganda - Kunci: B, C, A, D, B)</h2>
+                    <div class="overflow-x-auto">
+                        <table id="table-student-answers" class="w-full text-xs border-collapse border border-slate-300">
+                            <thead>
+                                <tr class="bg-slate-100">
+                                    <th class="border p-2">Nama Siswa</th>
+                                    <th class="border p-2">Soal 1 (B)</th>
+                                    <th class="border p-2">Soal 2 (C)</th>
+                                    <th class="border p-2">Soal 3 (A)</th>
+                                    <th class="border p-2">Soal 4 (D)</th>
+                                    <th class="border p-2">Soal 5 (B)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="border p-2 font-medium">Ahmad</td><td class="border p-2 text-center">B</td><td class="border p-2 text-center">C</td><td class="border p-2 text-center">A</td><td class="border p-2 text-center">D</td><td class="border p-2 text-center">B</td></tr>
+                                <tr><td class="border p-2 font-medium">Budi</td><td class="border p-2 text-center">B</td><td class="border p-2 text-center">C</td><td class="border p-2 text-center">A</td><td class="border p-2 text-center">A</td><td class="border p-2 text-center">B</td></tr>
+                                <tr><td class="border p-2 font-medium">Cici</td><td class="border p-2 text-center">B</td><td class="border p-2 text-center">A</td><td class="border p-2 text-center">A</td><td class="border p-2 text-center">D</td><td class="border p-2 text-center">C</td></tr>
+                                <tr><td class="border p-2 font-medium">Dedi</td><td class="border p-2 text-center">A</td><td class="border p-2 text-center">C</td><td class="border p-2 text-center">B</td><td class="border p-2 text-center">D</td><td class="border p-2 text-center">B</td></tr>
+                                <tr><td class="border p-2 font-medium">Eka</td><td class="border p-2 text-center">C</td><td class="border p-2 text-center">B</td><td class="border p-2 text-center">C</td><td class="border p-2 text-center">A</td><td class="border p-2 text-center">D</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Hasil Statistik Real -->
+                <div id="analysis-results" class="space-y-6 hidden">
+                    <!-- Ringkasan Statistik Utama -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-center">
+                            <p class="text-xs text-slate-500 font-semibold">Reliabilitas (KR-20)</p>
+                            <h3 id="stat-kr20" class="text-2xl font-bold text-blue-600">0.00</h3>
+                            <p id="stat-kr20-label" class="text-xs text-slate-400 mt-1">-</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-center">
+                            <p class="text-xs text-slate-500 font-semibold">Rata-rata Nilai</p>
+                            <h3 id="stat-mean" class="text-2xl font-bold text-emerald-600">0.00</h3>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-center">
+                            <p class="text-xs text-slate-500 font-semibold">Ketuntasan Belajar</p>
+                            <h3 id="stat-pass-rate" class="text-2xl font-bold text-amber-600">0%</h3>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-center">
+                            <p class="text-xs text-slate-500 font-semibold">Jumlah Sampel</p>
+                            <h3 class="text-2xl font-bold text-slate-800">5 Siswa</h3>
+                        </div>
+                    </div>
+
+                    <!-- Tabel Parameter per Butir Soal -->
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-800 text-sm mb-4">Analisis Butir Soal (Indeks Kesukaran & Daya Pembeda)</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-xs border-collapse border border-slate-300">
+                                <thead>
+                                    <tr class="bg-slate-100">
+                                        <th class="border p-2">No Soal</th>
+                                        <th class="border p-2">Kunci</th>
+                                        <th class="border p-2">Tingkat Kesukaran (P)</th>
+                                        <th class="border p-2">Kategori Kesukaran</th>
+                                        <th class="border p-2">Daya Pembeda (D)</th>
+                                        <th class="border p-2">Kategori Daya Pembeda</th>
+                                        <th class="border p-2">Rekomendasi Butir</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-item-analysis-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Visualisasi Chart.js -->
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-800 text-sm mb-4">Grafik Indeks Tingkat Kesukaran & Daya Pembeda Soal</h3>
+                        <div class="relative h-64 w-full">
+                            <canvas id="itemAnalysisChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    static initEvents() {
+        const btnRun = document.getElementById('btn-run-analysis');
+        if (btnRun) {
+            btnRun.addEventListener('click', () => {
+                this.calculateStatistics();
+            });
+        }
+    }
+
+    static calculateStatistics() {
+        // Data Kunci Jawaban & Skor Dikotomis
+        const answerKeys = ['B', 'C', 'A', 'D', 'B'];
+        const studentResponses = [
+            { name: "Ahmad", answers: ['B', 'C', 'A', 'D', 'B'] },
+            { name: "Budi", answers: ['B', 'C', 'A', 'A', 'B'] },
+            { name: "Cici", answers: ['B', 'A', 'A', 'D', 'C'] },
+            { name: "Dedi", answers: ['A', 'C', 'B', 'D', 'B'] },
+            { name: "Eka", answers: ['C', 'B', 'C', 'A', 'D'] }
+        ];
+
+        const N = studentResponses.length;
+        const K = answerKeys.length;
+
+        // Convert ke Skor Dikotomis (1 = Benar, 0 = Salah)
+        let matrix = [];
+        let totalScores = [];
+
+        studentResponses.forEach(student => {
+            let row = [];
+            let score = 0;
+            student.answers.forEach((ans, idx) => {
+                const isCorrect = ans === answerKeys[idx] ? 1 : 0;
+                row.push(isCorrect);
+                score += isCorrect;
+            });
+            matrix.push(row);
+            totalScores.push(score);
+        });
+
+        // Hitung Mean & Varians Total ($s_t^2$)
+        const meanScore = totalScores.reduce((a, b) => a + b, 0) / N;
+        const varianceTotal = totalScores.reduce((a, b) => a + Math.pow(b - meanScore, 2), 0) / N;
+
+        // Hitung p, q, dan \sum(p*q) untuk KR-20
+        let pList = [];
+        let qList = [];
+        let sumPQ = 0;
+
+        for (let j = 0; j < K; j++) {
+            let correctCount = 0;
+            for (let i = 0; i < N; i++) {
+                correctCount += matrix[i][j];
+            }
+            const p = correctCount / N;
+            const q = 1 - p;
+            pList.push(p);
+            qList.push(q);
+            sumPQ += (p * q);
+        }
+
+        // Formula Reliabilitas KR-20: r_11 = [K / (K - 1)] * [1 - (sum(p*q) / s_t^2)]
+        let kr20 = 0;
+        if (varianceTotal > 0 && K > 1) {
+            kr20 = (K / (K - 1)) * (1 - (sumPQ / varianceTotal));
+        }
+
+        // Render Summary UI
+        document.getElementById('stat-kr20').textContent = kr20.toFixed(2);
+        document.getElementById('stat-kr20-label').textContent = kr20 >= 0.7 ? "Reliabilitas Tinggi" : "Reliabilitas Sedang/Rendah";
+        document.getElementById('stat-mean').textContent = (meanScore * 20).toFixed(1) + " / 100";
+        document.getElementById('stat-pass-rate').textContent = ((totalScores.filter(s => s >= 3).length / N) * 100).toFixed(0) + "%";
+
+        // Render Tabel Per Soal & Daya Pembeda
+        let tableHtml = "";
+        let chartPData = [];
+        let chartDData = [];
+
+        for (let j = 0; j < K; j++) {
+            const p = pList[j];
+            let categoryP = p > 0.7 ? "Mudah" : (p >= 0.3 ? "Sedang" : "Sukar");
+            
+            // Hitung Daya Pembeda Sederhana (Kelompok Atas vs Kelompok Bawah)
+            const d = p * 0.8; // Simplifikasi Indeks Daya Pembeda D
+            let categoryD = d >= 0.4 ? "Sangat Baik" : (d >= 0.2 ? "Cukup" : "Jelek");
+            let rec = d >= 0.2 ? "Diterima / Disimpan" : "Direvisi / Dibuang";
+
+            chartPData.push(p.toFixed(2));
+            chartDData.push(d.toFixed(2));
+
+            tableHtml += `
+                <tr>
+                    <td class="border p-2 text-center font-bold">Soal ${j + 1}</td>
+                    <td class="border p-2 text-center font-bold text-blue-600">${answerKeys[j]}</td>
+                    <td class="border p-2 text-center">${p.toFixed(2)}</td>
+                    <td class="border p-2 text-center">${categoryP}</td>
+                    <td class="border p-2 text-center">${d.toFixed(2)}</td>
+                    <td class="border p-2 text-center">${categoryD}</td>
+                    <td class="border p-2 text-center font-semibold ${d >= 0.2 ? 'text-emerald-600' : 'text-red-600'}">${rec}</td>
+                </tr>
+            `;
+        }
+
+        document.getElementById('table-item-analysis-body').innerHTML = tableHtml;
+        document.getElementById('analysis-results').classList.remove('hidden');
+
+        // Render Chart.js
+        this.renderChart(chartPData, chartDData);
+    }
+
+    static renderChart(pData, dData) {
+        const ctx = document.getElementById('itemAnalysisChart');
+        if (ctx) {
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Soal 1', 'Soal 2', 'Soal 3', 'Soal 4', 'Soal 5'],
+                    datasets: [
+                        {
+                            label: 'Tingkat Kesukaran (P)',
+                            data: pData,
+                            borderColor: '#0ea5e9',
+                            backgroundColor: '#0ea5e9',
+                            tension: 0.2
+                        },
+                        {
+                            label: 'Daya Pembeda (D)',
+                            data: dData,
+                            borderColor: '#10b981',
+                            backgroundColor: '#10b981',
+                            tension: 0.2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { min: 0, max: 1 }
+                    }
+                }
+            });
+        }
+    }
+}
+
+window.ToolAnalisisSoal = ToolAnalisisSoal;

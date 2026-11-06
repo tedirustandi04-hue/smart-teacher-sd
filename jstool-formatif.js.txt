@@ -1,0 +1,81 @@
+// js/tool-formatif.js
+
+class ToolFormatif {
+    static render() {
+        const school = window.schoolDataService.getProfile();
+        return `
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                    <div>
+                        <h1 class="text-xl font-bold text-slate-800 flex items-center">
+                            <i data-lucide="bar-chart-2" class="w-6 h-6 text-blue-600 mr-2"></i> Asesmen Formatif
+                        </h1>
+                        <p class="text-xs text-slate-500 mt-1">Penilaian proses belajar (Quiz cepat, observasi unjuk kerja, tiket keluar/exit ticket).</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4 h-fit">
+                        <h2 class="font-semibold text-slate-700 border-b pb-2 text-sm">Bentuk Formatif</h2>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Materi / Sub-Bab</label>
+                            <input type="text" id="formatif-topic" value="Organ Pencernaan dan Fungsinya" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Teknik Asesmen</label>
+                            <select id="formatif-technique" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm">
+                                <option value="Exit Ticket (Tiket Keluar)">Exit Ticket (Tiket Keluar)</option>
+                                <option value="Kuis Cepat (3 Soal Tulis Singkat)">Kuis Cepat (3 Soal Tulis Singkat)</option>
+                                <option value="Lembar Observasi Unjuk Kerja Diskusi">Lembar Observasi Unjuk Kerja Diskusi</option>
+                            </select>
+                        </div>
+                        <button id="btn-generate-formatif" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg text-sm font-semibold flex justify-center items-center shadow-sm">
+                            <i data-lucide="sparkles" class="w-4 h-4 mr-2"></i> Generate Asesmen Formatif
+                        </button>
+                    </div>
+
+                    <div class="lg:col-span-2">
+                        <div id="formatif-a4-preview" class="a4-preview text-slate-800">
+                            <div class="text-center border-b-2 border-slate-800 pb-3 mb-4">
+                                <h2 class="text-base font-bold uppercase">${school.schoolName}</h2>
+                                <p class="text-xs font-bold uppercase">INSTRUMEN ASESMEN FORMATIF PROSES BELAJAR</p>
+                            </div>
+                            <div id="formatif-preview-body" class="space-y-4 text-xs">
+                                <p class="italic text-slate-400">Klik "Generate Asesmen Formatif" untuk menghasilkan instrumen formatif...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    static initEvents() {
+        const btnGen = document.getElementById('btn-generate-formatif');
+        if (btnGen) {
+            btnGen.addEventListener('click', () => {
+                const topic = document.getElementById('formatif-topic').value;
+                const tech = document.getElementById('formatif-technique').value;
+
+                let html = `
+                    <div class="border p-3 rounded bg-slate-50 mb-3">
+                        <p><strong>Topik:</strong> ${topic} | <strong>Teknik:</strong> ${tech}</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold border-b pb-1 mb-2 text-slate-800">Lembar Tiket Keluar (Exit Ticket) Siswa:</h4>
+                        <div class="border p-3 rounded space-y-2 bg-white">
+                            <p>1. Apa 1 hal paling penting yang baru kamu pelajari tentang ${topic} hari ini?</p>
+                            <div class="w-full h-12 border border-dashed rounded bg-slate-50 p-1 text-slate-400">Jawaban siswa...</div>
+                            <p>2. Bagian mana yang masih membuatmu bingung dan ingin kamu tanyakan pada pertemuan berikutnya?</p>
+                            <div class="w-full h-12 border border-dashed rounded bg-slate-50 p-1 text-slate-400">Jawaban siswa...</div>
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById('formatif-preview-body').innerHTML = html;
+            });
+        }
+    }
+}
+
+window.ToolFormatif = ToolFormatif;

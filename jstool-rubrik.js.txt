@@ -1,0 +1,62 @@
+// js/tool-rubrik.js
+
+class ToolRubrik {
+    static render() {
+        const school = window.schoolDataService.getProfile();
+        return `
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                    <div>
+                        <h1 class="text-xl font-bold text-slate-800 flex items-center">
+                            <i data-lucide="list-checks" class="w-6 h-6 text-blue-600 mr-2"></i> Rubrik Penilaian
+                        </h1>
+                        <p class="text-xs text-slate-500 mt-1">Rubrik kualitatif / kuantitatif untuk unjuk kerja, produk, presentasi, dan diskusi kelompok.</p>
+                    </div>
+                    <button id="btn-generate-rubrik" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold">
+                        Buat Rubrik
+                    </button>
+                </div>
+
+                <div id="rubrik-a4-preview" class="a4-preview text-slate-800">
+                    <h3 class="text-center font-bold text-sm uppercase underline mb-4">RUBRIK UNJUK KERJA DISKUSI KELOMPOK</h3>
+                    <div id="rubrik-preview-body" class="text-xs">
+                        <p class="italic text-slate-400">Klik "Buat Rubrik" untuk menghasilkan kriteria rubrik...</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    static initEvents() {
+        const btnGen = document.getElementById('btn-generate-rubrik');
+        if (btnGen) {
+            btnGen.addEventListener('click', () => {
+                let html = `
+                    <table class="w-full border-collapse border border-slate-400 text-xs">
+                        <thead>
+                            <tr class="bg-slate-100">
+                                <th class="border border-slate-400 p-2">Kriteria</th>
+                                <th class="border border-slate-400 p-2">Sangat Baik (4)</th>
+                                <th class="border border-slate-400 p-2">Baik (3)</th>
+                                <th class="border border-slate-400 p-2">Cukup (2)</th>
+                                <th class="border border-slate-400 p-2">Perlu Bimbingan (1)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border border-slate-400 p-2 font-semibold">Aktif Diskusi</td>
+                                <td class="border border-slate-400 p-2">Sangat aktif memberikan ide dan menghargai pendapat.</td>
+                                <td class="border border-slate-400 p-2">Aktif dalam diskusi kelompok.</td>
+                                <td class="border border-slate-400 p-2">Cukup aktif jika diminta guru.</td>
+                                <td class="border border-slate-400 p-2">Pasif selama diskusi.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                `;
+                document.getElementById('rubrik-preview-body').innerHTML = html;
+            });
+        }
+    }
+}
+
+window.ToolRubrik = ToolRubrik;

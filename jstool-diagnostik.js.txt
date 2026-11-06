@@ -1,0 +1,87 @@
+// js/tool-diagnostik.js
+
+class ToolDiagnostik {
+    static render() {
+        const school = window.schoolDataService.getProfile();
+        return `
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                    <div>
+                        <h1 class="text-xl font-bold text-slate-800 flex items-center">
+                            <i data-lucide="stethoscope" class="w-6 h-6 text-blue-600 mr-2"></i> Asesmen Diagnostik
+                        </h1>
+                        <p class="text-xs text-slate-500 mt-1">Instrumen pemetaan kognitif awal dan non-kognitif (gaya belajar, kesiapan siswa).</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4 h-fit">
+                        <h2 class="font-semibold text-slate-700 border-b pb-2 text-sm">Pengaturan Diagnostik</h2>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Mata Pelajaran / Topik</label>
+                            <input type="text" id="diag-topic" value="Sistem Pencernaan Manusia" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Fokus Diagnostik</label>
+                            <select id="diag-type" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm">
+                                <option value="Kognitif & Prasyarat">Kognitif (Pengetahuan Prasyarat)</option>
+                                <option value="Non-Kognitif & Gaya Belajar">Non-Kognitif (Gaya Belajar & Profil Siswa)</option>
+                                <option value="Kombinasi (Kognitif & Non-Kognitif)">Kombinasi (Kognitif & Non-Kognitif)</option>
+                            </select>
+                        </div>
+                        <button id="btn-generate-diag" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg text-sm font-semibold flex justify-center items-center shadow-sm">
+                            <i data-lucide="sparkles" class="w-4 h-4 mr-2"></i> Buat Asesmen Diagnostik
+                        </button>
+                    </div>
+
+                    <div class="lg:col-span-2">
+                        <div id="diag-a4-preview" class="a4-preview text-slate-800">
+                            <div class="text-center border-b-2 border-slate-800 pb-3 mb-4">
+                                <h2 class="text-base font-bold uppercase">${school.schoolName}</h2>
+                                <p class="text-xs font-bold uppercase">INSTRUMEN ASESMEN DIAGNOSTIK AWAL</p>
+                            </div>
+                            <div id="diag-preview-body" class="space-y-4 text-xs">
+                                <p class="italic text-slate-400">Klik "Buat Asesmen Diagnostik" untuk menghasilkan pertanyaan diagnostik kognitif dan non-kognitif...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    static initEvents() {
+        const btnGen = document.getElementById('btn-generate-diag');
+        if (btnGen) {
+            btnGen.addEventListener('click', () => {
+                const topic = document.getElementById('diag-topic').value;
+                const type = document.getElementById('diag-type').value;
+
+                let html = `
+                    <div class="bg-blue-50 p-3 rounded border border-blue-200 mb-3">
+                        <p><strong>Topik Pembelajaran:</strong> ${topic}</p>
+                        <p><strong>Jenis Diagnostik:</strong> ${type}</p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <h4 class="font-bold border-b pb-1 text-slate-800">A. Pertanyaan Diagnostik Non-Kognitif (Gaya Belajar)</h4>
+                        <ol class="list-decimal pl-5 space-y-2">
+                            <li>Bagaimana cara belajar yang paling kamu sukai saat memahami materi baru? (Melihat gambar/video, mendengarkan penjelasan guru, atau langsung mempraktikkan?)</li>
+                            <li>Apa kendala utama yang sering kamu hadapi saat belajar di rumah?</li>
+                        </ol>
+
+                        <h4 class="font-bold border-b pb-1 text-slate-800 pt-2">B. Pertanyaan Diagnostik Kognitif (Pengetahuan Prasyarat)</h4>
+                        <ol class="list-decimal pl-5 space-y-2">
+                            <li>Sebutkan nama-nama organ tubuh yang kamu ketahui berfungsi untuk mengolah makanan!</li>
+                            <li>Mengapa tubuh kita membutuhkan makanan setiap hari? Jelaskan dengan bahasa sederhanamu!</li>
+                        </ol>
+                    </div>
+                `;
+
+                document.getElementById('diag-preview-body').innerHTML = html;
+            });
+        }
+    }
+}
+
+window.ToolDiagnostik = ToolDiagnostik;
